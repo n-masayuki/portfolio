@@ -1,3 +1,9 @@
+## Working principles
+
+- ルールは目的を達成するための手段であり、機械的に守ること自体を目的にしない。
+- 既存のルールや実装には常に疑問を持ち、より現代的で良い方法があれば改善する。
+- ルールは状況や知見の変化に合わせて更新する。更新の必要がないときは、無理に変更しない。
+
 ## Development
 
 When starting the dev server, use background mode:
