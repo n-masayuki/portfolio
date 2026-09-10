@@ -1,11 +1,23 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Home/Hero.astro';
+import About from '../components/Home/About.astro';
+import Skills from '../components/Home/Skills.astro';
+import WorksSection from '../components/Home/WorksSection.astro';
+import Github from '../components/Home/Github.astro';
+import Contact from '../components/Home/Contact.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <Layout>
-	<Welcome />
+  <Hero />
+  <About />
+  <Skills />
+  <WorksSection works={works} />
+  <Github />
+  <Contact />
 </Layout>

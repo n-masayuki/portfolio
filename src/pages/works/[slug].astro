@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works');
+
+  return works.map((work) => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+---
+
+<Layout>
+  <article>
+    <p>{work.data.category}</p>
+    <h1>{work.data.title}</h1>
+    <p>{work.data.period}</p>
+
+    <section aria-labelledby="role-heading">
+      <h2 id="role-heading">Role</h2>
+      <ul>
+        {work.data.role.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="technologies-heading">
+      <h2 id="technologies-heading">Technologies</h2>
+      <ul>
+        {work.data.technologies.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <Content />
+  </article>
+</Layout>

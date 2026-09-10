@@ -1,6 +1,14 @@
 ---
 import astroLogo from '../assets/astro.svg';
 import background from '../assets/background.svg';
+
+const works = [
+	{ href: '/works/shoe-retail', title: 'Shoe Retail' },
+	{ href: '/works/commercial-facility', title: 'Commercial Facility' },
+	{ href: '/works/cosmetics-ec', title: 'Cosmetics EC' },
+	{ href: '/works/entertainment', title: 'Entertainment' },
+	{ href: '/works/others', title: 'Others' },
+];
 ---
 
 <div id="container">
@@ -24,6 +32,43 @@ import background from '../assets/background.svg';
 					>
 				</a>
 			</section>
+		</section>
+		<section id="about">
+			<h2>About This Project</h2>
+			<p>
+				This section contains information about the project, its goals, and the technologies used.
+			</p>
+		</section>
+		<section id="skills">
+			<h2>Skills</h2>
+			<p>
+				This section highlights the skills and expertise of the portfolio owner.
+			</p>
+		</section>
+		<section id="works">
+			<h2>Works</h2>
+			<p>
+				This section showcases various works and projects related to the portfolio.
+			</p>
+			<ul>
+				{works.map((work) => (
+					<li>
+						<a href={work.href}>{work.title}</a>
+					</li>
+				))}
+			</ul>
+		</section>
+		<section id="github">
+			<h2>GitHub</h2>
+			<p>
+				This section provides links to the portfolio owner's GitHub repositories and contributions.
+			</p>
+		</section>
+		<section id="contact">
+			<h2>Contact</h2>
+			<p>
+				This section provides contact information and ways to get in touch with the portfolio owner.
+			</p>
 		</section>
 	</main>
 

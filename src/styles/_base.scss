@@ -1,0 +1,35 @@
+// サイト全体の色
+// 日本語ゴシック系フォント
+// body の基本設定
+// リンク
+// :focus-visible
+
+:root {
+  --color-text: #111827;
+  --color-muted: #64748b;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-accent-soft: #eff6ff;
+  --color-accent-border: #bfdbfe;
+  --font-sans-jp:
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic', Meiryo, sans-serif;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: var(--font-sans-jp);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-border);
+  outline-offset: 3px;
+}

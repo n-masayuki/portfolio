@@ -1,0 +1,131 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+const { works } = Astro.props;
+const renderedWorks = await Promise.all(
+  works.map(async (work) => ({
+    work,
+    Content: (await render(work)).Content,
+  })),
+);
+---
+
+<section id="works">
+  <h2>Works</h2>
+  <div class="works-list">
+    {renderedWorks.map(({ work, Content }) => (
+      <article class="work" id={`work-${work.id}`}>
+        <header class="work__header">
+          <p class="work__category">{work.data.category}</p>
+          <h3>{work.data.title}</h3>
+          <p class="work__period">{work.data.period}</p>
+        </header>
+
+        <div class="work__meta">
+          <div>
+            <h4>Role</h4>
+            <ul>
+              {work.data.role.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Technologies</h4>
+            <ul>
+              {work.data.technologies.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="work__content">
+          <Content />
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style lang="scss">
+  #works {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+
+    h2 {
+      margin: 0 0 2rem;
+    }
+
+    h3 {
+      margin: 0.35rem 0;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+    }
+
+    h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .works-list {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .work {
+      padding: 2rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+
+      &__header {
+        margin-bottom: 1.5rem;
+      }
+
+      &__category,
+      &__period {
+        margin: 0;
+        color: var(--color-muted);
+        font-size: 0.875rem;
+      }
+
+      &__meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-block: 1.25rem;
+        border-block: 1px solid var(--color-border);
+        ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          color: var(--color-muted);
+        }
+      }
+
+      &__content {
+        :global(h2) {
+          margin-top: 2rem;
+        }
+        :global(p) {
+          line-height: 1.8;
+        }
+      }
+    }
+
+    @media (max-width: 767px) {
+      padding-inline: 1rem;
+
+      .work {
+        padding: 1.25rem;
+        &__meta {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+</style>
