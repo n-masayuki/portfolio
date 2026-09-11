@@ -1,0 +1,32 @@
+// 共通レイアウト
+@use '../styles/breakpoints' as breakpoint;
+
+.section {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 4rem 1.5rem;
+
+  @media (max-width: breakpoint.$mobile) {
+    padding-inline: 1rem;
+  }
+}
+
+.section-heading {
+  max-width: 42rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.intro {
+  margin: 1rem 0 0;
+  color: var(--color-muted);
+  line-height: 1.8;
+}

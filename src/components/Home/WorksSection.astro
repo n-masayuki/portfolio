@@ -13,8 +13,13 @@ const renderedWorks = await Promise.all(
 );
 ---
 
-<section id="works">
-  <h2>Works</h2>
+<section id="works" class="section" aria-labelledby="works-heading">
+  <div class="section-heading">
+    <p class="eyebrow">Portfolio</p>
+    <h2 id="works-heading">Works</h2>
+    <p class="intro">Here are some of my recent works.</p>
+  </div>
+
   <div class="works-list">
     {renderedWorks.map(({ work, Content }) => (
       <article class="work" id={`work-${work.id}`}>
@@ -53,10 +58,6 @@ const renderedWorks = await Promise.all(
 
 <style lang="scss">
   #works {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 4rem 1.5rem;
-
     h2 {
       margin: 0 0 2rem;
     }
@@ -78,7 +79,8 @@ const renderedWorks = await Promise.all(
 
     .work {
       padding: 2rem;
-      border: 1px solid var(--color-border);
+      // border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
       background: var(--color-surface);
 
       &__header {

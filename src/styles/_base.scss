@@ -13,10 +13,42 @@
   --color-accent-soft: #eff6ff;
   --color-accent-border: #bfdbfe;
   --font-sans-jp:
-    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic', Meiryo, sans-serif;
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
+    Meiryo, sans-serif;
+  --font-display: 'Grape Nuts', cursive;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-infinite: calc(1px / 0);
+
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
+  min-width: 320px;
   color: var(--color-text);
   background: var(--color-background);
   font-family: var(--font-sans-jp);
@@ -24,6 +56,12 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+// h1,
+// h2,
+// .eyebrow {
+//   font-family: var(--font-display);
+// }
 
 a {
   color: inherit;

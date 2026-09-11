@@ -1,4 +1,4 @@
-<section id="skills" aria-labelledby="skills-heading">
+<section id="skills" class="section" aria-labelledby="skills-heading">
   <div class="section-heading">
     <p class="eyebrow">Capabilities</p>
     <h2 id="skills-heading">Skills</h2>
@@ -28,7 +28,9 @@
     <article class="skill-card">
       <h3>Interaction</h3>
       <p>CSS Animation / GSAP / Lottie / Swiper / Splide / MicroModal</p>
-      <p>目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。</p>
+      <p>
+        目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。
+      </p>
     </article>
 
     <article class="skill-card">
@@ -42,7 +44,9 @@
     <article class="skill-card">
       <h3>Design &amp; Analysis</h3>
       <p>Figma / Photoshop / Illustrator / Adobe XD / GA4 / GTM</p>
-      <p>ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。</p>
+      <p>
+        ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。
+      </p>
     </article>
 
     <article class="skill-card">
@@ -58,46 +62,19 @@
 <style lang="scss">
   @use '../../styles/breakpoints' as breakpoint;
 
-  #skills {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 4rem 1.5rem;
-    @media (max-width: breakpoint.$mobile) {
-      padding-inline: 1rem;
-    }
-  }
-
-  .section-heading {
-    max-width: 42rem;
-    margin-bottom: 2rem;
-  }
-
-  .eyebrow {
-    margin: 0 0 0.5rem;
-    color: var(--color-muted);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
   h2 {
     margin: 0;
     font-size: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .intro {
-    margin: 1rem 0 0;
-    color: var(--color-muted);
-    line-height: 1.8;
   }
 
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
-    border: 1px solid var(--color-accent-border);
-    background: var(--color-accent-border);
+    padding: 0.5rem;
+    // border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
     @media (max-width: breakpoint.$mobile) {
       grid-template-columns: 1fr;
     }
@@ -105,7 +82,6 @@
 
   .skill-card {
     padding: 1.5rem;
-    background: var(--color-surface);
   }
 
   .skill-card h3 {
