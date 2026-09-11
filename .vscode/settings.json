@@ -2,7 +2,7 @@
   "window.zoomLevel": -0.7,
   "editor.formatOnSave": true,
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000,
+  "files.autoSaveDelay": 6000,
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
