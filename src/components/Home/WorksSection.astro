@@ -15,10 +15,16 @@ const renderedWorks = await Promise.all(
 
 <section id="works" class="section" aria-labelledby="works-heading">
   <div class="section-heading">
-    <p class="eyebrow">Portfolio</p>
-    <h2 id="works-heading">Works</h2>
-    <p class="intro">Here are some of my recent works.</p>
+    <!-- <p class="eyebrow">Portfolio</p> -->
+    <div class="section-heading__ja-en-wrapper">
+      <h2 class="section-heading__ja">開発履歴</h2>
+      <p class="section-heading__en" aria-hidden="true">
+        Works
+      </p>
+    </div>
   </div>
+
+  <p class="intro">Here are some of my recent works.</p>
 
   <div class="works-list">
     {renderedWorks.map(({ work, Content }) => (
@@ -57,11 +63,9 @@ const renderedWorks = await Promise.all(
 </section>
 
 <style lang="scss">
-  #works {
-    h2 {
-      margin: 0 0 2rem;
-    }
+  @use '../../styles/breakpoints' as breakpoint;
 
+  #works {
     h3 {
       margin: 0.35rem 0;
       font-size: clamp(1.5rem, 3vw, 2.25rem);
@@ -73,15 +77,20 @@ const renderedWorks = await Promise.all(
     }
 
     .works-list {
+      margin-top: 2rem;
       display: grid;
       gap: 2rem;
     }
 
     .work {
-      padding: 2rem;
+      padding: 1.5rem;
       // border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       background: var(--color-surface);
+
+      @media (max-width: breakpoint.$mobile) {
+        padding: 1.5rem;
+      }
 
       &__header {
         margin-bottom: 1.5rem;
@@ -101,6 +110,11 @@ const renderedWorks = await Promise.all(
         margin-bottom: 2rem;
         padding-block: 1.25rem;
         border-block: 1px solid var(--color-border);
+
+        @media (max-width: breakpoint.$mobile) {
+          grid-template-columns: 1fr;
+        }
+
         ul {
           margin: 0;
           padding: 0;
@@ -115,17 +129,6 @@ const renderedWorks = await Promise.all(
         }
         :global(p) {
           line-height: 1.8;
-        }
-      }
-    }
-
-    @media (max-width: 767px) {
-      padding-inline: 1rem;
-
-      .work {
-        padding: 1.25rem;
-        &__meta {
-          grid-template-columns: 1fr;
         }
       }
     }

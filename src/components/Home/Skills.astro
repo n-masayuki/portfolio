@@ -1,11 +1,17 @@
-<section id="skills" class="section" aria-labelledby="skills-heading">
+<section id="skills" class="section skills" aria-labelledby="skills-heading">
   <div class="section-heading">
-    <p class="eyebrow">Capabilities</p>
-    <h2 id="skills-heading">Skills</h2>
-    <p class="intro">
-      Webサイトの設計・実装から運用、改善まで、目的と環境に合わせて継続的に取り組んできました。
-    </p>
+    <!-- <p class="eyebrow">Capabilities</p> -->
+    <div class="section-heading__ja-en-wrapper">
+      <h2 class="section-heading__ja">テクニカルスキル</h2>
+      <p class="section-heading__en" aria-hidden="true">
+        Skills
+      </p>
+    </div>
   </div>
+
+  <p class="intro">
+    Webサイトの設計・実装から運用、改善まで、目的と環境に合わせて継続的に取り組んできました。
+  </p>
 
   <div class="skills-grid">
     <article class="skill-card">
@@ -62,40 +68,40 @@
 <style lang="scss">
   @use '../../styles/breakpoints' as breakpoint;
 
-  h2 {
-    margin: 0;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    padding: 0.5rem;
-    // border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    @media (max-width: breakpoint.$mobile) {
-      grid-template-columns: 1fr;
+  #skills {
+    .skills-grid {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      padding: 0.75rem;
+      // border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      @media (max-width: breakpoint.$mobile) {
+        grid-template-columns: 1fr;
+      }
     }
-  }
 
-  .skill-card {
-    padding: 1.5rem;
-  }
+    .skill-card {
+      padding: 0.75rem;
 
-  .skill-card h3 {
-    margin: 0 0 0.75rem;
-    font-size: 1.25rem;
-  }
+      h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+      }
 
-  .skill-card p {
-    margin: 0;
-    color: var(--color-muted);
-    line-height: 1.7;
-  }
+      p {
+        margin: 0;
+        font-size: 0.75rem;
+        line-height: 1.7;
 
-  .skill-card p + p {
-    margin-top: 0.75rem;
+        & + p {
+          margin-top: 0.75rem;
+          font-size: 0.75rem;
+          color: var(--color-muted);
+        }
+      }
+    }
   }
 </style>

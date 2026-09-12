@@ -5,17 +5,21 @@
 // :focus-visible
 
 :root {
+  --color-white: #fff;
+
   --color-text: #111827;
   --color-muted: #64748b;
-  --color-background: #ffffff;
+  --color-background: var(--color-white);
   --color-surface: #f8fafc;
+  --color-clear-blue: #f0f9ff;
   --color-border: #e2e8f0;
   --color-accent-soft: #eff6ff;
   --color-accent-border: #bfdbfe;
+
   --font-sans-jp:
     'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
     Meiryo, sans-serif;
-  --font-display: 'Grape Nuts', cursive;
+  --font-not-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
 
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
@@ -25,6 +29,8 @@
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
+
+  --transition-duration: 160ms;
 }
 
 html,
@@ -63,8 +69,33 @@ body {
 //   font-family: var(--font-display);
 // }
 
+// font family for Google Fonts
+.grape-nuts-regular {
+  font-family: 'Grape Nuts', cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 a {
   color: inherit;
+}
+
+a,
+button {
+  transition:
+    color var(--transition-duration) ease,
+    background-color var(--transition-duration) ease,
+    border-color var(--transition-duration) ease,
+    text-decoration-color var(--transition-duration) ease,
+    text-underline-offset var(--transition-duration) ease,
+    opacity var(--transition-duration) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a,
+  button {
+    transition: none;
+  }
 }
 
 :focus-visible {
