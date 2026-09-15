@@ -1,4 +1,5 @@
 // 共通レイアウト
+@use '../styles/base' as *;
 @use '../styles/breakpoints' as breakpoint;
 
 .section {
@@ -6,9 +7,9 @@
   margin-inline: auto;
   padding: 4rem 1.5rem;
 
-  @media (max-width: breakpoint.$mobile) {
-    padding-inline: 1rem;
-  }
+  // @media (max-width: breakpoint.$mobile) {
+  //   padding-inline: 1.5rem;
+  // }
 }
 
 .section-heading {
@@ -19,33 +20,32 @@
   }
   &__ja {
     position: relative;
+    z-index: 1;
     font-size: 2rem;
     font-weight: 700;
-    z-index: 1;
     @media (max-width: breakpoint.$mobile) {
       font-size: 1.5rem;
     }
   }
   &__en {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-family: var(--font-display);
-    font-size: 8rem;
+    @extend .grape-nuts-regular;
+    margin: 0.25rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.875rem;
     font-weight: 400;
-    line-height: 1cap;
-    color: var(--color-clear-blue);
-    pointer-events: none;
-    // user-select: none;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    opacity: 0.7;
+    text-transform: uppercase;
+
     @media (max-width: breakpoint.$mobile) {
-      font-size: 4rem;
+      font-size: 0.75rem;
     }
   }
 }
 
 .eyebrow {
   margin: 0 0 0.5rem;
-  color: var(--color-muted);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -55,7 +55,6 @@
 .intro {
   position: relative;
   margin: 1rem 0 0;
-  color: var(--color-muted);
   line-height: 1.8;
   @media (max-width: breakpoint.$mobile) {
     font-size: 0.875rem;
