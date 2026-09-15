@@ -2,7 +2,9 @@
   <div class="section-heading">
     <!-- <p class="eyebrow">Capabilities</p> -->
     <div class="section-heading__ja-en-wrapper">
-      <h2 class="section-heading__ja">テクニカルスキル</h2>
+      <h2 id="skills-heading" class="section-heading__ja">
+        テクニカルスキル
+      </h2>
       <p class="section-heading__en" aria-hidden="true">
         Skills
       </p>
@@ -15,8 +17,10 @@
 
   <div class="skills-grid">
     <article class="skill-card">
-      <h3>Frontend</h3>
-      <p>HTML / CSS / SCSS / JavaScript / TypeScript / React</p>
+      <h3>
+        フロントエンド <span aria-hidden="true">Frontend</span>
+      </h3>
+      <p>HTML / CSS / SCSS / JavaScript / TypeScript / React / Astro</p>
       <p>
         セマンティックなマークアップ、レスポンシブ設計、CSS
         Grid・Flexbox、既存コードの改修や共通化に対応します。
@@ -24,31 +28,39 @@
     </article>
 
     <article class="skill-card">
-      <h3>CMS &amp; EC</h3>
-      <p>PHP / WordPress / ecbeing</p>
+      <h3>
+        CMS・EC <span aria-hidden="true">CMS &amp; EC</span>
+      </h3>
+      <p>PHP / WordPress / ecbeing / makeshop by GMO / etc.</p>
       <p>
         WordPressのテーマ制作やPHPの改修、ECサイトのフロントエンド実装・運用、管理画面の設定を担当してきました。
       </p>
     </article>
 
     <article class="skill-card">
-      <h3>Interaction</h3>
-      <p>CSS Animation / GSAP / Lottie / Swiper / Splide / MicroModal</p>
+      <h3>
+        インタラクション <span aria-hidden="true">Interaction</span>
+      </h3>
+      <p>CSS Animation / GSAP / Lottie / Swiper / Splide / MicroModal / etc.</p>
       <p>
         目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。
       </p>
     </article>
 
     <article class="skill-card">
-      <h3>Quality &amp; Workflow</h3>
-      <p>Git / GitHub / npm / Vite / ESLint / Prettier</p>
+      <h3>
+        品質・開発環境 <span aria-hidden="true">Quality &amp; Workflow</span>
+      </h3>
+      <p>Git / GitHub / npm / Vite / ESLint / Prettier / etc.</p>
       <p>
         アクセシビリティ、アクセス解析、Lighthouseによる改善を意識し、レビューと保守性を含めて開発します。
       </p>
     </article>
 
     <article class="skill-card">
-      <h3>Design &amp; Analysis</h3>
+      <h3>
+        デザイン・分析 <span aria-hidden="true">Design &amp; Analysis</span>
+      </h3>
       <p>Figma / Photoshop / Illustrator / Adobe XD / GA4 / GTM</p>
       <p>
         ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。
@@ -56,8 +68,10 @@
     </article>
 
     <article class="skill-card">
-      <h3>AI-assisted Development</h3>
-      <p>ChatGPT / GitHub Copilot</p>
+      <h3>
+        AI活用 <span aria-hidden="true">AI-assisted Development</span>
+      </h3>
+      <p>ChatGPT / GitHub Copilot / etc.</p>
       <p>
         設計検討、デバッグ、リファクタリング、テスト、ドキュメント作成の補助に活用し、内容を確認してから採用します。
       </p>
@@ -66,6 +80,7 @@
 </section>
 
 <style lang="scss">
+  @use '../../styles/base' as *;
   @use '../../styles/breakpoints' as breakpoint;
 
   #skills {
@@ -73,22 +88,31 @@
       margin-top: 2rem;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      padding: 0.75rem;
+      gap: 1rem;
       // border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      background: var(--color-surface);
       @media (max-width: breakpoint.$mobile) {
         grid-template-columns: 1fr;
       }
     }
 
     .skill-card {
-      padding: 0.75rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
 
       h3 {
         margin: 0 0 0.75rem;
-        font-size: 1.25rem;
+        font-size: 1rem;
+
+        span {
+          @extend .grape-nuts-regular;
+          margin-inline-start: 0.5rem;
+          color: var(--color-muted);
+          font-size: 1rem;
+          font-weight: 400;
+          letter-spacing: 0.04em;
+        }
       }
 
       p {
@@ -99,7 +123,6 @@
         & + p {
           margin-top: 0.75rem;
           font-size: 0.75rem;
-          color: var(--color-muted);
         }
       }
     }
