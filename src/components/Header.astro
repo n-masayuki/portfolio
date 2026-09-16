@@ -410,7 +410,9 @@
     });
 
     siteNavigation.addEventListener('click', (event) => {
-      if ((event.target as HTMLElement).closest('a')) {
+      if (event.target === siteNavigation) {
+        closeMenu();
+      } else if ((event.target as HTMLElement).closest('a')) {
         closeMenu();
       }
     });

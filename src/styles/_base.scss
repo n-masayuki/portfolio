@@ -36,6 +36,10 @@
   --radius-lg: 1rem;
   --radius-infinite: calc(1px / 0);
 
+  --box-shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --box-shadow-md: 0 8px 12px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.1);
+
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
@@ -83,6 +87,13 @@ body {
 .grape-nuts-regular {
   font-family: 'Grape Nuts', cursive;
   font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-500 {
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-style: normal;
 }
 

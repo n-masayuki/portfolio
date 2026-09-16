@@ -34,3 +34,37 @@ const experienceYears =
     Webデザイン、フロントエンド開発、Webディレクションの各業務を経験しており、デザインや要件を踏まえた実装判断が可能です。Web領域を主担当として、案件規模に応じて外部エンジニアやコーダー、ベンダーと連携しながらプロジェクトを進行してきました。
   </p>
 </section>
+
+<style lang="scss">
+  @use '../../styles/base' as *;
+  @use '../../styles/breakpoints' as breakpoint;
+
+  #about {
+    position: relative;
+
+    @media (max-width: breakpoint.$mobile) {
+      --_m: max(0px, calc((100vw - 800px) / 2));
+      margin-inline: calc(-1 * var(--_m));
+      width: calc(100% + var(--_m) * 2);
+    }
+
+    &::before {
+      @extend .grape-nuts-regular;
+      content: 'NM';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(32rem, 20vw, 200rem);
+      text-align: center;
+      color: var(--color-white);
+      white-space: nowrap;
+      pointer-events: none; // これは要素がマウスイベントを受け取らないようにするためのスタイルです。
+      user-select: none; // これはテキストの選択を防ぐためのスタイルです。
+    }
+  }
+
+  :global(.site-shell) {
+    overflow-x: clip;
+  }
+</style>
