@@ -1,3 +1,7 @@
+---
+import { Menu, X } from '@lucide/astro';
+---
+
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href="/" aria-label="Portfolio home">
@@ -12,9 +16,8 @@
     >
       <span class="menu-toggle__label">メニュー</span>
       <span class="menu-toggle__icon" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
+        <Menu class="menu-toggle__menu-icon" size={40} stroke-width={1} />
+        <X class="menu-toggle__close-icon" size={40} stroke-width={1} />
       </span>
     </button>
 
@@ -107,8 +110,13 @@
     z-index: 1000;
     isolation: isolate;
 
+    // ウィンドウ幅の変更中は、デスクトップ用ナビとモバイル用ボタンが切り替わる途中の表示を隠す。
+    &.is-resizing {
+      visibility: hidden;
+    }
+
     &__inner {
-      --header-shrink-width: 40rem;
+      --header-shrink-width: 34rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -120,6 +128,9 @@
       padding-inline: 1.5rem;
       border-radius: 0;
 
+      @media (max-width: breakpoint.$mobile) {
+      }
+
       &::before {
         content: '';
         position: absolute;
@@ -128,6 +139,10 @@
         border-radius: inherit;
         background-color: rgb(255 255 255 / 0%);
         pointer-events: none;
+
+        @media (max-width: breakpoint.$mobile) {
+          display: none;
+        }
       }
     }
 
@@ -135,7 +150,7 @@
       @extend .grape-nuts-regular;
       position: relative;
       z-index: 1;
-      color: var(--color-text);
+      // color: var(--color-text);
       font-size: 2rem;
       font-weight: 700;
       letter-spacing: 0.04em;
@@ -143,6 +158,11 @@
       text-decoration-line: underline;
       text-decoration-color: transparent;
       text-underline-offset: 0.25em;
+      background: linear-gradient(45deg, #6497fc 0%, #d01b63 100%);
+      color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+
       &:hover,
       &:focus-visible {
         text-decoration-color: currentColor;
@@ -155,15 +175,21 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-width: 2.75rem;
-    min-height: 2.75rem;
+    min-width: 2.5rem;
+    // min-height: 2.75rem;
+    min-height: 1.5rem;
     padding: 0.5rem;
     border: 0;
-    border-radius: var(--radius-sm);
+    // border-radius: var(--radius-sm);
     color: var(--color-text);
     background: transparent;
     cursor: pointer;
     z-index: 1001;
+
+    @media (max-width: breakpoint.$mobile) {
+      display: inline-flex;
+      padding: 0 0.5rem;
+    }
 
     &__label {
       position: absolute;
@@ -176,52 +202,46 @@
     }
 
     &__icon {
-      display: grid;
-      gap: 0.3rem;
+      display: inline-flex;
       width: 1.5rem;
 
-      span {
+      svg {
         display: block;
-        height: 1px;
-        border-radius: var(--radius-infinite);
-        background: currentColor;
-        transition:
-          transform calc(var(--transition-duration) + 0.4s) ease,
-          opacity calc(var(--transition-duration) + 0.4s) ease;
+      }
+
+      .menu-toggle__close-icon {
+        display: none;
       }
     }
 
     &[aria-expanded='true'] {
-      .menu-toggle__icon span {
-        position: relative;
-        &:nth-child(1) {
-          top: -2px;
-          transform: translateY(0.5rem) rotate(45deg);
-        }
+      .menu-toggle__menu-icon {
+        display: none;
+      }
 
-        &:nth-child(2) {
-          opacity: 0;
-        }
-
-        &:nth-child(3) {
-          top: 2px;
-          transform: translateY(-0.5rem) rotate(-45deg);
-        }
+      .menu-toggle__close-icon {
+        display: block;
       }
     }
   }
 
+  // スクロール時に対応したヘッダーの縮小およびグラスエフェクトのアニメーション
   @supports (animation-timeline: scroll()) {
     .site-header__inner {
       animation: header-shrink cubic-bezier(0.16, 1, 0.3, 1) both;
       animation-timeline: scroll(root block);
       animation-range: 0 160px; // Adjust the scroll range for the header shrink animation
-    }
 
-    .site-header__inner::before {
-      animation: header-glass cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-timeline: scroll(root block);
-      animation-range: 0 160px;
+      @media (max-width: breakpoint.$mobile) {
+        animation: none;
+      }
+
+      &::before {
+        animation: header-glass cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 160px;
+        opacity: 0.8;
+      }
     }
   }
 
@@ -242,10 +262,6 @@
     gap: 0.5rem;
     margin: 0;
     list-style: none;
-
-    // @media (max-width: breakpoint.$mobile) {
-    //   gap: 0.5rem;
-    // }
 
     a {
       position: relative;
@@ -287,10 +303,6 @@
       font-size: 1.5rem;
     }
 
-    .menu-toggle {
-      display: inline-flex;
-    }
-
     .site-navigation {
       position: fixed;
       inset: 0;
@@ -304,8 +316,8 @@
       opacity: 0;
       backdrop-filter: blur(2px);
       transition:
-        opacity 320ms ease,
-        visibility 0s linear 320ms;
+        opacity var(--transition-duration-slow) ease,
+        visibility 0s linear var(--transition-duration-slow);
 
       ul {
         display: grid;
@@ -319,8 +331,9 @@
         opacity: 0;
         transform: translateY(-0.75rem) scale(0.96);
         transition:
-          opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
-          transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+          opacity var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1),
+          transform var(--transition-duration-slow)
+            cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       a {
@@ -346,7 +359,7 @@
         visibility: visible;
         opacity: 1;
         transition:
-          opacity 320ms ease,
+          opacity var(--transition-duration-slow) ease,
           visibility 0s linear 0s;
 
         ul {
@@ -362,10 +375,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .menu-toggle__icon span {
-      transition: none;
-    }
-
     .site-navigation,
     .site-navigation ul {
       transition: none;
@@ -381,24 +390,36 @@
 </style>
 
 <script>
+  // ハンバーガーボタンと、開閉するナビゲーションを取得する。
+  // querySelector の型引数で、取得した要素の種類を TypeScript に伝える。
   const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const siteNavigation =
     document.querySelector<HTMLElement>('#site-navigation');
 
+  // 要素が両方存在するときだけ、メニューのイベント処理を登録する。
+  // 要素が見つからない場合に JavaScript エラーが起きるのを防ぐ。
   if (menuToggle && siteNavigation) {
+    // メニューを閉じた状態に戻す共通関数。
+    // aria-expanded はボタンの状態を支援技術へ伝え、data-open は CSS の表示状態を切り替える。
     const closeMenu = () => {
       menuToggle.setAttribute('aria-expanded', 'false');
       siteNavigation.removeAttribute('data-open');
       document.body.classList.remove('menu-open');
     };
 
+    // メニューを開く共通関数。
+    // body にクラスを付けて、メニュー表示中の背景スクロールも止める。
     const openMenu = () => {
       menuToggle.setAttribute('aria-expanded', 'true');
       siteNavigation.setAttribute('data-open', 'true');
       document.body.classList.add('menu-open');
+
+      // メニューを開いたら、最初のリンクへフォーカスを移動する。
+      // ?. はリンクが存在しない場合に処理を止めずに無視する記法。
       siteNavigation.querySelector<HTMLAnchorElement>('a')?.focus();
     };
 
+    // ハンバーガーボタンを押すたびに、現在の状態を反転させる。
     menuToggle.addEventListener('click', () => {
       const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
 
@@ -409,6 +430,8 @@
       }
     });
 
+    // ナビゲーションの背景、またはリンクを押したらメニューを閉じる。
+    // 背景クリックでは event.target が nav 自身になる。
     siteNavigation.addEventListener('click', (event) => {
       if (event.target === siteNavigation) {
         closeMenu();
@@ -417,6 +440,8 @@
       }
     });
 
+    // Escape キーでもメニューを閉じられるようにする。
+    // 閉じた後は、操作を始めたハンバーガーボタンへフォーカスを戻す。
     document.addEventListener('keydown', (event) => {
       if (
         event.key === 'Escape' &&
@@ -427,6 +452,7 @@
       }
     });
 
+    // メニューの外側をクリックした場合もメニューを閉じる。
     document.addEventListener('click', (event) => {
       const target = event.target as Node;
 
@@ -439,13 +465,36 @@
       }
     });
 
+    // CSS と同じ「768px以上」を JavaScript でも監視する。
+    // resize を毎回処理するのではなく、デスクトップ幅へ切り替わった瞬間だけ反応する。
+    const desktopMediaQuery = window.matchMedia('(min-width: 768px)');
+
+    // デスクトップ表示になったら、モバイル用メニューを必ず閉じる。
+    const handleDesktopChange = (event: MediaQueryListEvent) => {
+      if (event.matches) closeMenu();
+    };
+
+    desktopMediaQuery.addEventListener('change', handleDesktopChange);
+
+    // ページ読み込み時点ですでにデスクトップ幅だった場合も状態を初期化する。
+    if (desktopMediaQuery.matches) closeMenu();
+
+    // リサイズ中の一瞬だけ、CSS の表示切り替え前後が見えることを防ぐ。
+    let resizeTimer: number | undefined;
     window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 768px)').matches) {
-        closeMenu();
-      }
+      const header = document.querySelector<HTMLElement>('.site-header');
+      if (!header) return;
+
+      header.classList.add('is-resizing');
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        header.classList.remove('is-resizing');
+      }, 150);
     });
   }
 
+  // ページ内のセクションと、それに対応するナビゲーションリンクを取得する。
+  // セクションが画面に入ったとき、ヘッダーの対応リンクに aria-current を付けるために使う。
   const sections = Array.from(
     document.querySelectorAll<HTMLElement>('main [id]'),
   );
@@ -453,13 +502,17 @@
     document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]'),
   );
 
+  // IntersectionObserver が使える環境で、現在地表示の処理を登録する。
   if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
+    // セクション ID とナビゲーションリンクの対応表を作る。
+    // Map にしておくと、表示中のセクションに対応するリンクをすぐ取得できる。
     const linkBySectionId = new Map<string, HTMLAnchorElement>();
     navLinks.forEach((link) => {
       const id = link.getAttribute('href')?.split('#')[1];
       if (id) linkBySectionId.set(id, link);
     });
 
+    // すべてのリンクから aria-current を一度外し、対象のリンクだけに付け直す。
     const setActiveLink = (id: string | null) => {
       navLinks.forEach((link) => link.removeAttribute('aria-current'));
       if (id) linkBySectionId.get(id)?.setAttribute('aria-current', 'location');
@@ -473,9 +526,11 @@
     // 現在ヘッダー直下の帯に入っているセクション id の集合
     const visibleSectionIds = new Set<string>();
 
+    // セクションが判定領域に入ったか、出たかを監視する。
     const sectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          // 画面内に入ったセクションを記録し、出たセクションを削除する。
           if (entry.isIntersecting) {
             visibleSectionIds.add(entry.target.id);
           } else {
@@ -483,6 +538,7 @@
           }
         });
 
+        // 現在表示されているセクションのうち、ページ上で先にあるものを採用する。
         const activeSection = sections.find((section) =>
           visibleSectionIds.has(section.id),
         );
@@ -496,6 +552,7 @@
       },
     );
 
+    // すべてのセクションを監視対象に登録する。
     sections.forEach((section) => sectionObserver.observe(section));
   }
 </script>

@@ -1,5 +1,5 @@
 ---
-const isHome = Astro.url.pathname === '/';
+// const isHome = Astro.url.pathname === '/';
 ---
 
 <footer class="site-footer">
@@ -7,7 +7,7 @@ const isHome = Astro.url.pathname === '/';
     <p>
       <span>&copy;</span> {new Date().getFullYear()} NM Portfolio
     </p>
-    {isHome ? <a href="#">Back to top</a> : <a href="/">Back to home</a>}
+    <!-- {isHome ? <a href="#">Back to top</a> : <a href="/">Back to home</a>} -->
   </div>
 </footer>
 
@@ -36,8 +36,9 @@ const isHome = Astro.url.pathname === '/';
 
     p {
       margin: 0;
+      font-family: var(--font-sans);
       span {
-        font-family: var(--font-not-sans-jp);
+        // font-family: var(--font-not-sans-jp);
       }
     }
 
