@@ -9,6 +9,8 @@
 - Astro
 - TypeScript
 - CSS
+- SCSS
+- `@lucide/astro`（UIアイコン）
 - Node.js 22.12.0 以上
 
 ## 開発方法
@@ -51,6 +53,7 @@ npm run preview
 - ページ固有の内容と、再利用する UI 部品を分ける
 - Astro の特性を活かし、必要以上にクライアント側の JavaScript に依存しない
 - 表示内容、保守性、アクセシビリティを確認しながら改善する
+- UI操作用アイコンは `@lucide/astro` を使用し、ブランドロゴや単純な装飾は用途に応じて SVG または CSS で表現する
 
 ## AI 利用方針
 
