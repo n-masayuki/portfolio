@@ -1,3 +1,99 @@
+---
+import {
+  siAstro,
+  siCss,
+  siSass,
+  siFigma,
+  siGit,
+  siGithub,
+  siGithubcopilot,
+  siPrettier,
+  siPhp,
+  siEslint,
+  siHtml5,
+  siJavascript,
+  siReact,
+  siTypescript,
+  siWebpack,
+  siGsap,
+  siSwiper,
+  siWordpress,
+  siLottiefiles,
+  siGoogleanalytics,
+  siGoogletagmanager,
+  siNpm,
+  siVite,
+} from 'simple-icons';
+
+type Skill = {
+  label: string;
+  icon?: {
+    hex: string;
+    path: string;
+  };
+};
+
+// フロントエンド
+const frontSkills: Skill[] = [
+  { icon: siHtml5, label: 'HTML' },
+  { icon: siCss, label: 'CSS' },
+  { icon: siSass, label: 'Sass' },
+  { icon: siJavascript, label: 'JavaScript' },
+  { icon: siTypescript, label: 'TypeScript' },
+  { icon: siReact, label: 'React' },
+  { icon: siAstro, label: 'Astro' },
+];
+
+// CMS・EC
+const cmsSkills: Skill[] = [
+  { icon: siPhp, label: 'PHP' },
+  { icon: siWordpress, label: 'WordPress' },
+  { label: 'ecbeing' },
+  { label: 'makeshop by GMO' },
+  { label: 'etc.' },
+];
+
+// インタラクション
+const interactionSkills: Skill[] = [
+  { label: 'CSS Animation' },
+  { icon: siGsap, label: 'GSAP' },
+  { icon: siLottiefiles, label: 'LottieFiles' },
+  { icon: siSwiper, label: 'Swiper' },
+  { label: 'Splide' },
+  { label: 'MicroModal' },
+  { label: 'etc.' },
+];
+
+// 品質管理・開発支援
+const qualitySkills: Skill[] = [
+  { icon: siGit, label: 'Git' },
+  { icon: siGithub, label: 'GitHub' },
+  { icon: siNpm, label: 'npm' },
+  { icon: siVite, label: 'Vite' },
+  { icon: siWebpack, label: 'webpack' },
+  { icon: siEslint, label: 'ESLint' },
+  { icon: siPrettier, label: 'Prettier' },
+  { label: 'etc.' },
+];
+
+// デザイン・分析
+const designSkills: Skill[] = [
+  { icon: siFigma, label: 'Figma' },
+  { label: 'Photoshop' },
+  { label: 'Illustrator' },
+  { label: 'Adobe XD' },
+  { icon: siGoogleanalytics, label: 'GA4' },
+  { icon: siGoogletagmanager, label: 'Google Tag Manager' },
+];
+
+// AI活用
+const aiSkills: Skill[] = [
+  { label: 'ChatGPT' },
+  { icon: siGithubcopilot, label: 'GitHub Copilot' },
+  { label: 'etc.' },
+];
+---
+
 <section id="skills" class="section skills" aria-labelledby="skills-heading">
   <div class="section-heading">
     <!-- <p class="eyebrow">Capabilities</p> -->
@@ -20,7 +116,18 @@
       <h3>
         フロントエンド <span aria-hidden="true">Frontend</span>
       </h3>
-      <p>HTML / CSS / SCSS / JavaScript / TypeScript / React / Astro</p>
+      <ul class="skill-list">
+        {frontSkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         セマンティックなマークアップ、レスポンシブ設計、CSS
         Grid・Flexbox、既存コードの改修や共通化に対応します。
@@ -31,7 +138,18 @@
       <h3>
         CMS・EC <span aria-hidden="true">CMS &amp; EC</span>
       </h3>
-      <p>PHP / WordPress / ecbeing / makeshop by GMO / etc.</p>
+      <ul class="skill-list">
+        {cmsSkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         WordPressのテーマ制作やPHPの改修、ECサイトのフロントエンド実装・運用、管理画面の設定を担当してきました。
       </p>
@@ -41,7 +159,18 @@
       <h3>
         インタラクション <span aria-hidden="true">Interaction</span>
       </h3>
-      <p>CSS Animation / GSAP / Lottie / Swiper / Splide / MicroModal / etc.</p>
+      <ul class="skill-list">
+        {interactionSkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。
       </p>
@@ -51,9 +180,22 @@
       <h3>
         品質・開発環境 <span aria-hidden="true">Quality &amp; Workflow</span>
       </h3>
-      <p>Git / GitHub / npm / Vite / ESLint / Prettier / etc.</p>
+      <ul class="skill-list">
+        {qualitySkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         アクセシビリティ、アクセス解析、Lighthouseによる改善を意識し、レビューと保守性を含めて開発します。
+        <br />
+        また、ビルド環境の整備、Lint・フォーマットによるコード品質の維持に対応します。
       </p>
     </article>
 
@@ -61,7 +203,18 @@
       <h3>
         デザイン・分析 <span aria-hidden="true">Design &amp; Analysis</span>
       </h3>
-      <p>Figma / Photoshop / Illustrator / Adobe XD / GA4 / GTM</p>
+      <ul class="skill-list">
+        {designSkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。
       </p>
@@ -71,7 +224,18 @@
       <h3>
         AI活用 <span aria-hidden="true">AI-assisted Development</span>
       </h3>
-      <p>ChatGPT / GitHub Copilot / etc.</p>
+      <ul class="skill-list">
+        {aiSkills.map(({ icon, label }) => (
+          <li style={icon ? `--brand-color: #${icon.hex}` : undefined}>
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icon.path} fill="currentColor" />
+              </svg>
+            )}
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <p>
         設計検討、デバッグ、リファクタリング、テスト、ドキュメント作成の補助に活用し、内容を確認してから採用します。
       </p>
@@ -108,7 +272,7 @@
         span {
           @extend .grape-nuts-regular;
           margin-inline-start: 0.5rem;
-          color: var(--color-muted);
+          color: var(--color-gray-400);
           font-size: 1rem;
           font-weight: 400;
           letter-spacing: 0.04em;
@@ -123,6 +287,85 @@
         & + p {
           margin-top: 0.75rem;
           font-size: 0.75rem;
+        }
+      }
+
+      .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          // padding: 0.375rem 0.625rem;
+          padding: 0.25rem 0.625rem;
+          font-size: var(--font-size-xxs);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-infinite);
+          color: var(--brand-color, var(--color-gray-600));
+          background-color: var(--color-white);
+        }
+
+        svg {
+          width: 1rem;
+          height: 1rem;
+        }
+
+        // simple-icons にない項目を含め、既存SVGにもブランドカラーを適用する。
+        .skill-card:nth-child(2) & {
+          li:nth-child(1) {
+            --brand-color: #777bb4;
+          }
+
+          li:nth-child(2) {
+            --brand-color: #21759b;
+          }
+        }
+
+        .skill-card:nth-child(3) & {
+          li:nth-child(2) {
+            --brand-color: #0ae448;
+          }
+
+          li:nth-child(3) {
+            --brand-color: #00d084;
+          }
+
+          li:nth-child(4) {
+            --brand-color: #6332f6;
+          }
+
+          li:nth-child(5) {
+            --brand-color: #ff4154;
+          }
+        }
+
+        .skill-card:nth-child(4) & {
+          li:nth-child(1) {
+            --brand-color: #f05032;
+          }
+
+          li:nth-child(2) {
+            --brand-color: #181717;
+          }
+
+          li:nth-child(3) {
+            --brand-color: #cb3837;
+          }
+        }
+
+        span {
+          color: var(--color-text);
+        }
+
+        & + p {
+          // margin-top: 0.75rem;
+          margin-top: 1rem;
         }
       }
     }
