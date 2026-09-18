@@ -1,4 +1,5 @@
 ---
+import { Plus } from '@lucide/astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -52,11 +53,15 @@ const renderedWorks = works.map((work) => ({
             )}
           </span>
           <span class="work__body">
-            <p class="work__category">{work.data.category}</p>
+            <ul class="work__category">
+              {work.data.category.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
             <h3>{work.data.title}</h3>
             <p class="work__period">{work.data.period}</p>
             <span class="work__cta" aria-hidden="true">
-              詳細
+              <Plus size={32} stroke-width={0.5} />
             </span>
           </span>
         </button>
@@ -81,7 +86,11 @@ const renderedWorks = works.map((work) => ({
         </button>
 
         <header class="work__header">
-          <p class="work__category">{work.data.category}</p>
+          <ul class="work__category">
+            {work.data.category.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
           <h3 id={`work-modal-title-${work.id}`}>{work.data.title}</h3>
           {work.data.url && (
             <p class="work__url">
@@ -126,7 +135,7 @@ const renderedWorks = works.map((work) => ({
 
   #works {
     h3 {
-      margin: 0.35rem 0;
+      margin-block: 0.5rem;
       // font-size: clamp(1rem, 3vw, 1.5rem);
       font-size: 1.25rem;
     }
@@ -145,6 +154,7 @@ const renderedWorks = works.map((work) => ({
     .work {
       border-radius: var(--radius-lg);
       background: var(--color-white);
+      // counter-increment: mycounter; // カウントする基準要素を指定
 
       &__trigger {
         position: relative;
@@ -160,16 +170,39 @@ const renderedWorks = works.map((work) => ({
         text-align: left;
         background: transparent;
         cursor: pointer;
-        transition: background-color 200ms ease;
+        transition: background-color var(--transition-duration-normal)
+          ease-in-out;
 
         @media (max-width: breakpoint.$mobile) {
           flex-direction: column;
           padding: 1.5rem;
         }
 
+        // &::before {
+        //   @extend .grape-nuts-regular;
+        //   counter-increment: number 1;
+        //   content: counter(mycounter, decimal-leading-zero); // 01, 02, 03, ...
+        //   position: absolute;
+        //   top: -1.5rem;
+        //   left: 0.5rem;
+        //   font-size: var(--font-size-3xl);
+        //   color: var(--color-gray-300);
+        //   pointer-events: none;
+        //   // user-select: none;
+        // }
+
         &:hover,
         &:focus-visible {
           background-color: var(--color-surface);
+
+          .work__cta {
+            background-color: var(--color-text);
+            transform: translateY(-2px);
+
+            svg {
+              color: var(--color-white);
+            }
+          }
         }
       }
 
@@ -183,11 +216,10 @@ const renderedWorks = works.map((work) => ({
         border: 1px solid var(--color-gray-100);
         border-radius: var(--radius-md);
         background-color: var(--color-surface);
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 9;
 
         @media (max-width: breakpoint.$mobile) {
           width: 100%;
-          aspect-ratio: 16 / 9;
         }
 
         img {
@@ -217,7 +249,11 @@ const renderedWorks = works.map((work) => ({
             text-transform: capitalize;
           }
           &:nth-child(2) {
-            color: var(--color-gray-200);
+            // color: var(--color-gray-200);
+            background: linear-gradient(45deg, #6497fc 0%, #d01b63 100%);
+            color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
           }
         }
       }
@@ -230,50 +266,30 @@ const renderedWorks = works.map((work) => ({
 
       &__cta {
         --size: 40px;
-        position: relative;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin-top: 0.75rem;
+        margin-right: calc(-1 * var(--size) / 6);
+        margin-bottom: calc(-1 * var(--size) / 6);
+        // padding: 0.5rem 0.875rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin-top: 0.75rem;
-        // padding: 0.5rem 0.875rem;
         width: var(--size);
         height: var(--size);
         border-radius: var(--radius-infinite);
         background-color: var(--color-gray-100);
         box-shadow: var(--box-shadow-sm);
         transition:
-          color var(--color-transition-duration) ease,
-          background-color var(--color-transition-duration) ease;
+          color var(--transition-duration-normal) ease,
+          background-color var(--transition-duration-normal) ease,
+          transform var(--transition-duration-normal) ease-in-out;
 
-        @media (max-width: breakpoint.$mobile) {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          margin-right: calc(-1 * var(--size) / 4); // ネガティブマージン
-          margin-bottom: calc(-1 * var(--size) / 4); // ネガティブマージン
-        }
-
-        &::before,
-        &::after {
+        svg {
           display: block;
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
-          background-color: var(--color-gray-400);
-          border-radius: 10px;
-        }
-
-        &::before {
-          width: 1px;
-          height: 16px;
-        }
-        &::after {
-          width: 16px;
-          height: 1px;
+          color: var(--color-gray-400);
+          transition: color var(--color-transition-duration) ease;
         }
       }
 
@@ -281,11 +297,30 @@ const renderedWorks = works.map((work) => ({
         margin-bottom: 1.5rem;
       }
 
-      &__category,
       &__period,
       &__url {
         margin: 0;
-        font-size: 0.75rem;
+        font-size: var(--font-size-xs);
+      }
+
+      &__category {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          padding: 0.1rem 0.625rem;
+          font-size: var(--font-size-xxs);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-sm);
+          background-color: var(--color-white);
+        }
       }
 
       &__meta {
@@ -347,10 +382,10 @@ const renderedWorks = works.map((work) => ({
       opacity: 0;
       transform: translateY(0.75rem) scale(0.97);
       transition:
-        opacity 280ms ease,
-        transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
-        overlay 280ms allow-discrete,
-        display 280ms allow-discrete;
+        opacity var(--transition-duration-slow) ease,
+        transform var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1),
+        overlay var(--transition-duration-slow) allow-discrete,
+        display var(--transition-duration-slow) allow-discrete;
 
       &[open] {
         opacity: 1;
@@ -369,9 +404,9 @@ const renderedWorks = works.map((work) => ({
         backdrop-filter: blur(2px);
         opacity: 0;
         transition:
-          opacity 280ms ease,
-          overlay 280ms allow-discrete,
-          display 280ms allow-discrete;
+          opacity var(--transition-duration-slow) ease,
+          overlay var(--transition-duration-slow) allow-discrete,
+          display var(--transition-duration-slow) allow-discrete;
       }
 
       &[open]::backdrop {

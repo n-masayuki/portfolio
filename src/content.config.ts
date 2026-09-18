@@ -10,7 +10,7 @@ const works = defineCollection({
   schema: z.object({
     order: z.number(),
     title: z.string(),
-    category: z.string(),
+    category: z.array(z.string()),
     period: z.string(),
     thumbnail: z.string().optional(),
     url: z.string().optional(),
