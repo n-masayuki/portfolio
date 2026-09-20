@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import portrait from '../../assets/home/portrait.webp';
+
 const careerStartYear = 2008;
 const careerOffset = 1;
 const experienceYears =
@@ -9,12 +12,19 @@ const experienceYears =
   <div class="section-heading">
     <!-- <p class="eyebrow">About Me</p> -->
     <div class="section-heading__ja-en-wrapper">
-      <h2 class="section-heading__ja">私について</h2>
+      <h2 id="about-heading" class="section-heading__ja">
+        私について
+      </h2>
       <p class="section-heading__en" aria-hidden="true">
         About
       </p>
     </div>
   </div>
+
+  <figure class="avatar">
+    <Image src={portrait} alt="プロフィール画像" loading="lazy" />
+    <figcaption>Niibori Masauyki</figcaption>
+  </figure>
 
   <p class="intro">
     約{experienceYears}
@@ -67,5 +77,47 @@ const experienceYears =
 
   :global(.site-shell) {
     overflow-x: clip;
+  }
+
+  .avatar {
+    position: relative;
+    float: left;
+    width: clamp(80px, 16vw, 160px);
+    margin: 0 2rem 1rem 0;
+    shape-outside: inset(0 round 1.25rem);
+
+    @media (max-width: breakpoint.$mobile) {
+      margin-right: 1rem;
+    }
+
+    figcaption {
+      margin-top: 0.5rem;
+      text-align: center;
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+      line-height: 1.4;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      // aspect-ratio: 3 / 4;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      // border-radius: var(--radius-xl);
+      border-radius: 58% 42% 72% 28% / 32% 65% 35% 68%;
+      background-color: var(--color-surface);
+
+      @media (max-width: breakpoint.$mobile) {
+        aspect-ratio: 3 / 4;
+        // border-radius: var(--radius-lg);
+        border-radius: 58% 42% 72% 28% / 32% 65% 35% 68%;
+      }
+    }
+  }
+
+  .intro {
+    text-wrap: pretty;
   }
 </style>
