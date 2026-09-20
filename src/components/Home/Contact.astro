@@ -2,25 +2,110 @@
   <div class="section-heading">
     <!-- <p class="eyebrow">Get in Touch</p> -->
     <div class="section-heading__ja-en-wrapper">
-      <h2 class="section-heading__ja">お問い合わせ</h2>
+      <h2 id="contact-heading" class="section-heading__ja">
+        お問い合わせ
+      </h2>
       <p class="section-heading__en" aria-hidden="true">
         Contact
       </p>
     </div>
   </div>
 
-  <p class="intro">Feel free to reach out to me via the form below.</p>
+  <p class="intro">以下のフォームからお気軽にご連絡ください。</p>
 
-  <form class="contact-form">
-    <label for="name">Name</label>
+  <form
+    class="contact-form"
+    action="https://formspree.io/f/moevejjl"
+    method="POST"
+  >
+    <label for="name">お名前</label>
     <input type="text" id="name" name="name" required />
 
-    <label for="email">Email</label>
+    <label for="email">メールアドレス</label>
     <input type="email" id="email" name="email" required />
 
-    <label for="message">Message</label>
+    <label for="message">お問い合わせ内容</label>
     <textarea id="message" name="message" required></textarea>
 
-    <button type="submit">Send</button>
+    <button type="submit">送信</button>
   </form>
 </section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as breakpoint;
+
+  .contact-form {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-white);
+
+    @media (max-width: breakpoint.$mobile) {
+      margin-top: 1.5rem;
+    }
+  }
+
+  label {
+    margin-top: 0.5rem;
+    color: var(--color-gray-700);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    color: var(--color-text);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    font: inherit;
+    line-height: 1.5;
+    transition:
+      border-color var(--transition-duration-normal) ease,
+      box-shadow var(--transition-duration-normal) ease;
+
+    &:focus {
+      border-color: var(--color-accent-border);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 10rem;
+    resize: vertical;
+  }
+
+  button {
+    justify-self: start;
+    min-width: 8rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    color: var(--color-white);
+    border: 1px solid var(--color-gray-800);
+    border-radius: var(--radius-infinite);
+    background-color: var(--color-gray-800);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    cursor: pointer;
+
+    @media (max-width: breakpoint.$mobile) {
+      width: 100%;
+    }
+
+    &:hover {
+      background-color: var(--color-gray-900);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+</style>
