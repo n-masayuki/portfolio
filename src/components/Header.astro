@@ -33,25 +33,21 @@ import { Menu, X } from '@lucide/astro';
         <li>
           <a href="/#about">
             <span>私について</span>
-            <!-- <span>About</span> -->
           </a>
         </li>
         <li>
           <a href="/#skills">
             <span>テクニカルスキル</span>
-            <!-- <span>Skills</span> -->
           </a>
         </li>
         <li>
           <a href="/#works">
             <span>開発履歴</span>
-            <!-- <span>Works</span> -->
           </a>
         </li>
         <li>
           <a href="/#contact">
             <span>お問い合わせ</span>
-            <!-- <span>Contact</span> -->
           </a>
         </li>
       </ul>
@@ -188,7 +184,8 @@ import { Menu, X } from '@lucide/astro';
 
     @media (max-width: breakpoint.$mobile) {
       display: inline-flex;
-      padding: 0 0.5rem;
+      margin-right: -0.5rem;
+      padding-block: 0;
     }
 
     &__label {
@@ -547,7 +544,7 @@ import { Menu, X } from '@lucide/astro';
       },
       {
         // ヘッダー直下に細い判定帯を作り、常に1セクションだけ拾う
-        rootMargin: `-${headerHeight + 24}px 0px -70% 0px`,
+        rootMargin: `-${headerHeight + 32}px 0px 0% 0px`, // 上からヘッダーの高さ + 32px、下から70%の位置までを判定領域とする
         threshold: 0,
       },
     );
