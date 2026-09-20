@@ -1,6 +1,7 @@
 ---
 import { Plus } from '@lucide/astro';
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
   works: CollectionEntry<'works'>[];
@@ -40,7 +41,7 @@ const renderedWorks = works.map((work) => ({
         >
           <span class="work__thumbnail">
             {work.data.thumbnail ? (
-              <img
+              <Image
                 src={work.data.thumbnail}
                 alt={`${work.data.title}のサムネイル`}
                 loading="lazy"
@@ -152,7 +153,7 @@ const renderedWorks = works.map((work) => ({
     }
 
     .work {
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       background: var(--color-white);
       // counter-increment: mycounter; // カウントする基準要素を指定
 
@@ -375,7 +376,7 @@ const renderedWorks = works.map((work) => ({
       margin: auto;
       padding: 0;
       border: 0;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       color: inherit;
       background: var(--color-white);
       box-shadow: 0 1.5rem 3rem rgb(15 23 42 / 24%);

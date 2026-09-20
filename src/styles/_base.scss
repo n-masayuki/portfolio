@@ -51,6 +51,7 @@
   --radius-sm: 0.3rem;
   --radius-md: 0.5rem;
   --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
   --radius-infinite: calc(1px / 0);
 
   --box-shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -91,6 +92,7 @@ body {
   color: var(--color-text);
   background: var(--color-background);
   font-family: var(--font-sans-jp);
+  // font-family: var(--font-not-sans-jp);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -142,4 +144,16 @@ button {
 :focus-visible {
   outline: 2px solid var(--color-accent-border);
   outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
