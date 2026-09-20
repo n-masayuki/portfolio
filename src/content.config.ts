@@ -7,16 +7,17 @@ const works = defineCollection({
     base: './src/content/works',
     pattern: '*.md',
   }),
-  schema: z.object({
-    order: z.number(),
-    title: z.string(),
-    category: z.array(z.string()),
-    period: z.string(),
-    thumbnail: z.string().optional(),
-    url: z.string().optional(),
-    role: z.array(z.string()),
-    technologies: z.array(z.string()),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      order: z.number(),
+      title: z.string(),
+      category: z.array(z.string()),
+      period: z.string(),
+      thumbnail: image().optional(),
+      url: z.string().optional(),
+      role: z.array(z.string()),
+      technologies: z.array(z.string()),
+    }),
 });
 
 export const collections = { works };
