@@ -4,13 +4,11 @@ import portrait from '../../assets/home/portrait.webp';
 
 const careerStartYear = 2008;
 const careerOffset = 1;
-const experienceYears =
-  new Date().getFullYear() - careerStartYear - careerOffset;
+const experienceYears = new Date().getFullYear() - careerStartYear - careerOffset;
 ---
 
 <section id="about" class="section about" aria-labelledby="about-heading">
   <div class="section-heading">
-    <!-- <p class="eyebrow">About Me</p> -->
     <div class="section-heading__ja-en-wrapper">
       <h2 id="about-heading" class="section-heading__ja">
         私について
@@ -22,7 +20,7 @@ const experienceYears =
   </div>
 
   <figure class="avatar">
-    <Image src={portrait} alt="プロフィール画像" loading="lazy" />
+    <Image src={portrait} alt="プロフィール画像" loading="eager" />
     <figcaption>Niibori Masauyki</figcaption>
   </figure>
 
@@ -34,8 +32,7 @@ const experienceYears =
     CSSを用いたWebサイト制作を強みとし、JavaScript、React、PHP、WordPressを用いたフロントエンド開発・CMS構築にも携わっています。
     <br />
     <br />
-    近年は既存サイトのリファクタリングやReactへの段階的な移行、表示パフォーマンス・アクセシビリティの改善、GA4
-    /
+    近年は既存サイトのリファクタリングやReactへの段階的な移行、表示パフォーマンス・アクセシビリティの改善、GA4 /
     GTM等を利用した計測環境の整備など、継続的なサイト改善に取り組んできました。
     <br />
     大手上場企業のコーポレートサイトやブランドサイトをはじめ、ECサイト、商業施設のキャンペーンサイト、芸能関連サイトなど幅広い制作・運用経験があります。
@@ -51,6 +48,7 @@ const experienceYears =
 
   #about {
     position: relative;
+    scroll-margin-top: 0; // 調整
 
     @media (max-width: breakpoint.$mobile) {
       --_m: max(0px, calc((100vw - 800px) / 2));
@@ -66,8 +64,8 @@ const experienceYears =
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: clamp(32rem, 20vw, 200rem);
+      line-height: 1cap;
       text-align: center;
-      // color: var(--color-white);
       color: rgba(255, 255, 255, 0.6);
       white-space: nowrap;
       pointer-events: none;
@@ -80,6 +78,10 @@ const experienceYears =
   }
 
   .avatar {
+    // fyi: https://9elements.github.io/fancy-border-radius/
+
+    --border-radius: 42% 58% 71% 29% / 42% 39% 61% 58%;
+
     position: relative;
     float: left;
     width: clamp(80px, 16vw, 160px);
@@ -88,6 +90,22 @@ const experienceYears =
 
     @media (max-width: breakpoint.$mobile) {
       margin-right: 1rem;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      display: block;
+      width: clamp(80px, 16vw, 160px);
+      aspect-ratio: 4 / 3;
+      outline: 1px dashed var(--color-white);
+      outline-offset: 3px;
+      border-radius: var(--border-radius);
+      @media (max-width: breakpoint.$mobile) {
+        aspect-ratio: 3 / 4;
+      }
     }
 
     figcaption {
@@ -106,13 +124,12 @@ const experienceYears =
       aspect-ratio: 4 / 3;
       object-fit: cover;
       // border-radius: var(--radius-xl);
-      border-radius: 58% 42% 72% 28% / 32% 65% 35% 68%;
+      border-radius: var(--border-radius);
       background-color: var(--color-surface);
 
       @media (max-width: breakpoint.$mobile) {
         aspect-ratio: 3 / 4;
         // border-radius: var(--radius-lg);
-        border-radius: 58% 42% 72% 28% / 32% 65% 35% 68%;
       }
     }
   }

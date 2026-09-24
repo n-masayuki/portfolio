@@ -1,5 +1,5 @@
 ---
-import { Plus } from '@lucide/astro';
+import { Plus, ExternalLink, X } from '@lucide/astro';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
@@ -15,7 +15,6 @@ const renderedWorks = works.map((work) => ({
 
 <section id="works" class="section" aria-labelledby="works-heading">
   <div class="section-heading">
-    <!-- <p class="eyebrow">Portfolio</p> -->
     <div class="section-heading__ja-en-wrapper">
       <h2 id="works-heading" class="section-heading__ja">
         開発履歴
@@ -31,39 +30,36 @@ const renderedWorks = works.map((work) => ({
   <div class="works-list">
     {renderedWorks.map(({ work }) => (
       <article class="work" id={`work-${work.id}`}>
+        <div class="work__thumbnail">
+          {work.data.thumbnail ? (
+            <Image src={work.data.thumbnail} alt={`${work.data.title}のサムネイル`} loading="lazy" />
+          ) : (
+            <span class="work__placeholder" aria-hidden="true">
+              <span>port</span>
+              <span>folio</span>
+            </span>
+          )}
+        </div>
+        <div class="work__body">
+          <ul class="work__category">
+            {work.data.category.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          <h3>{work.data.title}</h3>
+          <p class="work__period">{work.data.period}</p>
+        </div>
         <button
           class="work__trigger"
           type="button"
           aria-haspopup="dialog"
           aria-controls={`work-modal-${work.id}`}
           aria-label={`${work.data.title}の詳細を見る`}
-          data-open-modal={`work-modal-${work.id}`}
+          commandfor={`work-modal-${work.id}`}
+          command="show-modal"
         >
-          <span class="work__thumbnail">
-            {work.data.thumbnail ? (
-              <Image
-                src={work.data.thumbnail}
-                alt={`${work.data.title}のサムネイル`}
-                loading="lazy"
-              />
-            ) : (
-              <span class="work__placeholder" aria-hidden="true">
-                <span>port</span>
-                <span>folio</span>
-              </span>
-            )}
-          </span>
-          <span class="work__body">
-            <ul class="work__category">
-              {work.data.category.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-            <h3>{work.data.title}</h3>
-            <p class="work__period">{work.data.period}</p>
-            <span class="work__cta" aria-hidden="true">
-              <Plus size={32} stroke-width={0.5} />
-            </span>
+          <span class="work__cta" aria-hidden="true">
+            <Plus size={32} stroke-width={0.5} />
           </span>
         </button>
       </article>
@@ -74,56 +70,59 @@ const renderedWorks = works.map((work) => ({
     <dialog
       id={`work-modal-${work.id}`}
       class="work-modal"
+      closedby="any"
       aria-labelledby={`work-modal-title-${work.id}`}
     >
-      <div class="work-modal__inner">
+      <div class="work-modal__contents">
         <button
           class="work-modal__close"
           type="button"
-          data-close-modal
+          commandfor={`work-modal-${work.id}`}
+          command="close"
           aria-label="閉じる"
         >
-          <span aria-hidden="true">&times;</span>
+          <X size={32} stroke-width={0.5} />
         </button>
 
-        <header class="work__header">
-          <ul class="work__category">
-            {work.data.category.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-          <h3 id={`work-modal-title-${work.id}`}>{work.data.title}</h3>
-          {work.data.url && (
-            <p class="work__url">
-              <a href={work.data.url} target="_blank" rel="noopener noreferrer">
+        <div class="work-modal__inner">
+          <header class="work__header">
+            <ul class="work__category">
+              {work.data.category.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <h3 id={`work-modal-title-${work.id}`}>{work.data.title}</h3>
+            {work.data.url && (
+              <a class="work__url" href={work.data.url} target="_blank" rel="noopener noreferrer">
                 {work.data.url}
+                <ExternalLink size={32} stroke-width={1} />
               </a>
-            </p>
-          )}
-          <p class="work__period">{work.data.period}</p>
-        </header>
+            )}
+            <p class="work__period">{work.data.period}</p>
+          </header>
 
-        <div class="work__meta">
-          <div>
-            <h4>担当領域</h4>
-            <ul>
-              {work.data.role.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
+          <div class="work__meta">
+            <div>
+              <h4>担当領域</h4>
+              <ul>
+                {work.data.role.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4>使用技術</h4>
+              <ul>
+                {work.data.technologies.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4>使用技術</h4>
-            <ul>
-              {work.data.technologies.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
 
-        <div class="work__content">
-          <Fragment set:html={html} />
+          <div class="work__content">
+            <Fragment set:html={html} />
+          </div>
         </div>
       </div>
     </dialog>
@@ -136,9 +135,13 @@ const renderedWorks = works.map((work) => ({
 
   #works {
     h3 {
-      margin-block: 0.5rem;
+      margin-block: 1rem 0.5rem;
       // font-size: clamp(1rem, 3vw, 1.5rem);
       font-size: 1.25rem;
+
+      @media (max-width: breakpoint.$mobile) {
+        font-size: 1rem;
+      }
     }
 
     h4 {
@@ -153,57 +156,54 @@ const renderedWorks = works.map((work) => ({
     }
 
     .work {
+      position: relative;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: stretch;
+      gap: 1.5rem;
+      padding: 1.5rem;
       border-radius: var(--radius-xl);
       background: var(--color-white);
-      // counter-increment: mycounter; // カウントする基準要素を指定
+      transition: background-color var(--transition-duration-normal) ease-in-out;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+
+      @media (max-width: breakpoint.$mobile) {
+        flex-direction: column;
+      }
+
+      &:hover,
+      &:focus-within {
+        background-color: var(--color-surface);
+
+        .work__cta {
+          background-color: var(--color-text);
+          transform: translateY(-2px);
+
+          svg {
+            color: var(--color-white);
+          }
+        }
+      }
 
       &__trigger {
-        position: relative;
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: stretch;
-        gap: 1.5rem;
+        // カードの文書構造を保ち、独立したボタンで全体をクリック可能にする。
+        position: absolute;
+        inset: 0;
         width: 100%;
-        padding: 1.5rem;
+        height: 100%;
+        padding: 0;
         border: 0;
         border-radius: inherit;
         color: inherit;
-        text-align: left;
         background: transparent;
         cursor: pointer;
-        transition: background-color var(--transition-duration-normal)
-          ease-in-out;
 
-        @media (max-width: breakpoint.$mobile) {
-          flex-direction: column;
-          padding: 1.5rem;
-        }
-
-        // &::before {
-        //   @extend .grape-nuts-regular;
-        //   counter-increment: number 1;
-        //   content: counter(mycounter, decimal-leading-zero); // 01, 02, 03, ...
-        //   position: absolute;
-        //   top: -1.5rem;
-        //   left: 0.5rem;
-        //   font-size: var(--font-size-3xl);
-        //   color: var(--color-gray-300);
-        //   pointer-events: none;
-        //   // user-select: none;
-        // }
-
-        &:hover,
         &:focus-visible {
-          background-color: var(--color-surface);
-
-          .work__cta {
-            background-color: var(--color-text);
-            transform: translateY(-2px);
-
-            svg {
-              color: var(--color-white);
-            }
-          }
+          outline: 2px solid var(--color-text);
+          outline-offset: 4px;
         }
       }
 
@@ -300,8 +300,25 @@ const renderedWorks = works.map((work) => ({
 
       &__period,
       &__url {
-        margin: 0;
         font-size: var(--font-size-xs);
+      }
+
+      &__url {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        line-height: 1cap;
+
+        svg {
+          --size: 1.5em;
+          block-size: var(--size);
+          inline-size: var(--size);
+        }
+
+        + .work__period {
+          margin-top: 0.5rem;
+        }
       }
 
       &__category {
@@ -342,6 +359,7 @@ const renderedWorks = works.map((work) => ({
           list-style: none;
           font-size: 0.75rem;
         }
+
         li {
           &::before {
             content: '';
@@ -371,10 +389,14 @@ const renderedWorks = works.map((work) => ({
       position: fixed;
       inset: 0;
       z-index: 1000;
-      width: min(100% - 2rem, 40rem);
-      max-height: min(100% - 4rem, 48rem);
       margin: auto;
       padding: 0;
+      width: min(100% - 2rem, 40rem);
+      // max-height: min(100% - 4rem, 48rem);
+      max-height: 90vh;
+      max-height: 90dvh;
+      overscroll-behavior: contain;
+      overflow: visible;
       border: 0;
       border-radius: var(--radius-xl);
       color: inherit;
@@ -420,6 +442,14 @@ const renderedWorks = works.map((work) => ({
         }
       }
 
+      &__contents {
+        max-height: 80vh;
+        overflow-y: scroll;
+
+        // max-height: inherit;
+        // overflow-y: auto;
+      }
+
       &__inner {
         position: relative;
         max-height: inherit;
@@ -428,22 +458,24 @@ const renderedWorks = works.map((work) => ({
       }
 
       &__close {
+        --size: 40px;
         position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
+        top: 0;
+        right: 0;
+        margin-top: calc(-1 * var(--size) / 6);
+        margin-right: calc(-1 * var(--size) / 6);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 2.25rem;
-        height: 2.25rem;
+        width: var(--size);
+        height: var(--size);
+        color: var(--color-text);
         border: 0;
         border-radius: var(--radius-infinite);
-        color: var(--color-text);
-        font-size: 1.25rem;
-        // line-height: 1;
-        line-height: 1cap;
         background: var(--color-surface);
+        box-shadow: var(--box-shadow-sm);
         cursor: pointer;
+        z-index: 1;
 
         &:hover,
         &:focus-visible {
@@ -454,38 +486,8 @@ const renderedWorks = works.map((work) => ({
   }
 </style>
 
-<script>
-  // ダイアログを開閉するモーダル機能
-  const openButtons =
-    document.querySelectorAll<HTMLButtonElement>('[data-open-modal]');
-
-  openButtons.forEach((button) => {
-    const dialogId = button.dataset.openModal;
-    const dialog = dialogId ? document.getElementById(dialogId) : null;
-
-    if (!(dialog instanceof HTMLDialogElement)) return;
-
-    button.addEventListener('click', () => {
-      dialog.showModal();
-      document.body.classList.add('modal-open');
-    });
-
-    const closeButton =
-      dialog.querySelector<HTMLButtonElement>('[data-close-modal]');
-    closeButton?.addEventListener('click', () => dialog.close());
-
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-
-    dialog.addEventListener('close', () => {
-      document.body.classList.remove('modal-open');
-    });
-  });
-</script>
-
 <style lang="scss" is:global>
-  body.modal-open {
+  :root:has(#works dialog:modal) {
     overflow: hidden;
   }
 </style>

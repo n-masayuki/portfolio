@@ -19,10 +19,12 @@ import {
   siSwiper,
   siWordpress,
   siLottiefiles,
+  siGooglegemini,
   siGoogleanalytics,
   siGoogletagmanager,
   siNpm,
   siVite,
+  siClaude,
 } from 'simple-icons';
 
 type Skill = {
@@ -89,14 +91,16 @@ const designSkills: Skill[] = [
 // AI活用
 const aiSkills: Skill[] = [
   { label: 'ChatGPT' },
+  { label: 'Codex' },
+  { icon: siClaude, label: 'Claude' },
   { icon: siGithubcopilot, label: 'GitHub Copilot' },
+  { icon: siGooglegemini, label: 'Google Gemini' },
   { label: 'etc.' },
 ];
 ---
 
 <section id="skills" class="section skills" aria-labelledby="skills-heading">
   <div class="section-heading">
-    <!-- <p class="eyebrow">Capabilities</p> -->
     <div class="section-heading__ja-en-wrapper">
       <h2 id="skills-heading" class="section-heading__ja">
         テクニカルスキル
@@ -107,14 +111,13 @@ const aiSkills: Skill[] = [
     </div>
   </div>
 
-  <p class="intro">
-    Webサイトの設計・実装から運用、改善まで、目的と環境に合わせて継続的に取り組んできました。
-  </p>
+  <p class="intro">Webサイトの設計・実装から運用、改善まで、目的と環境に合わせて継続的に取り組んできました。</p>
 
   <div class="skills-grid">
     <article class="skill-card">
       <h3>
-        フロントエンド <span aria-hidden="true">Frontend</span>
+        <span>フロントエンド</span>
+        <span aria-hidden="true">Frontend</span>
       </h3>
       <ul class="skill-list">
         {frontSkills.map(({ icon, label }) => (
@@ -128,15 +131,13 @@ const aiSkills: Skill[] = [
           </li>
         ))}
       </ul>
-      <p>
-        セマンティックなマークアップ、レスポンシブ設計、CSS
-        Grid・Flexbox、既存コードの改修や共通化に対応します。
-      </p>
+      <p>セマンティックなマークアップ、レスポンシブ設計、CSS Grid・Flexbox、既存コードの改修や共通化に対応します。</p>
     </article>
 
     <article class="skill-card">
       <h3>
-        CMS・EC <span aria-hidden="true">CMS &amp; EC</span>
+        <span>CMS・EC</span>
+        <span aria-hidden="true">CMS &amp; EC</span>
       </h3>
       <ul class="skill-list">
         {cmsSkills.map(({ icon, label }) => (
@@ -150,14 +151,13 @@ const aiSkills: Skill[] = [
           </li>
         ))}
       </ul>
-      <p>
-        WordPressのテーマ制作やPHPの改修、ECサイトのフロントエンド実装・運用、管理画面の設定を担当してきました。
-      </p>
+      <p>WordPressのテーマ制作やPHPの改修、ECサイトのフロントエンド実装・運用、管理画面の設定を担当してきました。</p>
     </article>
 
     <article class="skill-card">
       <h3>
-        インタラクション <span aria-hidden="true">Interaction</span>
+        <span>インタラクション</span>
+        <span aria-hidden="true">Interaction</span>
       </h3>
       <ul class="skill-list">
         {interactionSkills.map(({ icon, label }) => (
@@ -171,14 +171,13 @@ const aiSkills: Skill[] = [
           </li>
         ))}
       </ul>
-      <p>
-        目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。
-      </p>
+      <p>目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。</p>
     </article>
 
     <article class="skill-card">
       <h3>
-        品質・開発環境 <span aria-hidden="true">Quality &amp; Workflow</span>
+        <span>品質・開発環境</span>
+        <span aria-hidden="true">Quality &amp; Workflow</span>
       </h3>
       <ul class="skill-list">
         {qualitySkills.map(({ icon, label }) => (
@@ -201,7 +200,8 @@ const aiSkills: Skill[] = [
 
     <article class="skill-card">
       <h3>
-        デザイン・分析 <span aria-hidden="true">Design &amp; Analysis</span>
+        <span>デザイン・分析</span>
+        <span aria-hidden="true">Design &amp; Analysis</span>
       </h3>
       <ul class="skill-list">
         {designSkills.map(({ icon, label }) => (
@@ -215,14 +215,13 @@ const aiSkills: Skill[] = [
           </li>
         ))}
       </ul>
-      <p>
-        ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。
-      </p>
+      <p>ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。</p>
     </article>
 
     <article class="skill-card">
       <h3>
-        AI活用 <span aria-hidden="true">AI-assisted Development</span>
+        <span>AI活用</span>
+        <span aria-hidden="true">AI-assisted Development</span>
       </h3>
       <ul class="skill-list">
         {aiSkills.map(({ icon, label }) => (
@@ -264,16 +263,28 @@ const aiSkills: Skill[] = [
       background: var(--color-white);
 
       h3 {
-        margin: 0 0 0.75rem;
+        margin-bottom: 0.75rem;
         font-size: 1rem;
+        line-height: 1.2;
+
+        @media (max-width: breakpoint.$mobile) {
+          display: grid;
+          gap: 0.5rem;
+        }
 
         span {
-          @extend .grape-nuts-regular;
-          margin-inline-start: 0.5rem;
-          color: var(--color-gray-400);
-          font-size: 1rem;
-          font-weight: 400;
-          letter-spacing: 0.04em;
+          &[aria-hidden='true'] {
+            @extend .grape-nuts-regular;
+            margin-inline-start: 1rem;
+            color: var(--color-gray-400);
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+
+            @media (max-width: breakpoint.$mobile) {
+              margin-inline-start: 0;
+            }
+          }
         }
       }
 

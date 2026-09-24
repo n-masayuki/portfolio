@@ -1,6 +1,5 @@
 <section id="contact" class="section" aria-labelledby="contact-heading">
   <div class="section-heading">
-    <!-- <p class="eyebrow">Get in Touch</p> -->
     <div class="section-heading__ja-en-wrapper">
       <h2 id="contact-heading" class="section-heading__ja">
         お問い合わせ
@@ -13,23 +12,59 @@
 
   <p class="intro">以下のフォームからお気軽にご連絡ください。</p>
 
-  <form
-    class="contact-form"
-    action="https://formspree.io/f/moevejjl"
-    method="POST"
-  >
-    <label for="name">お名前</label>
-    <input type="text" id="name" name="name" required />
+  <form class="contact-form" action="https://formspree.io/f/moevejjl" method="POST">
+    <label for="contact-form-name">
+      お名前 <span aria-hidden="true">※</span>
+    </label>
+    <input type="text" id="contact-form-name" name="name" autocomplete="name" maxlength="24" required />
 
-    <label for="email">メールアドレス</label>
-    <input type="email" id="email" name="email" required />
+    <label for="contact-form-email">
+      メールアドレス <span aria-hidden="true">※</span>
+    </label>
+    <input type="email" id="contact-form-email" name="email" autocomplete="email" maxlength="254" required />
 
-    <label for="message">お問い合わせ内容</label>
-    <textarea id="message" name="message" required></textarea>
+    <label for="contact-form-message">
+      お問い合わせ内容 <span aria-hidden="true">※</span>
+    </label>
+    <textarea id="contact-form-message" name="message" maxlength="500" placeholder="500文字以内" required></textarea>
+
+    <p class="character-count" aria-live="polite">
+      <span id="contact-form-message-count">0</span> / 500文字
+    </p>
+
+    <p class="contact-form__note">
+      <span aria-hidden="true">※</span>
+      お問い合わせの内容によっては、お答えできない場合がございます。
+    </p>
+
+    <div
+      class="cf-turnstile"
+      data-sitekey="0x4AAAAAAE_YlR1gYvDPg5XU"
+      data-action="contact"
+      data-size="flexible"
+      data-theme="auto"
+    ></div>
 
     <button type="submit">送信</button>
   </form>
 </section>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+  // メッセージ入力欄の文字数をリアルタイムでカウントするためのスクリプト
+  const message = document.querySelector<HTMLTextAreaElement>('#contact-form-message');
+  const messageCount = document.querySelector<HTMLElement>('#contact-form-message-count');
+
+  if (message && messageCount) {
+    const updateMessageCount = () => {
+      messageCount.textContent = String(Array.from(message.value).length);
+    };
+
+    message.addEventListener('input', updateMessageCount);
+    updateMessageCount();
+  }
+</script>
 
 <style lang="scss">
   @use '../../styles/breakpoints' as breakpoint;
@@ -37,32 +72,63 @@
   .contact-form {
     display: grid;
     gap: 0.75rem;
+    min-width: 0;
     margin-top: 2rem;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     border-radius: var(--radius-lg);
     background-color: var(--color-white);
 
     @media (max-width: breakpoint.$mobile) {
       margin-top: 1.5rem;
     }
+
+    &__note {
+      font-size: var(--font-size-xs);
+    }
   }
+
+  .character-count {
+    min-height: 1.25rem;
+    margin: -0.25rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-xs);
+    text-align: right;
+  }
+
+  // .required-note {
+  //   margin: 1.5rem 0 0;
+  //   color: var(--color-muted);
+  //   font-size: var(--font-size-xs);
+  //   span {
+  //     color: var(--color-red);
+  //     font-family: var(--font-sans);
+  //   }
+  // }
 
   label {
     margin-top: 0.5rem;
     color: var(--color-gray-700);
     font-family: var(--font-sans);
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: var(--font-size-sm);
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    span {
+      color: var(--color-red);
+      font-family: var(--font-sans);
+      font-size: var(--font-size-xs);
+    }
   }
 
   input,
   textarea {
     width: 100%;
-    padding: 0.75rem 0.875rem;
+    padding: 0.625rem 0.75rem;
     color: var(--color-text);
     border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     background-color: var(--color-white);
     font: inherit;
     line-height: 1.5;
@@ -75,6 +141,12 @@
       box-shadow: 0 0 0 3px var(--color-accent-soft);
       outline: none;
     }
+
+    &::placeholder {
+      color: var(--color-gray-300);
+      font-size: var(--font-size-md);
+      font-family: var(--font-sans);
+    }
   }
 
   textarea {
@@ -82,13 +154,31 @@
     resize: vertical;
   }
 
+  .cf-turnstile {
+    // min-height: 65px;
+    margin-top: 1rem;
+    margin-inline: auto;
+    line-height: 1cap;
+
+    @media (max-width: breakpoint.$mobile) {
+      transform: scale(0.75);
+      transform-origin: left top;
+      width: 224px;
+    }
+
+    // iframe {
+    // }
+  }
+
   button {
     justify-self: start;
     min-width: 8rem;
     margin-top: 0.75rem;
-    padding: 0.75rem 1.25rem;
+    margin-inline: auto;
+    // padding: 0.625rem 1.25rem;
+    padding: 0.5rem 1.5rem;
     color: var(--color-white);
-    border: 1px solid var(--color-gray-800);
+    border: none;
     border-radius: var(--radius-infinite);
     background-color: var(--color-gray-800);
     font-family: var(--font-sans);
@@ -96,12 +186,12 @@
     font-weight: 700;
     cursor: pointer;
 
-    @media (max-width: breakpoint.$mobile) {
-      width: 100%;
-    }
+    // @media (max-width: breakpoint.$mobile) {
+    //   width: 100%;
+    // }
 
     &:hover {
-      background-color: var(--color-gray-900);
+      background-color: var(--color-gray-600);
     }
 
     &:active {

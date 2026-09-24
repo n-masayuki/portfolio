@@ -1,35 +1,20 @@
----
-import { Menu, X } from '@lucide/astro';
----
-
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href="/" aria-label="Portfolio home">
       NM
     </a>
 
-    <button
-      class="menu-toggle"
-      type="button"
-      aria-controls="site-navigation"
-      aria-expanded="false"
-    >
+    <button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">
       <span class="menu-toggle__label">メニュー</span>
       <span class="menu-toggle__icon" aria-hidden="true">
-        <Menu class="menu-toggle__menu-icon" size={40} stroke-width={1} />
-        <X class="menu-toggle__close-icon" size={40} stroke-width={1} />
+        <span class="menu-toggle__line"></span>
+        <span class="menu-toggle__line"></span>
+        <span class="menu-toggle__line"></span>
       </span>
     </button>
 
-    <nav
-      id="site-navigation"
-      class="site-navigation"
-      aria-label="Main navigation"
-    >
+    <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
       <ul class="site-nav">
-        <!-- <li>
-          <a href="/">Home</a>
-        </li> -->
         <li>
           <a href="/#about">
             <span>私について</span>
@@ -53,6 +38,66 @@ import { Menu, X } from '@lucide/astro';
       </ul>
     </nav>
   </div>
+  <svg class="nav-glass-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="nav-liquid-glass" color-interpolation-filters="sRGB">
+        <feImage
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          preserveAspectRatio="none"
+          result="map"
+          data-nav-glass-map="true"
+        ></feImage>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          xChannelSelector="R"
+          yChannelSelector="B"
+          scale="-50"
+          result="dispRed"
+        ></feDisplacementMap>
+        <feColorMatrix
+          in="dispRed"
+          type="matrix"
+          values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"
+          result="red"
+        ></feColorMatrix>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          xChannelSelector="R"
+          yChannelSelector="B"
+          scale="-47"
+          result="dispGreen"
+        ></feDisplacementMap>
+        <feColorMatrix
+          in="dispGreen"
+          type="matrix"
+          values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0"
+          result="green"
+        ></feColorMatrix>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          xChannelSelector="R"
+          yChannelSelector="B"
+          scale="-44"
+          result="dispBlue"
+        ></feDisplacementMap>
+        <feColorMatrix
+          in="dispBlue"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0"
+          result="blue"
+        ></feColorMatrix>
+        <feBlend in="red" in2="green" mode="screen" result="rg"></feBlend>
+        <feBlend in="rg" in2="blue" mode="screen" result="output"></feBlend>
+        <feGaussianBlur in="output" stdDeviation="0.7"></feGaussianBlur>
+      </filter>
+    </defs>
+  </svg>
 </header>
 
 <style lang="scss">
@@ -74,37 +119,20 @@ import { Menu, X } from '@lucide/astro';
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: var(--radius-infinite);
       box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 12%);
-      // background-color: rgb(255 255 255 / 80%);
-    }
-  }
-
-  @media (max-width: breakpoint.$mobile) {
-    @keyframes header-shrink {
-      from {
-        margin-top: 0;
-        max-width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0);
-        border-radius: 0;
-        box-shadow: 0 0 0 rgb(15 23 42 / 0%);
-        // box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 12%);
-      }
-
-      to {
-        margin-top: 0;
-        max-width: var(--header-shrink-width);
-        border: none;
-        border-radius: 0;
-        box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 12%);
-        // background-color: rgb(255 255 255 / 80%);
-      }
+      background: #ffffff6b;
+      backdrop-filter: blur(12px) saturate(1.4);
+      backdrop-filter: url(#nav-liquid-glass) blur(8px) saturate(1.4);
     }
   }
 
   .site-header {
     position: sticky;
     top: 0;
+    margin-inline: auto;
+    width: 100%;
     z-index: 1000;
     isolation: isolate;
+    pointer-events: none;
 
     // ウィンドウ幅の変更中は、デスクトップ用ナビとモバイル用ボタンが切り替わる途中の表示を隠す。
     &.is-resizing {
@@ -123,46 +151,53 @@ import { Menu, X } from '@lucide/astro';
       margin: 0 auto;
       padding-inline: 1.5rem;
       border-radius: 0;
+      pointer-events: auto;
 
       @media (max-width: breakpoint.$mobile) {
+        --header-shrink-width: 100%;
+        min-height: 1rem;
+        padding-inline: 1rem;
       }
 
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        border-radius: inherit;
-        background-color: rgb(255 255 255 / 0%);
-        pointer-events: none;
+      // &::before {
+      //   content: '';
+      //   position: absolute;
+      //   inset: 0;
+      //   z-index: 0;
+      //   border-radius: inherit;
+      //   background-color: rgb(255 255 255 / 0%);
+      //   pointer-events: none;
 
-        @media (max-width: breakpoint.$mobile) {
-          display: none;
-        }
-      }
+      //   @media (max-width: breakpoint.$mobile) {
+      //     display: none;
+      //   }
+      // }
     }
 
     &__brand {
       @extend .grape-nuts-regular;
       position: relative;
       z-index: 1;
-      // color: var(--color-text);
       font-size: 2rem;
-      font-weight: 700;
       letter-spacing: 0.04em;
       line-height: 1;
-      text-decoration-line: underline;
-      text-decoration-color: transparent;
-      text-underline-offset: 0.25em;
+      min-width: 2rem;
+      min-height: 2rem;
+      text-decoration: none;
       background: linear-gradient(45deg, #6497fc 0%, #d01b63 100%);
       color: transparent;
       background-clip: text;
       text-fill-color: transparent;
 
-      &:hover,
-      &:focus-visible {
-        text-decoration-color: currentColor;
+      @media (max-width: breakpoint.$mobile) {
+        font-size: 1.5rem;
+        min-height: 1.5rem;
       }
+
+      // &:hover,
+      // &:focus-visible {
+      //   text-decoration-color: currentColor;
+      // }
     }
   }
 
@@ -199,25 +234,50 @@ import { Menu, X } from '@lucide/astro';
     }
 
     &__icon {
-      display: inline-flex;
+      position: relative;
+      display: block;
       width: 1.5rem;
+      height: 2.5rem;
+    }
 
-      svg {
-        display: block;
+    &__line {
+      position: absolute;
+      top: calc(50% - 0.5px);
+      left: 12.5%;
+      width: 75%;
+      height: 1px;
+      border-radius: 1px;
+      background: currentColor;
+      transform-origin: center;
+      transition:
+        transform var(--transition-duration-slow) cubic-bezier(0.22, 1, 0.36, 1),
+        opacity var(--transition-duration-fast) ease;
+
+      &:nth-child(1) {
+        transform: translateY(-6px) rotate(0deg);
       }
 
-      .menu-toggle__close-icon {
-        display: none;
+      &:nth-child(2) {
+        transform: scaleX(1);
+      }
+
+      &:nth-child(3) {
+        transform: translateY(6px) rotate(0deg);
       }
     }
 
     &[aria-expanded='true'] {
-      .menu-toggle__menu-icon {
-        display: none;
+      .menu-toggle__line:nth-child(1) {
+        transform: translateY(0) rotate(45deg);
       }
 
-      .menu-toggle__close-icon {
-        display: block;
+      .menu-toggle__line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      .menu-toggle__line:nth-child(3) {
+        transform: translateY(0) rotate(-45deg);
       }
     }
   }
@@ -227,29 +287,28 @@ import { Menu, X } from '@lucide/astro';
     .site-header__inner {
       animation: header-shrink cubic-bezier(0.16, 1, 0.3, 1) both;
       animation-timeline: scroll(root block);
-      animation-range: 0 160px; // Adjust the scroll range for the header shrink animation
+      animation-range: 0 80px;
+      // animation-range: 0 160px;
+    }
+  }
 
-      @media (max-width: breakpoint.$mobile) {
-        animation: none;
-      }
-
-      &::before {
-        animation: header-glass cubic-bezier(0.16, 1, 0.3, 1) both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 160px;
-        opacity: 0.8;
+  @media (max-width: breakpoint.$mobile) {
+    @supports (animation-timeline: scroll()) {
+      .site-header__inner {
+        animation-name: none;
+        backdrop-filter: none;
       }
     }
   }
 
   @keyframes header-glass {
     from {
-      background-color: rgb(255 255 255 / 0%);
+      // background-color: rgb(255 255 255 / 0%);
       backdrop-filter: blur(0);
     }
 
     to {
-      background-color: rgb(255 255 255 / 80%);
+      // background-color: rgb(255 255 255 / 80%);
       backdrop-filter: blur(8px);
     }
   }
@@ -265,21 +324,20 @@ import { Menu, X } from '@lucide/astro';
       padding: 0.5rem 1rem;
       font-size: 0.75rem;
       color: inherit;
-      text-decoration-line: none;
-      // text-decoration-line: underline;
-      text-decoration-color: transparent;
-      text-underline-offset: 0.25em;
+      text-decoration: none;
       border-radius: var(--radius-infinite);
+      border: 1px solid transparent;
       background-color: transparent;
 
       &:hover,
       &:focus-visible {
         text-decoration-color: currentColor;
+        // border: 1px solid var(--color-gray-200);
+        background-color: rgba(255, 255, 255, 0.8);
       }
 
       &[aria-current='location'] {
         color: var(--color-white);
-        font-weight: 700;
         background-color: var(--color-text);
       }
     }
@@ -287,20 +345,8 @@ import { Menu, X } from '@lucide/astro';
 
   .site-navigation {
     z-index: 1;
-  }
 
-  @media (max-width: breakpoint.$mobile) {
-    .site-header__inner {
-      --header-shrink-width: 100%;
-      min-height: 1rem;
-      padding-inline: 1rem;
-    }
-
-    .site-header__brand {
-      font-size: 1.5rem;
-    }
-
-    .site-navigation {
+    @media (max-width: breakpoint.$mobile) {
       position: fixed;
       inset: 0;
       z-index: 999;
@@ -329,8 +375,11 @@ import { Menu, X } from '@lucide/astro';
         transform: translateY(-0.75rem) scale(0.96);
         transition:
           opacity var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1),
-          transform var(--transition-duration-slow)
-            cubic-bezier(0.16, 1, 0.3, 1);
+          transform var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1);
+
+        @media (max-width: breakpoint.$mobile) {
+          gap: 0.5rem;
+        }
       }
 
       a {
@@ -339,11 +388,11 @@ import { Menu, X } from '@lucide/astro';
         padding: 0.625rem 0.75rem;
         border-radius: var(--radius-md);
         text-align: center;
+        text-decoration: none;
 
         &:hover,
         &:focus-visible {
           background: var(--color-surface);
-          text-decoration: none;
         }
 
         &[aria-current='location'] {
@@ -365,13 +414,16 @@ import { Menu, X } from '@lucide/astro';
         }
       }
     }
+  }
 
+  @media (max-width: breakpoint.$mobile) {
     :global(body.menu-open) {
       overflow: hidden;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .menu-toggle__line,
     .site-navigation,
     .site-navigation ul {
       transition: none;
@@ -390,8 +442,7 @@ import { Menu, X } from '@lucide/astro';
   // ハンバーガーボタンと、開閉するナビゲーションを取得する。
   // querySelector の型引数で、取得した要素の種類を TypeScript に伝える。
   const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-  const siteNavigation =
-    document.querySelector<HTMLElement>('#site-navigation');
+  const siteNavigation = document.querySelector<HTMLElement>('#site-navigation');
 
   // 要素が両方存在するときだけ、メニューのイベント処理を登録する。
   // 要素が見つからない場合に JavaScript エラーが起きるのを防ぐ。
@@ -440,10 +491,7 @@ import { Menu, X } from '@lucide/astro';
     // Escape キーでもメニューを閉じられるようにする。
     // 閉じた後は、操作を始めたハンバーガーボタンへフォーカスを戻す。
     document.addEventListener('keydown', (event) => {
-      if (
-        event.key === 'Escape' &&
-        menuToggle.getAttribute('aria-expanded') === 'true'
-      ) {
+      if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
         closeMenu();
         menuToggle.focus();
       }
@@ -492,12 +540,11 @@ import { Menu, X } from '@lucide/astro';
 
   // ページ内のセクションと、それに対応するナビゲーションリンクを取得する。
   // セクションが画面に入ったとき、ヘッダーの対応リンクに aria-current を付けるために使う。
-  const sections = Array.from(
-    document.querySelectorAll<HTMLElement>('main [id]'),
-  );
-  const navLinks = Array.from(
-    document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]'),
-  );
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('main [id]'));
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]'));
+
+  // ページ上端ではナビゲーションを未選択にし、スクロール後から現在地を表示する。
+  let hasScrolled = window.scrollY > 0;
 
   // IntersectionObserver が使える環境で、現在地表示の処理を登録する。
   if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
@@ -515,10 +562,25 @@ import { Menu, X } from '@lucide/astro';
       if (id) linkBySectionId.get(id)?.setAttribute('aria-current', 'location');
     };
 
+    // 初期表示では現在地を持たせず、スクロール後のObserver判定から反映する。
+    setActiveLink(null);
+
     // ヘッダーの高さ分だけ判定領域を下にずらす
-    const headerHeight =
-      document.querySelector('.site-header')?.getBoundingClientRect().height ??
-      0;
+    const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 0;
+    const sectionMarkerOffsetPx = 32; // ヘッダー直下の判定帯のオフセット（px）
+
+    // ヘッダー直下にあるsectionを取得して、スクロール直後にも現在地を更新する。
+    const updateActiveSection = () => {
+      const markerPosition = headerHeight + sectionMarkerOffsetPx;
+      const activeSection = sections
+        .filter((section) => linkBySectionId.has(section.id))
+        .find((section) => {
+          const { top, bottom } = section.getBoundingClientRect();
+          return top <= markerPosition && bottom > markerPosition;
+        });
+
+      setActiveLink(activeSection?.id ?? null);
+    };
 
     // 現在ヘッダー直下の帯に入っているセクション id の集合
     const visibleSectionIds = new Set<string>();
@@ -526,6 +588,8 @@ import { Menu, X } from '@lucide/astro';
     // セクションが判定領域に入ったか、出たかを監視する。
     const sectionObserver = new IntersectionObserver(
       (entries) => {
+        if (!hasScrolled) return;
+
         entries.forEach((entry) => {
           // 画面内に入ったセクションを記録し、出たセクションを削除する。
           if (entry.isIntersecting) {
@@ -536,20 +600,30 @@ import { Menu, X } from '@lucide/astro';
         });
 
         // 現在表示されているセクションのうち、ページ上で先にあるものを採用する。
-        const activeSection = sections.find((section) =>
-          visibleSectionIds.has(section.id),
-        );
+        const activeSection = sections.find((section) => visibleSectionIds.has(section.id));
 
         setActiveLink(activeSection?.id ?? null);
       },
       {
         // ヘッダー直下に細い判定帯を作り、常に1セクションだけ拾う
-        rootMargin: `-${headerHeight + 32}px 0px 0% 0px`, // 上からヘッダーの高さ + 32px、下から70%の位置までを判定領域とする
+        rootMargin: `-${headerHeight + sectionMarkerOffsetPx}px 0px -70% 0px`, // 上からヘッダーの高さ + sectionMarkerOffsetPx、下から70%の位置までを判定領域とする
         threshold: 0,
       },
     );
 
     // すべてのセクションを監視対象に登録する。
     sections.forEach((section) => sectionObserver.observe(section));
+
+    // 最初のスクロールをきっかけに現在地表示を有効にする。
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.scrollY > 0) {
+          hasScrolled = true;
+          updateActiveSection();
+        }
+      },
+      { passive: true },
+    );
   }
 </script>
