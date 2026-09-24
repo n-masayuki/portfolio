@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="404 ページが見つかりません - Portfolio"
+  description="お探しのページが見つかりませんでした。トップページからご覧ください。"
+>
+  <section class="section not-found" aria-labelledby="not-found-heading">
+    <p class="not-found__code" aria-hidden="true">
+      <span>4</span>
+      <span>😨</span>
+      <span>4</span>
+    </p>
+    <h1 id="not-found-heading">ページが見つかりません</h1>
+    <p class="not-found__message">
+      お探しのページは、
+      <wbr />
+      移動または削除された可能性があります。
+    </p>
+    <a class="not-found__link" href="/">
+      トップページへ戻る
+    </a>
+  </section>
+</Layout>
+
+<style lang="scss">
+  @use '../styles/base' as *;
+
+  .not-found {
+    padding-block: clamp(4rem, 12vh, 8rem);
+    text-align: center;
+
+    &__code {
+      font-size: clamp(6rem, 20vw, 10rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      // color: var(--color-gray-200);
+
+      span {
+        --rest-rotation: 0deg;
+        position: relative;
+        display: inline-block;
+        transform-origin: 50% 85%;
+        animation: not-found-hop 3.6s ease-in-out infinite;
+        &:nth-of-type(1),
+        &:nth-of-type(3) {
+          @extend .montserrat-500;
+          color: #0000;
+          background: linear-gradient(45deg, #6497fc 0%, #d01b63 100%);
+          background-clip: text;
+        }
+        &:nth-of-type(1) {
+          --rest-rotation: -4deg;
+          top: -0.1em;
+          transform: rotate(-4deg);
+        }
+        &:nth-of-type(2) {
+          animation-delay: 0.18s;
+          font-family: inherit;
+          color: inherit;
+          background: none;
+          background-clip: inherit;
+        }
+        &:nth-of-type(3) {
+          --rest-rotation: 8deg;
+          animation-delay: 0.36s;
+          top: 0.1em;
+          transform: rotate(8deg);
+        }
+      }
+    }
+
+    &__message {
+      margin-top: 1rem;
+      color: var(--color-muted);
+      font-size: var(--font-size-sm);
+      word-break: keep-all;
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      // min-height: 44px;
+      margin-top: 2rem;
+      // padding: 0.625rem 1.25rem;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-infinite);
+      background: var(--color-background);
+      text-decoration: none;
+
+      &:hover {
+        background: var(--color-accent-soft);
+      }
+    }
+  }
+
+  @keyframes not-found-hop {
+    0%,
+    30%,
+    100% {
+      transform: translateY(0) rotate(var(--rest-rotation));
+    }
+    10% {
+      transform: translateY(-0.16em) rotate(calc(var(--rest-rotation) - 6deg));
+    }
+    20% {
+      transform: translateY(0.025em) rotate(calc(var(--rest-rotation) + 3deg));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .not-found__code span {
+      animation: none;
+    }
+  }
+
+  h1 {
+    margin-top: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+</style>
