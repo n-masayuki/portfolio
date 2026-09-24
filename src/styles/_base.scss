@@ -7,6 +7,9 @@
 :root {
   --color-white: #fff;
   --color-black: #111827;
+  --color-red: #ef4444;
+
+  --color-gray-50: #fbf9f9;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
   --color-gray-300: #d1d5db;
@@ -27,11 +30,9 @@
   --color-accent-border: #bfdbfe;
 
   --font-sans:
-    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', Segoe UI Symbol;
-  --font-sans-jp:
-    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
-    Meiryo, sans-serif;
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', Segoe UI Symbol;
+  --font-sans-jp: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic', Meiryo, sans-serif;
   --font-not-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
 
   // font sizes
@@ -78,7 +79,7 @@ html {
 }
 
 [id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 2rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -100,12 +101,28 @@ body {
 }
 
 // h1,
-// h2,
-// .eyebrow {
+// h2 {
 //   font-family: var(--font-display);
 // }
 
-// font family for Google Fonts
+// Self-hosted - Google Fonts
+@font-face {
+  font-family: 'Grape Nuts';
+  src: url('/fonts/grape-nuts-regular.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat-500.woff2') format('woff2');
+  font-display: swap;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 .grape-nuts-regular {
   font-family: 'Grape Nuts', cursive;
   font-weight: 400;
@@ -114,7 +131,6 @@ body {
 
 .montserrat-500 {
   font-family: 'Montserrat', sans-serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
@@ -156,4 +172,10 @@ button {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+mark {
+  --mark-bg-color: oklch(0.95 0.12 102);
+  --mark-bg: linear-gradient(transparent 70%, var(--mark-bg-color) 0%);
+  background: var(--mark-bg);
 }
