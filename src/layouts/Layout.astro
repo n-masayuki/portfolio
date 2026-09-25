@@ -2,6 +2,7 @@
 import '../styles/global.scss';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import GoogleTagManager from '../components/GoogleTagManager.astro';
 
 interface Props {
   title?: string;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const {
-  title = 'Niibori Masauyuki - Portfolio',
+  title = 'Niibori Masayuki - Portfolio',
   description = 'ポートフォリオサイト。ウェブ開発とデザインのスキルを紹介しています。',
   pageUrl = new URL(Astro.url.pathname, Astro.site),
   ogImageUrl = new URL('/ogp.png', Astro.site),
@@ -22,11 +23,12 @@ const {
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
+    <GoogleTagManager />
     <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex, nofollow" />
+    {/* <meta name="robots" content="noindex, nofollow" /> */}
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="author" content="Niibori Masauyuki" />
+    <meta name="author" content="Niibori Masayuki" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Portfolio" />
@@ -34,7 +36,7 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={pageUrl.href} />
     <meta property="og:image" content={ogImageUrl.href} />
-    <meta property="og:image:alt" content="Niibori Masauyukiのポートフォリオ" />
+    <meta property="og:image:alt" content="Niibori Masayukiのポートフォリオ" />
     <title>{title}</title>
     {/* <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> */}
     <link rel="icon" href="/favicon.ico" />
@@ -43,6 +45,8 @@ const {
     <link rel="preload" href="/fonts/montserrat-500.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   </head>
   <body>
+    <GoogleTagManager noscript />
+    <slot name="splash" />
     <div class="site-shell">
       <Header />
       <main class="site-main">

@@ -45,6 +45,7 @@
       data-theme="auto"
     ></div>
 
+    <p class="contact-form__error" role="alert" id="contact-form-error"></p>
     <button type="submit">送信</button>
   </form>
 </section>
@@ -52,6 +53,46 @@
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const errorMessage = document.querySelector<HTMLElement>('#contact-form-error');
+
+  if (form && submitButton && errorMessage) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (submitButton.disabled) return;
+
+      const data = new FormData(form);
+      errorMessage.textContent = '';
+      submitButton.disabled = true;
+      submitButton.textContent = '送信中…';
+      form.setAttribute('aria-busy', 'true');
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) throw new Error('Form submission failed');
+
+        window.location.assign('/contact/thanks/');
+      } catch {
+        errorMessage.textContent =
+          '送信を完了できませんでした。通信環境や入力内容を確認し、認証後にもう一度送信してください。';
+        // 再送時には、新しい Turnstile トークンを取得する。
+        const turnstile = (window as Window & { turnstile?: { reset: (container: HTMLElement) => void } }).turnstile;
+        const widget = form.querySelector<HTMLElement>('.cf-turnstile');
+        if (turnstile && widget) turnstile.reset(widget);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = '送信';
+        form.removeAttribute('aria-busy');
+      }
+    });
+  }
+
   // メッセージ入力欄の文字数をリアルタイムでカウントするためのスクリプト
   const message = document.querySelector<HTMLTextAreaElement>('#contact-form-message');
   const messageCount = document.querySelector<HTMLElement>('#contact-form-message-count');
@@ -84,6 +125,15 @@
 
     &__note {
       font-size: var(--font-size-xs);
+    }
+
+    &__error {
+      color: var(--color-red);
+      font-size: var(--font-size-sm);
+
+      &:empty {
+        display: none;
+      }
     }
   }
 
@@ -185,6 +235,11 @@
     font-size: var(--font-size-sm);
     font-weight: 700;
     cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
 
     // @media (max-width: breakpoint.$mobile) {
     //   width: 100%;

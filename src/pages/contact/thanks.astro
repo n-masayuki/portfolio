@@ -1,0 +1,87 @@
+---
+import { CircleCheck } from '@lucide/astro';
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="お問い合わせありがとうございます - Portfolio"
+  description="お問い合わせを受け付けました。ご連絡いただきありがとうございます。"
+>
+  <section class="section thanks" aria-labelledby="thanks-heading">
+    <CircleCheck class="thanks__icon" size={56} stroke-width={1.5} aria-hidden="true" />
+    <p class="thanks__en" aria-hidden="true">
+      Thank you!
+    </p>
+    <h1 id="thanks-heading">お問い合わせありがとうございます</h1>
+    <p class="thanks__message break-keep">
+      お問い合わせを受け付けました。
+      <br />
+      内容を確認のうえ、ご入力いただいたメールアドレスへご連絡いたします。
+    </p>
+    <p class="thanks__note break-keep">お問い合わせの内容によっては、お答えできない場合がございます。</p>
+    <a class="thanks__link" href="/">
+      トップページへ戻る
+    </a>
+  </section>
+</Layout>
+
+<style lang="scss">
+  @use '../../styles/_base.scss' as *;
+
+  .thanks {
+    padding-block: clamp(4rem, 12vh, 8rem);
+    text-align: center;
+
+    &__icon {
+      margin-inline: auto;
+      color: var(--color-green);
+    }
+
+    &__en {
+      margin-top: 1.5rem;
+      font-family: 'Grape Nuts', cursive;
+      font-size: clamp(3rem, 10vw, 5rem);
+      line-height: 1.2;
+      color: transparent;
+      background: linear-gradient(45deg, #6497fc 0%, #d01b63 100%);
+      background-clip: text;
+    }
+
+    h1 {
+      margin-top: 1.5rem;
+      font-size: clamp(1.25rem, 4vw, 2rem);
+      font-weight: 700;
+      text-wrap: balance;
+    }
+
+    &__message {
+      margin-top: 1.5rem;
+      font-size: var(--font-size-sm);
+      line-height: 2;
+    }
+
+    &__note {
+      margin-top: 1rem;
+      color: var(--color-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      margin-top: 2rem;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-infinite);
+      background: var(--color-background);
+      font-size: var(--font-size-sm);
+      text-decoration: none;
+
+      &:hover {
+        background: var(--color-accent-soft);
+      }
+    }
+  }
+</style>

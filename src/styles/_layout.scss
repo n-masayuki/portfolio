@@ -15,6 +15,9 @@
 .section-heading {
   max-width: 42rem;
   margin-bottom: 2rem;
+  @media (max-width: breakpoint.$mobile) {
+    margin-bottom: 1.5rem;
+  }
   &__ja-en-wrapper {
     position: relative;
   }
@@ -44,7 +47,6 @@
     }
   }
 }
-
 
 .intro {
   position: relative;

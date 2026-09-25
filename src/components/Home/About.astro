@@ -21,7 +21,7 @@ const experienceYears = new Date().getFullYear() - careerStartYear - careerOffse
 
   <figure class="avatar">
     <Image src={portrait} alt="プロフィール画像" loading="eager" />
-    <figcaption>Niibori Masauyki</figcaption>
+    <figcaption>Niibori Masayuki</figcaption>
   </figure>
 
   <p class="intro">
@@ -49,11 +49,13 @@ const experienceYears = new Date().getFullYear() - careerStartYear - careerOffse
   #about {
     position: relative;
     scroll-margin-top: 0; // 調整
+    padding-top: 5.5rem; // 調整
 
     @media (max-width: breakpoint.$mobile) {
       --_m: max(0px, calc((100vw - 800px) / 2));
       margin-inline: calc(-1 * var(--_m));
       width: calc(100% + var(--_m) * 2);
+      padding-top: 2rem;
     }
 
     &::before {

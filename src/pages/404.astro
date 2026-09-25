@@ -13,16 +13,18 @@ import Layout from '../layouts/Layout.astro';
       <span>4</span>
     </p>
     <h1 id="not-found-heading">ページが見つかりません</h1>
-    <p class="not-found__message">
-      お探しのページは、
-      <wbr />
-      移動または削除された可能性があります。
-    </p>
+    <p class="not-found__message break-keep">お探しのページは、移動または削除された可能性があります。</p>
     <a class="not-found__link" href="/">
       トップページへ戻る
     </a>
   </section>
 </Layout>
+
+<style is:global>
+  .site-main {
+    place-content: center;
+  }
+</style>
 
 <style lang="scss">
   @use '../styles/base' as *;
@@ -75,7 +77,6 @@ import Layout from '../layouts/Layout.astro';
       margin-top: 1rem;
       color: var(--color-muted);
       font-size: var(--font-size-sm);
-      word-break: keep-all;
     }
 
     &__link {
