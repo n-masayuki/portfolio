@@ -12,5 +12,5 @@ export default defineConfig({
       cssMinify: 'esbuild',
     },
   },
-  site: 'https://enuemu.com',
+  site: 'https://nm-dev.jp',
 });
