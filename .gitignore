@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# authentication credentials
+private/users.php
+
 # macOS-specific files
 .DS_Store
 
