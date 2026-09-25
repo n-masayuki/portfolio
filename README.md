@@ -56,7 +56,57 @@ Apacheで配信する場合は、`public/.htaccess` がビルド時に `dist/.ht
 Content-Security-PolicyなどのHTTPヘッダーを設定します。Apache以外のホスティングサービスでは、
 同じヘッダー設定をサービス側へ移行してください。
 
+## PHP認証
+
+Apache配信では、`public/.htaccess` が静的ファイルを含むすべてのリクエストを
+`auth.php`へ渡します。認証後だけ、ビルド成果物が配信されます。
+
+### 初回設定
+
+まだ`private/users.php`がない場合だけ、雛形をコピーします。
+
+```sh
+cp private/users.php.example private/users.php
+```
+
+### ハッシュの生成
+
+ユーザーごとにパスワードを1つ決め、次のコマンドを実行します。
+`ここにパスワード`の部分を実際のパスワードへ置き換えてください。
+
+```sh
+php -r 'echo password_hash("ここにパスワード", PASSWORD_DEFAULT), PHP_EOL;'
+```
+
+実行するとハッシュが表示されます。
+パスワードではなく、表示されたハッシュだけを登録します。
+
+### 管理者の追加
+
+`private/users.php`の`return`配列へ、IDと生成したハッシュを追加します。
+既存の行は残したまま、管理者ごとに1行追加してください。
+
+```php
+return [
+	'admin' => '$2y$10$adminのハッシュ',
+	'designer' => '$2y$10$designerのハッシュ',
+	'reviewer' => '$2y$10$reviewerのハッシュ',
+];
+```
+
+IDは配列のキーになるため、同じIDを複数登録することはできません。
+管理者を削除するときは、そのIDの行を削除し、パスワードを変更するときは同じIDのハッシュを置き換えます。
+
+ログイン画面ではIDを入力せず、パスワードだけを入力します。複数の管理者を登録する場合は、
+管理者ごとに異なるパスワードを設定してください。同じパスワードを複数のIDで使うと、
+先に登録されたIDとして認証されます。
+
+`private/users.php`は公開ディレクトリの外に置き、Gitへ登録しないでください。
+認証はApache + PHPで配信する場合のみ動作します。`astro dev`や`astro preview`では認証されません。
+
 ## 設計上の特徴
+
+スプラッシュスクリーンの目的・表示条件・実装ルールは [docs/splash-screen.md](docs/splash-screen.md) を参照してください。
 
 - ページ固有の内容と、再利用する UI 部品を分ける
 - Astro の特性を活かし、必要以上にクライアント側の JavaScript に依存しない
