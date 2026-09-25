@@ -1,0 +1,123 @@
+<dialog class="splash" id="site-splash" aria-label="ポートフォリオのオープニング">
+  <div class="splash__identity" aria-hidden="true">
+    <span class="splash__logo">NM</span>
+    <span class="splash__caption">Portfolio</span>
+  </div>
+</dialog>
+
+{/* CSPを維持し、本文の解析前に表示判定する小さな外部スクリプト。 */}
+<script is:inline src="/scripts/splash.js"></script>
+
+<style lang="scss">
+  .splash {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--color-text);
+    // background: linear-gradient(135deg, #edf3ff, #fff 45%, #fff 55%, #faeaf1);
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background-image: url(../../assets/noise.png);
+      background-size: 256px 256px;
+      opacity: 0.1;
+    }
+
+    &::after {
+      content: '';
+      position: fixed;
+      // position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: linear-gradient(
+        45deg,
+        rgba(100, 151, 252, 0.2) 0%,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0) 80%,
+        rgba(208, 27, 99, 0.2) 100%
+      );
+      pointer-events: none;
+    }
+
+    &[open] {
+      display: grid;
+      place-items: center;
+      animation: splash-exit 400ms ease-in 1600ms forwards;
+
+      .splash__identity {
+        animation: splash-enter 700ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+      }
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+
+    &__identity {
+      display: grid;
+      justify-items: center;
+      gap: 0.5rem;
+    }
+
+    &__logo {
+      font-family: 'Grape Nuts', cursive;
+      font-size: clamp(4rem, 16vw, 8rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      text-indent: 0.06em;
+      color: transparent;
+      background: linear-gradient(45deg, #6497fc, #d01b63);
+      background-clip: text;
+    }
+
+    &__caption {
+      color: var(--color-muted);
+      font-family: 'Grape Nuts', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+    }
+  }
+
+  :global(html:has(#site-splash[open])) {
+    overflow: hidden;
+  }
+
+  @keyframes splash-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes splash-exit {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash[open],
+    .splash[open] .splash__identity {
+      animation: none;
+    }
+  }
+</style>
