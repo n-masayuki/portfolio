@@ -34,9 +34,11 @@
   --color-accent-border: #bfdbfe;
 
   --font-sans:
-    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', Segoe UI Symbol;
-  --font-sans-jp: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic', Meiryo, sans-serif;
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', Segoe UI Symbol;
+  --font-sans-jp:
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
+    Meiryo, sans-serif;
   --font-not-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
 
   // font sizes
@@ -195,3 +197,7 @@ mark {
   --mark-bg: linear-gradient(transparent 70%, var(--mark-bg-color) 0%);
   background: var(--mark-bg);
 }
+
+// @view-transition {
+//   navigation: auto;
+// }

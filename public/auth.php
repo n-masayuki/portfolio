@@ -183,6 +183,7 @@ function renderLogin(string $redirectPath, ?string $error): never
     label { font-size: .875rem; }
     input { box-sizing: border-box; width: 100%; padding: .7rem .75rem; border: 1px solid #cfd3da; border-radius: .4rem; font: inherit; }
     button { margin-top: .5rem; padding: .7rem 1.25rem; border: 0; border-radius: 99rem; color: #fff; background: #333947; font: inherit; cursor: pointer; }
+    button:hover { color: contrast-color(#fff); background-color: contrast-color(#333947); }
     .error, .setup { color: #b42318; font-size: .875rem; }
   </style>
 </head>
