@@ -117,13 +117,12 @@ function serveFile(string $path, string $cspNonce): never
 
     // .htaccessの拒否ルールは?path=経由やreadfile()には適用されない。
     // 要求パスと実体パスの両方で隠しファイル・ディレクトリを拒否する。
-    if ($basePath === false || $filePath === false || !str_starts_with($filePath, $basePath . DIRECTORY_SEPARATOR) || !is_file($filePath)
+    if (
+        $basePath === false || $filePath === false || !str_starts_with($filePath, $basePath . DIRECTORY_SEPARATOR) || !is_file($filePath)
         || preg_match('~(^|/)\.~', $path)
-        || preg_match('~(^|/)\.~', substr($filePath, strlen($basePath)))) {
-        http_response_code(404);
-        header('Content-Type: text/plain; charset=UTF-8');
-        echo 'Not Found';
-        exit;
+        || preg_match('~(^|/)\.~', substr($filePath, strlen($basePath)))
+    ) {
+        serveNotFound($cspNonce);
     }
 
     $mimeTypes = [
@@ -146,10 +145,7 @@ function serveFile(string $path, string $cspNonce): never
 
     // PHPソース、設定、バックアップなど、公開用ではない形式は配信しない。
     if (!isset($mimeTypes[$extension])) {
-        http_response_code(404);
-        header('Content-Type: text/plain; charset=UTF-8');
-        echo 'Not Found';
-        exit;
+        serveNotFound($cspNonce);
     }
 
     header('Content-Type: ' . $mimeTypes[$extension]);
@@ -164,6 +160,25 @@ function serveFile(string $path, string $cspNonce): never
 
     header('Content-Length: ' . (string) filesize($filePath));
     readfile($filePath);
+    exit;
+}
+
+function serveNotFound(string $cspNonce): never
+{
+    $notFoundPath = __DIR__ . '/404.html';
+    $html = is_file($notFoundPath) ? (string) file_get_contents($notFoundPath) : '';
+
+    http_response_code(404);
+    header('Content-Type: text/html; charset=UTF-8');
+
+    if ($html !== '') {
+        $html = preg_replace('/<script\b/i', '<script nonce="' . htmlspecialchars($cspNonce, ENT_QUOTES, 'UTF-8') . '"', $html);
+        echo $html;
+        exit;
+    }
+
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo 'Not Found';
     exit;
 }
 
