@@ -8,7 +8,6 @@ RewriteRule ^(.*)$ auth.php?path=/$1 [END,QSA]
 # Content-Security-Policyはリクエストごとのnonceが必要なため auth.php 側で発行する。
 # GTMが動的に挿入する子スクリプトにも対応できるよう、nonce + strict-dynamic方式にしている。
 # https://developers.google.com/tag-platform/security/guides/csp
-
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
