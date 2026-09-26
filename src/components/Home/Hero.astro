@@ -1,0 +1,23 @@
+---
+---
+
+<!-- Hello, I'm Niibori Masayuki. -->
+
+<section id="hero" class="section hero" aria-hidden="true">
+  <p class="intro">Hello, I'm Niibori Masayuki.</p>
+</section>
+
+<style lang="scss">
+  @use '../../styles/base' as *;
+  @use '../../styles/breakpoints' as breakpoint;
+
+  #hero {
+    .intro {
+      @extend .grape-nuts-regular;
+      font-size: 2rem;
+      text-align: center;
+    }
+    @media (max-width: breakpoint.$mobile) {
+    }
+  }
+</style>

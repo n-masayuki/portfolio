@@ -24,7 +24,7 @@ import { siGithub } from 'simple-icons';
 
 <style lang="scss">
   .github {
-    // padding-block: 1rem;
+    padding-block: 3rem;
     display: flex;
     justify-content: center;
   }
@@ -40,6 +40,11 @@ import { siGithub } from 'simple-icons';
     text-decoration: none;
     border-radius: var(--radius-infinite);
     background-color: var(--color-surface);
+
+    &:hover {
+      color: contrast-color(var(--color-text));
+      background-color: contrast-color(var(--color-surface));
+    }
 
     svg {
       --size: 1.5em;

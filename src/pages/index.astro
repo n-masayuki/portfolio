@@ -1,23 +1,30 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Splash from '../components/Home/Splash.astro';
 // import Hero from '../components/Home/Hero.astro';
 import About from '../components/Home/About.astro';
 import Skills from '../components/Home/Skills.astro';
 import WorksSection from '../components/Home/WorksSection.astro';
-import Github from '../components/Home/Github.astro';
 import Contact from '../components/Home/Contact.astro';
-import Splash from '../components/Home/Splash.astro';
+import Github from '../components/Home/Github.astro';
+// import Built from '../components/Home/Built.astro';
 
-const works = (await getCollection('works')).sort((a, b) => a.data.order - b.data.order);
+// スプラッシュの切り替え: true = 有効、false = 無効（公開サイトへの反映には再ビルドが必要）。
+const enableSplash = true;
+
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <Layout>
-  <Splash slot="splash" />
+  <Fragment slot="splash">{enableSplash && <Splash />}</Fragment>
   {/* <Hero /> */}
   <About />
   <Skills />
   <WorksSection works={works} />
   <Contact />
   <Github />
+  {/* <Built /> */}
 </Layout>

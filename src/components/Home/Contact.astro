@@ -42,7 +42,7 @@
       data-sitekey="0x4AAAAAAE_YlR1gYvDPg5XU"
       data-action="contact"
       data-size="flexible"
-      data-theme="auto"
+      data-theme="light"
     ></div>
 
     <p class="contact-form__error" role="alert" id="contact-form-error"></p>
@@ -223,17 +223,15 @@
   button {
     justify-self: start;
     min-width: 8rem;
-    margin-top: 0.75rem;
+    margin-top: 1rem;
     margin-inline: auto;
     // padding: 0.625rem 1.25rem;
     padding: 0.5rem 1.5rem;
-    color: var(--color-white);
-    border: none;
-    border-radius: var(--radius-infinite);
-    background-color: var(--color-gray-800);
     font-family: var(--font-sans);
     font-size: var(--font-size-sm);
-    font-weight: 700;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-infinite);
+    background-color: var(--color-surface);
     cursor: pointer;
 
     &:disabled {
@@ -246,7 +244,8 @@
     // }
 
     &:hover {
-      background-color: var(--color-gray-600);
+      color: contrast-color(var(--color-text));
+      background-color: contrast-color(var(--color-surface));
     }
 
     &:active {

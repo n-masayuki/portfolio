@@ -1,10 +1,15 @@
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href="/" aria-label="Portfolio home">
+    <a class="site-header__brand" href="/" aria-label="NM ホーム">
       NM
     </a>
 
-    <button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-controls="site-navigation"
+      aria-expanded="false"
+    >
       <span class="menu-toggle__label">メニュー</span>
       <span class="menu-toggle__icon" aria-hidden="true">
         <span class="menu-toggle__line"></span>
@@ -13,7 +18,11 @@
       </span>
     </button>
 
-    <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
+    <nav
+      id="site-navigation"
+      class="site-navigation"
+      aria-label="Main navigation"
+    >
       <ul class="site-nav">
         <li>
           <a href="/#about">
@@ -38,7 +47,13 @@
       </ul>
     </nav>
   </div>
-  <svg class="nav-glass-defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <svg
+    class="nav-glass-defs"
+    aria-hidden="true"
+    focusable="false"
+    width="0"
+    height="0"
+  >
     <defs>
       <filter id="nav-liquid-glass" color-interpolation-filters="sRGB">
         <feImage
@@ -106,7 +121,7 @@
 
   @keyframes header-shrink {
     from {
-      margin-top: 0;
+      margin-top: 0.5rem;
       max-width: 100%;
       border: 1px solid rgba(255, 255, 255, 0);
       border-radius: 0;
@@ -114,7 +129,7 @@
     }
 
     to {
-      margin-top: 16px;
+      margin-top: 1rem;
       max-width: var(--header-shrink-width);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: var(--radius-infinite);
@@ -141,6 +156,9 @@
 
     &__inner {
       --header-shrink-width: 34rem;
+      margin-top: 0.5rem;
+      margin-inline: auto;
+      padding-inline: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -148,30 +166,14 @@
       z-index: 1;
       width: 100%;
       min-height: 3rem;
-      margin: 0 auto;
-      padding-inline: 1.5rem;
       border-radius: 0;
       pointer-events: auto;
 
       @media (max-width: breakpoint.$mobile) {
         --header-shrink-width: 100%;
-        min-height: 1rem;
         padding-inline: 1rem;
+        min-height: 1rem;
       }
-
-      // &::before {
-      //   content: '';
-      //   position: absolute;
-      //   inset: 0;
-      //   z-index: 0;
-      //   border-radius: inherit;
-      //   background-color: rgb(255 255 255 / 0%);
-      //   pointer-events: none;
-
-      //   @media (max-width: breakpoint.$mobile) {
-      //     display: none;
-      //   }
-      // }
     }
 
     &__brand {
@@ -193,11 +195,6 @@
         font-size: 1.5rem;
         min-height: 1.5rem;
       }
-
-      // &:hover,
-      // &:focus-visible {
-      //   text-decoration-color: currentColor;
-      // }
     }
   }
 
@@ -210,8 +207,8 @@
     // min-height: 2.75rem;
     min-height: 1.5rem;
     padding: 0.5rem;
-    border: 0;
-    // border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    border-radius: var(--radius-infinite);
     color: var(--color-text);
     background: transparent;
     cursor: pointer;
@@ -221,6 +218,11 @@
       display: inline-flex;
       margin-right: -0.5rem;
       padding-block: 0;
+    }
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     &__label {
@@ -287,8 +289,8 @@
     .site-header__inner {
       animation: header-shrink cubic-bezier(0.16, 1, 0.3, 1) both;
       animation-timeline: scroll(root block);
-      animation-range: 0 80px;
-      // animation-range: 0 160px;
+      animation-range: 0 3rem;
+      // animation-range: 0 100px;
     }
   }
 
@@ -375,7 +377,8 @@
         transform: translateY(-0.75rem) scale(0.96);
         transition:
           opacity var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1),
-          transform var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1);
+          transform var(--transition-duration-slow)
+            cubic-bezier(0.16, 1, 0.3, 1);
 
         @media (max-width: breakpoint.$mobile) {
           gap: 0.5rem;
@@ -442,7 +445,8 @@
   // ハンバーガーボタンと、開閉するナビゲーションを取得する。
   // querySelector の型引数で、取得した要素の種類を TypeScript に伝える。
   const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-  const siteNavigation = document.querySelector<HTMLElement>('#site-navigation');
+  const siteNavigation =
+    document.querySelector<HTMLElement>('#site-navigation');
 
   // 要素が両方存在するときだけ、メニューのイベント処理を登録する。
   // 要素が見つからない場合に JavaScript エラーが起きるのを防ぐ。
@@ -491,7 +495,10 @@
     // Escape キーでもメニューを閉じられるようにする。
     // 閉じた後は、操作を始めたハンバーガーボタンへフォーカスを戻す。
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+      if (
+        event.key === 'Escape' &&
+        menuToggle.getAttribute('aria-expanded') === 'true'
+      ) {
         closeMenu();
         menuToggle.focus();
       }
@@ -540,8 +547,12 @@
 
   // ページ内のセクションと、それに対応するナビゲーションリンクを取得する。
   // セクションが画面に入ったとき、ヘッダーの対応リンクに aria-current を付けるために使う。
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('main [id]'));
-  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]'));
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>('main [id]'),
+  );
+  const navLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]'),
+  );
 
   // ページ上端ではナビゲーションを未選択にし、スクロール後から現在地を表示する。
   let hasScrolled = window.scrollY > 0;
@@ -566,7 +577,9 @@
     setActiveLink(null);
 
     // ヘッダーの高さ分だけ判定領域を下にずらす
-    const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 0;
+    const headerHeight =
+      document.querySelector('.site-header')?.getBoundingClientRect().height ??
+      0;
     const sectionMarkerOffsetPx = 32; // ヘッダー直下の判定帯のオフセット（px）
 
     // ヘッダー直下にあるsectionを取得して、スクロール直後にも現在地を更新する。
@@ -600,7 +613,9 @@
         });
 
         // 現在表示されているセクションのうち、ページ上で先にあるものを採用する。
-        const activeSection = sections.find((section) => visibleSectionIds.has(section.id));
+        const activeSection = sections.find((section) =>
+          visibleSectionIds.has(section.id),
+        );
 
         setActiveLink(activeSection?.id ?? null);
       },

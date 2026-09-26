@@ -1,5 +1,7 @@
 ---
 import '../styles/global.scss';
+import { getImage } from 'astro:assets';
+import noiseSource from '../assets/noise.png';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import GoogleTagManager from '../components/GoogleTagManager.astro';
@@ -17,6 +19,12 @@ const {
   pageUrl = new URL(Astro.url.pathname, Astro.site),
   ogImageUrl = new URL('/ogp.png', Astro.site),
 } = Astro.props;
+
+const noiseImage = await getImage({
+  src: noiseSource,
+  format: 'webp',
+  quality: 10,
+});
 ---
 
 <!doctype html>
@@ -41,13 +49,26 @@ const {
     {/* <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> */}
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" href="/fonts/grape-nuts-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="/fonts/montserrat-500.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link
+      rel="preload"
+      href="/fonts/grape-nuts-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/montserrat-500.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="preload" href={noiseImage.src} as="image" type="image/webp" />
   </head>
   <body>
     <GoogleTagManager noscript />
     <slot name="splash" />
-    <div class="site-shell">
+    <div class="site-shell" style={`--noise-image: url("${noiseImage.src}")`}>
       <Header />
       <main class="site-main">
         <slot />
@@ -76,7 +97,7 @@ const {
       width: 100%;
       height: 100%;
       z-index: 0;
-      background-image: url(../assets/noise.png);
+      background-image: var(--noise-image);
       background-size: 256px 256px;
       opacity: 0.1;
     }
@@ -118,54 +139,59 @@ const {
   gsap.registerPlugin(ScrollTrigger);
 
   // ユーザーが「動きの削減」を希望しているかどうかを判定する
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
 
   // 共通見出しを取得し、画面に入ったときだけアニメーションする
-  document.querySelectorAll<HTMLElement>('.section-heading__ja, .section-heading__en').forEach((heading) => {
-    if (prefersReducedMotion) return;
+  document
+    .querySelectorAll<HTMLElement>('.section-heading__ja, .section-heading__en')
+    .forEach((heading) => {
+      if (prefersReducedMotion) return;
 
-    const text = heading.textContent?.trim();
-    if (!text) return;
+      const text = heading.textContent?.trim();
+      if (!text) return;
 
-    // 見出し全体の読み上げを残したまま、表示用の文字だけ分割する
-    heading.setAttribute('aria-label', text);
-    heading.textContent = '';
+      // 見出し全体の読み上げを残したまま、表示用の文字だけ分割する
+      heading.setAttribute('aria-label', text);
+      heading.textContent = '';
 
-    // 各文字をspan要素に分割して、個別にアニメーションできるようにする
-    const characters = [...text].map((character) => {
-      const span = document.createElement('span');
-      span.textContent = character;
-      span.setAttribute('aria-hidden', 'true');
-      heading.append(span);
-      return span;
+      // 各文字をspan要素に分割して、個別にアニメーションできるようにする
+      const characters = [...text].map((character) => {
+        const span = document.createElement('span');
+        span.textContent = character;
+        span.setAttribute('aria-hidden', 'true');
+        heading.append(span);
+        return span;
+      });
+
+      // アニメーション開始前は各文字を少し下げて非表示にする
+      gsap.set(characters, {
+        display: 'inline-block',
+        opacity: 0,
+        y: '0.6em',
+      });
+
+      // 見出しがビューポートに入ったら、文字を順番に表示する
+      gsap.to(characters, {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        ease: 'power2.out',
+        stagger: 0.06,
+        scrollTrigger: {
+          trigger: heading,
+          start: 'top 89%',
+          once: true,
+          // markers: true,
+        },
+      });
     });
 
-    // アニメーション開始前は各文字を少し下げて非表示にする
-    gsap.set(characters, {
-      display: 'inline-block',
-      opacity: 0,
-      y: '0.6em',
-    });
-
-    // 見出しがビューポートに入ったら、文字を順番に表示する
-    gsap.to(characters, {
-      opacity: 1,
-      y: 0,
-      duration: 0.45,
-      ease: 'power2.out',
-      stagger: 0.06,
-      scrollTrigger: {
-        trigger: heading,
-        start: 'top 82%',
-        once: true,
-      },
-    });
-  });
-
-  // 各sectionを少し下からふわっと表示する
+  // 各section,要素を少し下からふわっと表示する
   document
     .querySelectorAll<HTMLElement>(
-      '.site-main > .section .intro, .site-main > .section .avatar, .site-main > .section .skills-grid, .site-main > .section .works-list, .site-main > .section .contact-form, .site-main > .section .github-link',
+      '.site-main > .section .intro, .site-main > .section .avatar, .site-main > .section .skills-grid, .skill-card, .site-main > .section .works-list, .work .site-main > .section .contact-form',
     )
     .forEach((section) => {
       if (prefersReducedMotion) return;
@@ -180,8 +206,33 @@ const {
           ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 88%',
+            start: 'top 89%',
             once: true,
+            // markers: true,
+          },
+        },
+      );
+    });
+
+  // 各section,要素を少し下からふわっと表示する
+  document
+    .querySelectorAll<HTMLElement>('.site-main > .section .github-link')
+    .forEach((section) => {
+      if (prefersReducedMotion) return;
+
+      gsap.fromTo(
+        section,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 90%',
+            once: true,
+            // markers: true,
           },
         },
       );

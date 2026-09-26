@@ -1,3 +1,5 @@
+@use '../styles/breakpoints' as breakpoint;
+
 // サイト全体の色
 // 日本語ゴシック系フォント
 // body の基本設定
@@ -81,7 +83,10 @@ html {
 }
 
 [id] {
-  scroll-margin-top: 2rem;
+  scroll-margin-top: 4rem;
+  @media (max-width: breakpoint.$mobile) {
+    scroll-margin-top: 2rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

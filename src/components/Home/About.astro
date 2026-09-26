@@ -1,6 +1,18 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import portrait from '../../assets/home/portrait.webp';
+
+const portraitSizes = '(max-width: 500px) 80px, (max-width: 1000px) 16vw, 160px';
+// CSSの $mobile: 767px と揃える。最大表示幅約123pxの2倍まで生成する。
+const mobilePortrait = await getImage({
+  src: portrait,
+  width: 246,
+  height: 328,
+  widths: [80, 128, 160, 246],
+  fit: 'cover',
+  position: 'center',
+  format: 'webp',
+});
 
 const careerStartYear = 2008;
 const careerOffset = 1;
@@ -20,7 +32,28 @@ const experienceYears = new Date().getFullYear() - careerStartYear - careerOffse
   </div>
 
   <figure class="avatar">
-    <Image src={portrait} alt="プロフィール画像" loading="eager" />
+    <picture>
+      <source
+        media="(max-width: 767px)"
+        type="image/webp"
+        srcset={mobilePortrait.srcSet.attribute}
+        sizes={portraitSizes}
+        width={246}
+        height={328}
+      />
+      <Image
+        src={portrait}
+        alt="プロフィール画像"
+        loading="eager"
+        width={160}
+        height={120}
+        widths={[160, 240, 320]}
+        sizes={portraitSizes}
+        fit="cover"
+        position="center"
+        format="webp"
+      />
+    </picture>
     <figcaption>Niibori Masayuki</figcaption>
   </figure>
 
@@ -48,13 +81,15 @@ const experienceYears = new Date().getFullYear() - careerStartYear - careerOffse
 
   #about {
     position: relative;
-    scroll-margin-top: 0; // 調整
-    padding-top: 5.5rem; // 調整
+    // scroll-margin-top: 0; // 調整
+    // padding-top: 20rem; // 調整
+    margin-block-start: 3rem;
 
     @media (max-width: breakpoint.$mobile) {
       --_m: max(0px, calc((100vw - 800px) / 2));
       margin-inline: calc(-1 * var(--_m));
       width: calc(100% + var(--_m) * 2);
+      margin-block-start: 0;
       padding-top: 2rem;
     }
 
