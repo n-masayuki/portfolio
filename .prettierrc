@@ -1,6 +1,6 @@
 {
   "plugins": ["prettier-plugin-astro"],
-  "printWidth": 120,
+  "printWidth": 80,
   "singleQuote": true,
   "semi": true
 }
