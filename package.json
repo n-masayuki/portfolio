@@ -43,5 +43,9 @@
     "sass": "^1.104.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
