@@ -115,7 +115,11 @@ function serveFile(string $path, string $cspNonce): never
     $basePath = realpath(__DIR__);
     $filePath = realpath(__DIR__ . $path);
 
-    if ($basePath === false || $filePath === false || !str_starts_with($filePath, $basePath . DIRECTORY_SEPARATOR) || !is_file($filePath)) {
+    // .htaccessの拒否ルールは?path=経由やreadfile()には適用されない。
+    // 要求パスと実体パスの両方で隠しファイル・ディレクトリを拒否する。
+    if ($basePath === false || $filePath === false || !str_starts_with($filePath, $basePath . DIRECTORY_SEPARATOR) || !is_file($filePath)
+        || preg_match('~(^|/)\.~', $path)
+        || preg_match('~(^|/)\.~', substr($filePath, strlen($basePath)))) {
         http_response_code(404);
         header('Content-Type: text/plain; charset=UTF-8');
         echo 'Not Found';
@@ -140,7 +144,15 @@ function serveFile(string $path, string $cspNonce): never
     ];
     $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
-    header('Content-Type: ' . ($mimeTypes[$extension] ?? 'application/octet-stream'));
+    // PHPソース、設定、バックアップなど、公開用ではない形式は配信しない。
+    if (!isset($mimeTypes[$extension])) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=UTF-8');
+        echo 'Not Found';
+        exit;
+    }
+
+    header('Content-Type: ' . $mimeTypes[$extension]);
 
     if ($extension === 'html') {
         // すべてのscript要素にnonceを付与し、strict-dynamicで信頼を伝播させる。

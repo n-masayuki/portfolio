@@ -56,10 +56,22 @@ Apacheで配信する場合は、`public/.htaccess` がビルド時に `dist/.ht
 Content-Security-PolicyなどのHTTPヘッダーを設定します。Apache以外のホスティングサービスでは、
 同じヘッダー設定をサービス側へ移行してください。
 
+Apache 2.4で`mod_rewrite`・`mod_headers`を有効にし、公開ディレクトリの
+`AllowOverride`で`Options FileInfo`を許可してください。
+本番のエックスサーバーでは`.htaccess`が利用できます。HTTP→HTTPS転送は、
+サーバーパネルのドメイン設定で「HTTPSに転送する」を有効にしてください。
+手順は[公式の常時SSL化マニュアル](https://www.xserver.ne.jp/manual/man_server_fullssl.php)を参照してください。
+HSTSはApacheのHTTPS接続判定またはサーバー側の`HTTPS=on`環境変数を条件に送信します。
+本番反映後はHTTPS応答に`Strict-Transport-Security`が付くことと、HTTPから転送されることを確認してください。
+`includeSubDomains`・`preload`は全サブドメインを含むHTTPS運用を確認してから検討してください。
+
 ## PHP認証
 
 Apache配信では、`public/.htaccess` が静的ファイルを含むすべてのリクエストを
 `auth.php`へ渡します。認証後だけ、ビルド成果物が配信されます。
+認証対象の応答には`Cache-Control: private, no-store`を設定します。
+隠しファイルと隠しディレクトリ、および`auth.php`の`$mimeTypes`にない拡張子は
+配信しません。新しいファイル形式を公開する場合は、この許可リストも更新してください。
 
 ### 初回設定
 

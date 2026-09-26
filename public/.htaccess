@@ -1,15 +1,46 @@
-# 公開ルートに配置した静的404ページを表示する。
+# Apache 2.4 / mod_rewrite / mod_headers を使用する。
+# AllowOverride で Options と FileInfo を許可すること。
+Options -Indexes -MultiViews
+
+# Apacheが検出した404に適用。auth.phpの404応答はPHP側で処理する。
 ErrorDocument 404 /404.html
 
 RewriteEngine On
+
+# 隠しファイル・隠しディレクトリは認証処理へ渡さず拒否する。
+# PHP経由のファイル取得はauth.phpでも制限する。
+RewriteRule (^|/)\. - [F,END]
+
+# 静的ファイルを含め、すべて認証処理を通す。
 RewriteRule ^auth\.php$ - [END]
-RewriteRule ^(.*)$ auth.php?path=/$1 [END,QSA]
+RewriteRule ^(.*)$ auth.php?path=/$1 [B,END,QSA]
 
 # Content-Security-Policyはリクエストごとのnonceが必要なため auth.php 側で発行する。
 # GTMが動的に挿入する子スクリプトにも対応できるよう、nonce + strict-dynamic方式にしている。
 # https://developers.google.com/tag-platform/security/guides/csp
-<IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-</IfModule>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+# CSPのframe-ancestors 'self'と揃え、重複する値を追加しない。
+Header onsuccess unset X-Frame-Options
+Header always set X-Frame-Options "SAMEORIGIN"
+
+# 旧式のXSSフィルターは無効化し、CSPで対策する。
+Header always set X-XSS-Protection "0"
+
+# クロスドメインポリシーの制御
+Header always set X-Permitted-Cross-Domain-Policies "none"
+
+# 認証済みコンテンツをブラウザーや共有キャッシュへ保存させない。
+Header onsuccess unset Cache-Control
+Header always set Cache-Control "private, no-store"
+Header onsuccess unset X-Powered-By
+Header always unset X-Powered-By
+
+# HTTPS応答のみで有効化。全サブドメインのHTTPS運用が未確認のため、
+# includeSubDomains / preloadは指定しない。
+# エックスサーバーなどのプロキシ構成では、サーバー側で設定された
+# HTTPS環境変数も参照する（クライアントの転送ヘッダーは直接信用しない）。
+# HTTP→HTTPS転送はサーバーパネルの「HTTPS転送設定」で有効にする。
+Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || reqenv('HTTPS') == 'on'"
