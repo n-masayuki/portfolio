@@ -32,7 +32,11 @@ const renderedWorks = works.map((work) => ({
       <article class="work" id={`work-${work.id}`}>
         <div class="work__thumbnail">
           {work.data.thumbnail ? (
-            <Image src={work.data.thumbnail} alt={`${work.data.title}のサムネイル`} loading="lazy" />
+            <Image
+              src={work.data.thumbnail}
+              alt={`${work.data.title}のサムネイル`}
+              loading="lazy"
+            />
           ) : (
             <span class="work__placeholder" aria-hidden="true">
               <span>port</span>
@@ -93,7 +97,12 @@ const renderedWorks = works.map((work) => ({
             </ul>
             <h3 id={`work-modal-title-${work.id}`}>{work.data.title}</h3>
             {work.data.url && (
-              <a class="work__url" href={work.data.url} target="_blank" rel="noopener noreferrer">
+              <a
+                class="work__url"
+                href={work.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {work.data.url}
                 <ExternalLink size={32} stroke-width={1} />
               </a>

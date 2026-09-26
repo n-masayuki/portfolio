@@ -12,21 +12,45 @@
 
   <p class="intro">以下のフォームからお気軽にご連絡ください。</p>
 
-  <form class="contact-form" action="https://formspree.io/f/moevejjl" method="POST">
+  <form
+    class="contact-form"
+    action="https://formspree.io/f/moevejjl"
+    method="POST"
+  >
     <label for="contact-form-name">
       お名前 <span aria-hidden="true">※</span>
     </label>
-    <input type="text" id="contact-form-name" name="name" autocomplete="name" maxlength="24" required />
+    <input
+      type="text"
+      id="contact-form-name"
+      name="name"
+      autocomplete="name"
+      maxlength="24"
+      required
+    />
 
     <label for="contact-form-email">
       メールアドレス <span aria-hidden="true">※</span>
     </label>
-    <input type="email" id="contact-form-email" name="email" autocomplete="email" maxlength="254" required />
+    <input
+      type="email"
+      id="contact-form-email"
+      name="email"
+      autocomplete="email"
+      maxlength="254"
+      required
+    />
 
     <label for="contact-form-message">
       お問い合わせ内容 <span aria-hidden="true">※</span>
     </label>
-    <textarea id="contact-form-message" name="message" maxlength="500" placeholder="500文字以内" required></textarea>
+    <textarea
+      id="contact-form-message"
+      name="message"
+      maxlength="500"
+      placeholder="500文字以内"
+      required
+    ></textarea>
 
     <p class="character-count" aria-live="polite">
       <span id="contact-form-message-count">0</span> / 500文字
@@ -50,12 +74,21 @@
   </form>
 </section>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script
+  is:inline
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+></script>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('.contact-form');
-  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const errorMessage = document.querySelector<HTMLElement>('#contact-form-error');
+  const submitButton = form?.querySelector<HTMLButtonElement>(
+    'button[type="submit"]',
+  );
+  const errorMessage = document.querySelector<HTMLElement>(
+    '#contact-form-error',
+  );
 
   if (form && submitButton && errorMessage) {
     form.addEventListener('submit', async (event) => {
@@ -82,7 +115,11 @@
         errorMessage.textContent =
           '送信を完了できませんでした。通信環境や入力内容を確認し、認証後にもう一度送信してください。';
         // 再送時には、新しい Turnstile トークンを取得する。
-        const turnstile = (window as Window & { turnstile?: { reset: (container: HTMLElement) => void } }).turnstile;
+        const turnstile = (
+          window as Window & {
+            turnstile?: { reset: (container: HTMLElement) => void };
+          }
+        ).turnstile;
         const widget = form.querySelector<HTMLElement>('.cf-turnstile');
         if (turnstile && widget) turnstile.reset(widget);
       } finally {
@@ -94,8 +131,12 @@
   }
 
   // メッセージ入力欄の文字数をリアルタイムでカウントするためのスクリプト
-  const message = document.querySelector<HTMLTextAreaElement>('#contact-form-message');
-  const messageCount = document.querySelector<HTMLElement>('#contact-form-message-count');
+  const message = document.querySelector<HTMLTextAreaElement>(
+    '#contact-form-message',
+  );
+  const messageCount = document.querySelector<HTMLElement>(
+    '#contact-form-message-count',
+  );
 
   if (message && messageCount) {
     const updateMessageCount = () => {
@@ -227,6 +268,7 @@
     margin-inline: auto;
     // padding: 0.625rem 1.25rem;
     padding: 0.5rem 1.5rem;
+    color: var(--color-text);
     font-family: var(--font-sans);
     font-size: var(--font-size-sm);
     border: 1px solid var(--color-gray-200);
