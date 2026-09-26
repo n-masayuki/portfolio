@@ -68,14 +68,14 @@ serveFile($requestedPath, $cspNonce);
 // https://developers.google.com/tag-platform/security/guides/csp
 function buildCsp(string $nonce): string
 {
-    $scriptSrc = "'self' 'nonce-{$nonce}' 'strict-dynamic' https://challenges.cloudflare.com https://www.googletagmanager.com https://tagmanager.google.com";
+    $scriptSrc = "'self' 'nonce-{$nonce}' 'strict-dynamic' https://challenges.cloudflare.com https://www.googletagmanager.com https://tagmanager.google.com https://*.clarity.ms";
 
     return "default-src 'self'; "
         . "script-src {$scriptSrc}; "
         . "style-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://tagmanager.google.com https://fonts.googleapis.com; "
-        . "img-src 'self' data: https://challenges.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com; "
+        . "img-src 'self' data: https://challenges.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com https://*.clarity.ms https://c.bing.com; "
         . "font-src 'self' data: https://fonts.gstatic.com; "
-        . "connect-src 'self' https://challenges.cloudflare.com https://formspree.io https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; "
+        . "connect-src 'self' https://challenges.cloudflare.com https://formspree.io https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.clarity.ms https://c.bing.com; "
         . "frame-src https://challenges.cloudflare.com https://www.googletagmanager.com; "
         . "form-action 'self' https://formspree.io; "
         . "base-uri 'self'; "
