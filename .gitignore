@@ -30,6 +30,6 @@ docs/
 .idea/
 
 # private files
-portrait.webp
-cosmic-plus.png
-cosmic-relations.png
+src/assets/home/portrait.webp
+src/assets/works/cosmic-plus.png
+src/assets/works/cosmic-relations.png
