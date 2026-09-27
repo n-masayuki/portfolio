@@ -30,5 +30,6 @@ docs/
 .idea/
 
 # private files
+src/content/works/*
 src/assets/home/*
 src/assets/works/*
