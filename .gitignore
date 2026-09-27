@@ -33,3 +33,9 @@ docs/
 src/content/works/*
 src/assets/home/*
 src/assets/works/*
+
+# sftp configuration
+sftp.json
+
+# copilot instructions
+copilot-instructtions.md
