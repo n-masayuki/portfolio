@@ -28,3 +28,8 @@ docs/
 
 # jetbrains setting folder
 .idea/
+
+# private files
+portrait.webp
+cosmic-plus.png
+cosmic-relations.png
