@@ -30,5 +30,5 @@ docs/
 .idea/
 
 # private files
-src/assets/home/*
-src/assets/works/*
+src/assets/home/*.{webp,png,jpg,svg}
+src/assets/works/*.{webp,png,jpg,svg}
