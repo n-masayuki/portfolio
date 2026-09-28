@@ -60,7 +60,7 @@
       border: 1px solid rgba(255, 255, 255, 0);
       border-radius: 0;
       box-shadow: 0 0 0 rgb(15 23 42 / 0%);
-      background-color: rgba(255, 255, 255, 0);
+      background-color: transparent;
       backdrop-filter: blur(0px);
     }
 
@@ -236,18 +236,6 @@
     }
   }
 
-  // @keyframes header-glass {
-  //   from {
-  //     // background-color: rgb(255 255 255 / 0%);
-  //     backdrop-filter: blur(0);
-  //   }
-
-  //   to {
-  //     // background-color: rgb(255 255 255 / 80%);
-  //     backdrop-filter: blur(8px);
-  //   }
-  // }
-
   .site-nav {
     position: relative;
     isolation: isolate;
@@ -412,13 +400,6 @@
       transition: none;
     }
   }
-
-  // .glass {
-  //   background-color: rgba(255, 255, 255, 0.06);
-  //   // border: 1px solid rgba(255, 255, 255, 0.8);
-  //   backdrop-filter: blur(16px);
-  //   transition: backdrop-filter 240ms ease;
-  // }
 </style>
 
 <script>
@@ -510,7 +491,6 @@
 
     // ページ読み込み時点ですでにデスクトップ幅だった場合も状態を初期化する。
     if (desktopMediaQuery.matches) closeMenu();
-
   }
 
   // ページ内のセクションと、それに対応するナビゲーションリンクを取得する。
