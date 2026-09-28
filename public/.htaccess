@@ -11,6 +11,9 @@ RewriteEngine On
 # PHP経由のファイル取得はauth.phpでも制限する。
 RewriteRule (^|/)\. - [F,END]
 
+# 検索エンジンのクロール用ファイルは認証を通さず直接配信する。
+RewriteRule ^(sitemap\.xml|robots\.txt)$ - [END]
+
 # 静的ファイルを含め、すべて認証処理を通す。
 RewriteRule ^auth\.php$ - [END]
 RewriteRule ^(.*)$ auth.php?path=/$1 [B,END,QSA]

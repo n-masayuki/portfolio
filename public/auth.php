@@ -202,16 +202,84 @@ function renderLogin(string $redirectPath, ?string $error): never
   <meta name="robots" content="noindex, nofollow">
   <title>ログイン - Portfolio</title>
   <style>
-    :root { color: #333947; background: #f5f6f8; font-family: sans-serif; }
-    body { display: grid; min-height: 100vh; margin: 0; place-items: center; }
-    main { box-sizing: border-box; width: min(100% - 2rem, 26rem); padding: 2rem; border-radius: 1rem; background: #fff; box-shadow: 0 1rem 3rem #0f172a1a; }
-    h1 { margin: 0 0 1.5rem; font-size: 1.25rem; }
-    form { display: grid; gap: .75rem; }
-    label { font-size: .875rem; }
-    input { box-sizing: border-box; width: 100%; padding: .7rem .75rem; border: 1px solid #cfd3da; border-radius: .4rem; font: inherit; }
-    button { margin-top: .5rem; padding: .7rem 1.25rem; border: 0; border-radius: 99rem; color: #fff; background: #333947; font: inherit; cursor: pointer; }
-    button:hover { color: contrast-color(#fff); background-color: contrast-color(#333947); }
-    .error, .setup { color: #b42318; font-size: .875rem; }
+    :root {
+    --color-white: #fff;
+    --color-black: #111827;
+    --color-red: #ef4444;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-700: #374151;
+    --color-surface: #f8fafc;
+    --color-text: var(--color-black);
+    --color-background: var(--color-white);
+    --font-not-sans-jp: "Noto Sans JP", "Noto Sans JP Variable", sans-serif;
+    --radius-md: .5rem;
+    --radius-infinite: calc(1px / 0);
+    --transition-duration-normal: 240ms;
+    }
+    body {
+    display: grid;
+    min-height: 100vh;
+    margin: 0;
+    place-items: center;
+    }
+    main {
+    box-sizing: border-box;
+    width: min(100% - 2rem, 26rem);
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: var(--color-background);
+    box-shadow: 0 0.75rem 1.5rem #0f172a1f;
+    }
+    h1 {
+    margin: 0 0 1.5rem;
+    font-size: var(--font-size-xl);
+    }
+    form {
+    display: grid;
+    gap: 0.75rem;
+    }
+    label {
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+    }
+    input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font: inherit;
+    }
+    button {
+    margin-top: 1rem;
+    margin-inline: auto;
+    padding: 0.5rem 1.5rem;
+    justify-self: start;
+    min-width: 8rem;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-infinite);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition:
+        color var(--transition-duration-normal) ease,
+        background-color var(--transition-duration-normal) ease,
+        border-color var(--transition-duration-normal) ease,
+        text-decoration-color var(--transition-duration-normal) ease,
+        text-underline-offset var(--transition-duration-normal) ease,
+        opacity var(--transition-duration-normal) ease;
+    }
+    button:hover {
+    color: contrast-color(var(--color-text));
+    background-color: contrast-color(var(--color-surface));
+    }
+    .error,
+    .setup {
+    color: var(--color-red);
+    font-size: var(--font-size-sm);
+    }
   </style>
 </head>
 <body>
