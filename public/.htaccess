@@ -14,6 +14,9 @@ RewriteRule (^|/)\. - [F,END]
 # 検索エンジンのクロール用ファイルは認証を通さず直接配信する。
 RewriteRule ^(sitemap\.xml|robots\.txt)$ - [END]
 
+# ホーム画面およびブラウザーのアイコンは未認証でも直接配信する。
+RewriteRule ^(apple-touch-icon\.png|favicon\.ico)$ - [END]
+
 # 静的ファイルを含め、すべて認証処理を通す。
 RewriteRule ^auth\.php$ - [END]
 RewriteRule ^(.*)$ auth.php?path=/$1 [B,END,QSA]

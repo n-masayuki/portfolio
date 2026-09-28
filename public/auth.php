@@ -222,6 +222,7 @@ function renderLogin(string $redirectPath, ?string $error): never
     min-height: 100vh;
     margin: 0;
     place-items: center;
+    font-family: var(--font-not-sans-jp);
     }
     main {
     box-sizing: border-box;
