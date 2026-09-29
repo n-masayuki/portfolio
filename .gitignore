@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# local HTTPS certificates
+localhost*.pem
+
 # authentication credentials
 private/users.php
 
