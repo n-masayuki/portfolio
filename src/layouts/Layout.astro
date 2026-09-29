@@ -168,6 +168,7 @@ const noiseImage = await getImage({
       gsap.set(characters, {
         display: 'inline-block',
         opacity: 0,
+        filter: 'blur(4px)',
         y: '0.6em',
       });
 
@@ -175,7 +176,8 @@ const noiseImage = await getImage({
       gsap.to(characters, {
         opacity: 1,
         y: 0,
-        duration: 0.45,
+        filter: 'blur(0px)',
+        duration: 0.8,
         ease: 'power2.out',
         stagger: 0.06,
         scrollTrigger: {
@@ -197,10 +199,11 @@ const noiseImage = await getImage({
 
       gsap.fromTo(
         section,
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 24, filter: 'blur(4px)' },
         {
           opacity: 1,
           y: 0,
+          filter: 'blur(0px)',
           duration: 0.8,
           ease: 'power2.out',
           scrollTrigger: {
