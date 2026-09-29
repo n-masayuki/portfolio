@@ -53,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $loginError = 'IDまたはパスワードが正しくありません。';
+    $loginError = 'パスワードが正しくありません。';
 }
 
 // 認証されていない場合はログインフォームを表示する
 if (empty($_SESSION['authenticated'])) {
-    renderLogin($requestedPath, $loginError ?? null);
+    renderLogin($requestedPath, $loginError ?? null, $cspNonce);
     exit;
 }
 
@@ -183,7 +183,7 @@ function serveNotFound(string $cspNonce): never
 }
 
 // ログインフォームをレンダリングする
-function renderLogin(string $redirectPath, ?string $error): never
+function renderLogin(string $redirectPath, ?string $error, string $cspNonce): never
 {
     $hasUsers = is_file(USERS_FILE) && loadUsers() !== [];
     $safeRedirect = htmlspecialchars($redirectPath, ENT_QUOTES, 'UTF-8');
@@ -206,13 +206,20 @@ function renderLogin(string $redirectPath, ?string $error): never
     --color-white: #fff;
     --color-black: #111827;
     --color-red: #ef4444;
+    --color-blue-900: #0017c1;
     --color-gray-200: #e5e7eb;
     --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
     --color-gray-700: #374151;
     --color-surface: #f8fafc;
     --color-text: var(--color-black);
     --color-background: var(--color-white);
     --font-not-sans-jp: "Noto Sans JP", "Noto Sans JP Variable", sans-serif;
+    --font-size-xxs: 0.625rem;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-xl: 1.25rem;
     --radius-md: .5rem;
     --radius-infinite: calc(1px / 0);
     --transition-duration-normal: 240ms;
@@ -226,15 +233,22 @@ function renderLogin(string $redirectPath, ?string $error): never
     }
     main {
     box-sizing: border-box;
-    width: min(100% - 2rem, 26rem);
+    width: min(100% - 4rem, 24rem);
+    min-width: 256px;
     padding: 2rem;
-    border-radius: 1rem;
-    background-color: var(--color-background);
-    box-shadow: 0 0.75rem 1.5rem #0f172a1f;
+    color: var(--color-text);
     }
     h1 {
-    margin: 0 0 1.5rem;
-    font-size: var(--font-size-xl);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    place-self: center;
+    font-size: var(--font-size-md);
+    font-weight: normal;
+    }
+    h1 svg {
+    margin-right: 0.5rem;
+    color: var(--color-text);
     }
     form {
     display: grid;
@@ -245,36 +259,100 @@ function renderLogin(string $redirectPath, ?string $error): never
     font-size: var(--font-size-sm);
     }
     input {
-    box-sizing: border-box;
     width: 100%;
     padding: 0.7rem 0.75rem;
     border: 1px solid var(--color-gray-300);
     border-radius: var(--radius-md);
+    box-sizing: border-box;
     font: inherit;
     }
-    button {
+    .password-field {
+    position: relative;
+    }
+    .password-field input {
+    padding: 0.7rem 2.75rem 0.7rem 1rem;
+    }
+    .password-field label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    color: var(--color-gray-400);
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition:
+        top var(--transition-duration-normal) ease,
+        transform var(--transition-duration-normal) ease,
+        font-size var(--transition-duration-normal) ease;
+    }
+    .password-field input::placeholder {
+    color: transparent;
+    }
+    .password-field:focus-within label,
+    .password-field input:not(:placeholder-shown) + label {
+    top: -0.5rem;
+    padding-inline: .25rem;
+    color: var(--color-gray-400);
+    font-size: var(--font-size-xxs);
+    transform: none;
+    background-color: white;
+    }
+    .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.35rem;
+    display: grid;
+    min-width: 0;
+    margin: 0;
+    padding: 0.4rem;
+    transform: translateY(-50%);
+    place-items: center;
+    color: var(--color-gray-700);
+    border: 0;
+    border-radius: var(--radius-infinite);
+    background: transparent;
+    cursor: pointer;
+    }
+    .password-toggle:hover {
+    color: var(--color-black);
+    background: var(--color-gray-200);
+    }
+    .password-toggle:focus-visible {
+    outline: 2px solid var(--color-blue-900);
+    outline-offset: 1px;
+    }
+    .password-toggle[aria-pressed="true"] .password-icon--show,
+    .password-toggle[aria-pressed="false"] .password-icon--hide {
+    display: none;
+    }
+    .login-button {
     margin-top: 1rem;
     margin-inline: auto;
     padding: 0.5rem 1.5rem;
     justify-self: start;
     min-width: 8rem;
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-infinite);
-    color: var(--color-text);
-    background-color: var(--color-surface);
+    color: var(--color-white);
     font-size: var(--font-size-sm);
+    outline: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-infinite);
+    border: 0;
+    background-color: var(--color-blue-900);
     cursor: pointer;
     transition:
         color var(--transition-duration-normal) ease,
+        font-weight var(--transition-duration-normal) ease,
         background-color var(--transition-duration-normal) ease,
-        border-color var(--transition-duration-normal) ease,
+        outline var(--transition-duration-normal) ease,
         text-decoration-color var(--transition-duration-normal) ease,
         text-underline-offset var(--transition-duration-normal) ease,
         opacity var(--transition-duration-normal) ease;
     }
-    button:hover {
-    color: contrast-color(var(--color-text));
-    background-color: contrast-color(var(--color-surface));
+    .login-button:hover,
+    .login-button:focus-visible,
+    .login-button:active {
+    color: var(--color-blue-900);
+    font-weight: bold;
+    outline: 1px solid var(--color-blue-900);
+    background-color: contrast-color(var(--color-blue-900));
     }
     .error,
     .setup {
@@ -285,16 +363,32 @@ function renderLogin(string $redirectPath, ?string $error): never
 </head>
 <body>
   <main>
-    <h1>ログイン</h1>
+    <h1><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock preview-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> ログイン</h1>
     {$setupHtml}
     {$errorHtml}
     <form method="post" action="{$authEndpoint}">
       <input type="hidden" name="redirect" value="{$safeRedirect}">
-      <label for="password">パスワード</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" required>
-      <button type="submit">ログイン</button>
+            <div class="password-field">
+                <input id="password" name="password" type="password" placeholder="パスワード" autocomplete="current-password" required>
+                <label for="password">パスワード</label>
+                <button class="password-toggle" type="button" aria-label="パスワードを表示" aria-pressed="false">
+                    <svg class="password-icon--show" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.1 12a1 1 0 0 1 0-.2 10.6 10.6 0 0 1 19.8 0 1 1 0 0 1 0 .2 10.6 10.6 0 0 1-19.8 0Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="password-icon--hide" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-.722-3.25"/><path d="M2 8a10.645 10.645 0 0 0 20 0"/><path d="m20 15-1.726-2.05"/><path d="m4 15 1.726-2.05"/><path d="m9 18 .722-3.25"/></svg>
+                </button>
+            </div>
+      <button class="login-button" type="submit">ログイン </button>
     </form>
   </main>
+    <script nonce="{$cspNonce}">
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.querySelector('.password-toggle');
+        passwordToggle.addEventListener('click', () => {
+            const isVisible = passwordInput.type === 'text';
+            passwordInput.type = isVisible ? 'password' : 'text';
+            passwordToggle.setAttribute('aria-pressed', String(!isVisible));
+            passwordToggle.setAttribute('aria-label', isVisible ? 'パスワードを表示' : 'パスワードを隠す');
+        });
+    </script>
 </body>
 </html>
 HTML;
