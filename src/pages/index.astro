@@ -18,7 +18,33 @@ const works = (await getCollection('works')).sort(
 );
 ---
 
-<Layout>
+<Layout
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    name: 'Niibori Masayuki - Portfolio',
+    description:
+      'ポートフォリオサイト。ウェブ開発とデザインのスキルを紹介しています。',
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Niibori Masayuki',
+      url: new URL('/', Astro.site).href,
+    },
+    hasPart: works.map((work) => ({
+      '@type': 'CreativeWork',
+      name: work.data.title,
+      description: `${work.data.title}の制作実績。${work.data.category.join('、')}に関するポートフォリオです。`,
+      creator: {
+        '@type': 'Person',
+        name: 'Niibori Masayuki',
+      },
+      temporalCoverage: work.data.period,
+      keywords: [...work.data.category, ...work.data.technologies],
+      ...(work.data.url ? { sameAs: work.data.url } : {}),
+    })),
+  }}
+>
   <Fragment slot="splash">{enableSplash && <Splash />}</Fragment>
   {/* <Hero /> */}
   <About />

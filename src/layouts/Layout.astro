@@ -11,6 +11,8 @@ interface Props {
   description?: string;
   pageUrl?: URL;
   ogImageUrl?: URL;
+  structuredData?: Record<string, unknown>;
+  noindex?: boolean;
 }
 
 const {
@@ -18,6 +20,14 @@ const {
   description = 'ポートフォリオサイト。ウェブ開発とデザインのスキルを紹介しています。',
   pageUrl = new URL(Astro.url.pathname, Astro.site),
   ogImageUrl = new URL('/ogp.png', Astro.site),
+  noindex = false,
+  structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: pageUrl.href,
+  },
 } = Astro.props;
 
 const noiseImage = await getImage({
@@ -35,6 +45,7 @@ const noiseImage = await getImage({
     <meta name="viewport" content="width=device-width" />
     {/* <meta name="robots" content="noindex, nofollow" /> */}
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="author" content="Niibori Masayuki" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
@@ -44,6 +55,11 @@ const noiseImage = await getImage({
     <meta property="og:url" content={pageUrl.href} />
     <meta property="og:image" content={ogImageUrl.href} />
     <meta property="og:image:alt" content="Niibori Masayukiのポートフォリオ" />
+    <link rel="canonical" href={pageUrl.href} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    ></script>
     <title>{title}</title>
     {/* <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> */}
     <link rel="icon" href="/favicon.ico" />

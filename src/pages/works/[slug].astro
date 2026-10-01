@@ -2,9 +2,14 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
+// 環境変数が「true」に設定されている場合のみ、worksページの静的パスを生成します。
 export async function getStaticPaths() {
+  if (import.meta.env.GENERATE_WORK_PAGES !== 'true') return [];
+
+  // すべてのworksコレクションを取得します。
   const works = await getCollection('works');
 
+  // 各workの静的パスを生成します。
   return works.map((work) => ({
     params: { slug: work.id },
     props: { work },
@@ -12,10 +17,32 @@ export async function getStaticPaths() {
 }
 
 const { work } = Astro.props;
-const { Content } = await render(work);
+const { Content } = await render(work); // Markdownコンテンツをレンダリングします。
+const pageUrl = new URL(`/works/${work.id}`, Astro.site);
+const description = `${work.data.title}の制作実績。${work.data.category.join('、')}に関するポートフォリオです。`;
 ---
 
-<Layout>
+<Layout
+  title={`${work.data.title} - Niibori Masayuki`}
+  description={description}
+  pageUrl={pageUrl}
+  noindex
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: work.data.title,
+    description,
+    url: pageUrl.href,
+    creator: {
+      '@type': 'Person',
+      name: 'Niibori Masayuki',
+      url: new URL('/', Astro.site).href,
+    },
+    dateCreated: work.data.period,
+    keywords: [...work.data.category, ...work.data.technologies],
+    ...(work.data.url ? { sameAs: work.data.url } : {}),
+  }}
+>
   <article>
     <p>{work.data.category}</p>
     <h1>{work.data.title}</h1>
@@ -24,14 +51,18 @@ const { Content } = await render(work);
     <section aria-labelledby="role-heading">
       <h2 id="role-heading">Role</h2>
       <ul>
-        {work.data.role.map((item) => <li>{item}</li>)}
+        {work.data.role.map((item) => (
+          <li>{item}</li>
+        ))}
       </ul>
     </section>
 
     <section aria-labelledby="technologies-heading">
       <h2 id="technologies-heading">Technologies</h2>
       <ul>
-        {work.data.technologies.map((item) => <li>{item}</li>)}
+        {work.data.technologies.map((item) => (
+          <li>{item}</li>
+        ))}
       </ul>
     </section>
 

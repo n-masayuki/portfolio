@@ -6,9 +6,15 @@ import Layout from '../../layouts/Layout.astro';
 <Layout
   title="お問い合わせありがとうございます - Portfolio"
   description="お問い合わせを受け付けました。ご連絡いただきありがとうございます。"
+  noindex
 >
   <section class="section thanks" aria-labelledby="thanks-heading">
-    <CircleCheck class="thanks__icon" size={56} stroke-width={1.5} aria-hidden="true" />
+    <CircleCheck
+      class="thanks__icon"
+      size={56}
+      stroke-width={1.5}
+      aria-hidden="true"
+    />
     <p class="thanks__en" aria-hidden="true">
       Thank you!
     </p>
@@ -18,7 +24,9 @@ import Layout from '../../layouts/Layout.astro';
       <br />
       内容を確認のうえ、ご入力いただいたメールアドレスへご連絡いたします。
     </p>
-    <p class="thanks__note break-keep">お問い合わせの内容によっては、お答えできない場合がございます。</p>
+    <p class="thanks__note break-keep">
+      お問い合わせの内容によっては、お答えできない場合がございます。
+    </p>
     <a class="thanks__link" href="/">
       トップページへ戻る
     </a>
