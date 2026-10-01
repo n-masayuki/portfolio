@@ -29,6 +29,17 @@ npm install
 npm run dev
 ```
 
+### ローカル HTTPS（任意）
+
+HTTPSでの動作確認には、mkcertをインストールしてローカル認証局を信頼させた後、リポジトリのルートで証明書を生成します。mkcertのインストール方法は[公式README](https://github.com/FiloSottile/mkcert#installation)を参照してください。
+
+```sh
+mkcert -install
+mkcert localhost 127.0.0.1 ::1
+```
+
+生成された`localhost+2.pem`と`localhost+2-key.pem`が両方ある場合、開発サーバーは`https://localhost:4321`で起動します。どちらかがない場合はHTTPで起動します。証明書と秘密鍵はマシンごとに生成し、Gitへ登録しないでください。
+
 本番ビルドを確認します。
 
 ```sh
