@@ -1,7 +1,9 @@
 ---
-import { Plus, ExternalLink, X } from '@lucide/astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { Plus, ExternalLink as ExternalLinkIcon, X } from '@lucide/astro';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import ExternalLink from '../ui/ExternalLink.astro';
 
 interface Props {
   works: CollectionEntry<'works'>[];
@@ -14,16 +16,7 @@ const renderedWorks = works.map((work) => ({
 ---
 
 <section id="works" class="section" aria-labelledby="works-heading">
-  <div class="section-heading">
-    <div class="section-heading__ja-en-wrapper">
-      <h2 id="works-heading" class="section-heading__ja">
-        開発履歴
-      </h2>
-      <p class="section-heading__en" aria-hidden="true">
-        Works
-      </p>
-    </div>
-  </div>
+  <SectionHeading id="works-heading" title="開発履歴" english="Works" />
 
   <p class="intro">これまでに携わったWebサイトの制作・開発実績を紹介します。</p>
 
@@ -36,6 +29,8 @@ const renderedWorks = works.map((work) => ({
               src={work.data.thumbnail}
               alt={`${work.data.title}のサムネイル`}
               loading="lazy"
+              widths={[192, 384, 640, 960, 1200, 1440]}
+              sizes="(max-width: 767px) calc(100vw - 6rem - 2px), 12rem"
             />
           ) : (
             <span class="work__placeholder" aria-hidden="true">
@@ -97,15 +92,10 @@ const renderedWorks = works.map((work) => ({
             </ul>
             <h3 id={`work-modal-title-${work.id}`}>{work.data.title}</h3>
             {work.data.url && (
-              <a
-                class="work__url"
-                href={work.data.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <ExternalLink class="work__url" href={work.data.url}>
                 {work.data.url}
-                <ExternalLink size={32} stroke-width={1} />
-              </a>
+                <ExternalLinkIcon size={32} stroke-width={1} />
+              </ExternalLink>
             )}
             <p class="work__period">{work.data.period}</p>
           </header>

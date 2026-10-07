@@ -1,25 +1,24 @@
 ---
-import { ExternalLink } from '@lucide/astro';
+import { ExternalLink as ExternalLinkIcon } from '@lucide/astro';
 import { siGithub } from 'simple-icons';
+import ExternalLink from '../ui/ExternalLink.astro';
 ---
 
 <section id="github" class="section github" aria-labelledby="github-heading">
   <h2 id="github-heading" class="visually-hidden">
     GitHub
   </h2>
-  <a
+  <ExternalLink
     class="github-link"
     href="https://github.com/n-masayuki"
     aria-label="GitHub"
-    target="_blank"
-    rel="noopener noreferrer"
   >
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d={siGithub.path} fill="currentColor" />
     </svg>
     View on GitHub
-    <ExternalLink size={32} stroke-width={1} />
-  </a>
+    <ExternalLinkIcon size={32} stroke-width={1} />
+  </ExternalLink>
 </section>
 
 <style lang="scss">
