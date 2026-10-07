@@ -208,7 +208,7 @@ const noiseImage = await getImage({
   // 各section,要素を少し下からふわっと表示する
   document
     .querySelectorAll<HTMLElement>(
-      '.site-main > .section .intro, .site-main > .section .avatar, .site-main > .section .skills-grid, .skill-card, .site-main > .section .works-list, .work .site-main > .section .contact-form',
+      '.intro, .avatar, .score-share, .skills-grid, .skill-card,.works-list, .contact-form',
     )
     .forEach((section) => {
       if (prefersReducedMotion) return;
@@ -232,26 +232,24 @@ const noiseImage = await getImage({
       );
     });
 
-  document
-    .querySelectorAll<HTMLElement>('.site-main > .section .github-link')
-    .forEach((section) => {
-      if (prefersReducedMotion) return;
+  document.querySelectorAll<HTMLElement>('.github-link').forEach((section) => {
+    if (prefersReducedMotion) return;
 
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 92%',
-            once: true,
-            // markers: true,
-          },
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 24 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 92%',
+          once: true,
+          // markers: true,
         },
-      );
-    });
+      },
+    );
+  });
 </script>
