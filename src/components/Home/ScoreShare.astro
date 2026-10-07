@@ -1,0 +1,136 @@
+---
+import { Image } from 'astro:assets';
+import ExternalLink from '../ui/ExternalLink.astro';
+import { ExternalLink as ExternalLinkIcon } from '@lucide/astro';
+import ogLapras from '../../assets/home/og.lapras.png';
+
+// 元画像の幅1200pxまで配信する。最大表示幅での@2xには2400pxの素材が必要。
+const sizes = '(min-width: 1200px) 1200px, 100vw';
+---
+
+<div class="score-share">
+  <figure>
+    <ExternalLink
+      class="score-share__link"
+      href="https://lapras.com/share?k=073d901d2678"
+    >
+      <Image
+        src={ogLapras}
+        alt="キャリア市場価値レポート"
+        loading="eager"
+        width={1200}
+        height={630}
+        widths={[320, 640, 960, 1200]}
+        sizes={sizes}
+        format="webp"
+      />
+      <figcaption>
+        強みファクター診断 / LAPRAS（ラプラス）2026.10.08 更新
+        <span class="score-share__icon" aria-hidden="true">
+          <ExternalLinkIcon size={12} stroke-width={1} />
+        </span>
+      </figcaption>
+    </ExternalLink>
+  </figure>
+</div>
+
+<style lang="scss">
+  @use '../../styles/base' as *;
+  @use '../../styles/breakpoints' as breakpoint;
+
+  @property --score-share-progress {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
+
+  .score-share {
+    position: relative;
+    figure {
+      margin-top: 2rem;
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      figcaption {
+        margin-top: 0.5rem;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        place-items: center;
+        gap: 0.5rem;
+        font-size: var(--font-size-xxs);
+        color: var(--color-muted);
+        line-height: 1cap;
+      }
+    }
+    &__link {
+      display: block;
+      text-decoration: none;
+      img {
+        transition: opacity var(--transition-duration-normal) ease-in-out;
+      }
+
+      // &::before,
+      // &::after {
+      //   --border-width: 2px;
+      //   --border-color: var(--color-black);
+
+      //   content: '';
+      //   position: absolute;
+      //   width: 48px;
+      //   height: 48px;
+      //   opacity: 0;
+      //   pointer-events: none;
+      //   z-index: 1;
+      //   transition:
+      //     opacity var(--transition-duration-normal) ease-in-out,
+      //     top var(--transition-duration-normal) ease-in-out,
+      //     left var(--transition-duration-normal) ease-in-out,
+      //     right var(--transition-duration-normal) ease-in-out,
+      //     bottom var(--transition-duration-normal) ease-in-out;
+      // }
+
+      // &::before {
+      //   top: 0;
+      //   left: 0;
+      //   border-left: solid var(--border-width) var(--border-color);
+      //   border-top: solid var(--border-width) var(--border-color);
+      // }
+
+      // &::after {
+      //   right: 0;
+      //   bottom: 0;
+      //   border-right: solid var(--border-width) var(--border-color);
+      //   border-bottom: solid var(--border-width) var(--border-color);
+      // }
+
+      &:hover,
+      &:focus-visible {
+        img {
+          opacity: 0.8;
+        }
+        // &::before,
+        // &::after {
+        //   opacity: 1;
+        // }
+        // &::before {
+        //   top: calc(-1 * var(--border-width) * 4);
+        //   left: calc(-1 * var(--border-width) * 4);
+        // }
+        // &::after {
+        //   right: calc(-1 * var(--border-width) * 4);
+        //   bottom: calc(-1 * var(--border-width) * 4);
+        // }
+      }
+
+      // @media (prefers-reduced-motion: reduce) {
+      //   transition: none;
+      // }
+    }
+    &__icon {
+      font-size: var(--font-size-xs);
+    }
+  }
+</style>
