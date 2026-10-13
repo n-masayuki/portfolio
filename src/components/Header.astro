@@ -53,29 +53,6 @@
   @use '../styles/base' as *;
   @use '../styles/breakpoints' as breakpoint;
 
-  @keyframes header-shrink {
-    from {
-      margin-top: 0.5rem;
-      // max-width: 100%;
-      max-width: 60rem;
-      border: 1px solid rgba(255, 255, 255, 0);
-      border-radius: 0;
-      box-shadow: 0 0 0 rgb(15 23 42 / 0%);
-      background-color: transparent;
-      backdrop-filter: blur(0px);
-    }
-
-    to {
-      margin-top: 1rem;
-      max-width: var(--header-shrink-width);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: var(--radius-infinite);
-      box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 12%);
-      background-color: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(8px);
-    }
-  }
-
   .site-header {
     position: sticky;
     top: 0;
@@ -96,12 +73,26 @@
       position: relative;
       z-index: 1;
       width: 100%;
+      max-width: 60rem;
       min-height: 3rem;
+      border: 1px solid transparent;
+      box-shadow: 0 0 0 rgb(15 23 42 / 0%);
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+      transition:
+        max-width var(--transition-duration-extra-slow) var(--spring),
+        margin-top var(--transition-duration-extra-slow) var(--spring),
+        border-color var(--transition-duration-extra-slow) ease,
+        border-radius var(--transition-duration-extra-slow) ease,
+        box-shadow var(--transition-duration-extra-slow) ease,
+        background-color var(--transition-duration-extra-slow) ease,
+        backdrop-filter var(--transition-duration-extra-slow) ease;
       border-radius: 0;
       pointer-events: auto;
 
       @media (max-width: breakpoint.$mobile) {
-        --header-shrink-width: 100%;
+        max-width: 100%;
+        backdrop-filter: none;
         padding-inline: 1rem;
         min-height: 1rem;
       }
@@ -183,7 +174,7 @@
       background: currentColor;
       transform-origin: center;
       transition:
-        transform var(--transition-duration-slow) cubic-bezier(0.22, 1, 0.36, 1),
+        transform var(--transition-duration-extra-slow) var(--spring),
         opacity var(--transition-duration-fast) ease;
 
       &:nth-child(1) {
@@ -215,25 +206,17 @@
     }
   }
 
-  // スクロール時に対応したヘッダーの縮小およびグラスエフェクトのアニメーション
-  @supports (animation-timeline: scroll()) {
-    .site-header__inner {
-      animation: header-shrink cubic-bezier(0.16, 1, 0.3, 1) both;
-      animation-timeline: scroll(root block);
-      animation-range: 0 3rem;
-      // animation-range: 0 100px;
-    }
-  }
-
-  @media (max-width: breakpoint.$mobile) {
-    @supports (animation-timeline: scroll()) {
-      .site-header__inner {
-        // animation の一括指定でスクロールタイムラインまでリセットしない。
-        // PC幅へ戻したときは、同じタイムラインの現在位置から再開する。
-        animation-name: none;
-        backdrop-filter: none;
-        background-color: transparent;
-      }
+  // 3rem以上スクロールしたら、時間ベースのトランジションで縮小する。
+  @media (min-width: (breakpoint.$mobile + 1px)) {
+    .site-header[data-shrunk] .site-header__inner {
+      margin-top: 1rem;
+      max-width: var(--header-shrink-width);
+      // border-color: rgba(255, 255, 255, 0.8);
+      border-color: hsla(0, 0%, 100%, 0.08);
+      border-radius: var(--radius-infinite);
+      box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 12%);
+      background-color: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
     }
   }
 
@@ -260,6 +243,9 @@
 
         // リンクより後に生成し、選択中のリンクを位置・サイズの基準にする。
         &::after {
+          // バウンスは可愛く柔らかく忙しい感じはなくすバウンスする数値に変更
+          --nav-current-spring: var(--spring);
+          --nav-current-transition-duration: 600ms;
           content: '';
           position: absolute;
           position-anchor: --nav-current;
@@ -273,9 +259,12 @@
           pointer-events: none;
           z-index: -1;
           transition:
-            left 400ms cubic-bezier(0.22, 1, 0.36, 1),
-            width 400ms cubic-bezier(0.22, 1, 0.36, 1),
-            opacity 150ms ease;
+            left var(--nav-current-transition-duration)
+              var(--nav-current-spring),
+            width var(--nav-current-transition-duration)
+              var(--nav-current-spring),
+            opacity var(--nav-current-transition-duration)
+              var(--nav-current-spring);
         }
 
         &:has(a[aria-current='location'])::after {
@@ -288,6 +277,10 @@
           }
         }
       }
+    }
+
+    li {
+      white-space: nowrap;
     }
 
     a {
@@ -343,11 +336,13 @@
         background-color: rgb(255 255 255 / 92%);
         box-shadow: 0 0.75rem 1.5rem rgb(15 23 42 / 24%);
         opacity: 0;
-        transform: translateY(-0.75rem) scale(0.96);
+        // 下から上がり、springのオーバーシュートで定位置の上へ進んで戻る。
+        translate: 0 3rem;
+        transform: scale(0.96);
         transition:
-          opacity var(--transition-duration-slow) cubic-bezier(0.16, 1, 0.3, 1),
-          transform var(--transition-duration-slow)
-            cubic-bezier(0.16, 1, 0.3, 1);
+          opacity var(--transition-duration-slow) ease,
+          translate var(--transition-duration-extra-slow) var(--spring),
+          transform var(--transition-duration-extra-slow) var(--spring);
 
         @media (max-width: breakpoint.$mobile) {
           gap: 0.5rem;
@@ -382,7 +377,8 @@
 
         ul {
           opacity: 1;
-          transform: translateY(0) scale(1);
+          translate: 0 0;
+          transform: scale(1);
         }
       }
     }
@@ -395,6 +391,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .site-header__inner,
     .menu-toggle__line,
     .site-navigation,
     .site-navigation ul {
@@ -404,6 +401,26 @@
 </style>
 
 <script>
+  // サイトヘッダーの要素を取得する。
+  const siteHeader = document.querySelector<HTMLElement>('.site-header');
+
+  // ウィンドウのスクロール位置に応じてヘッダーの幅を更新する関数を定義する。
+  if (siteHeader) {
+    const updateHeaderWidth = () => {
+      // スクロール位置の閾値を計算する。
+      const threshold =
+        Number.parseFloat(getComputedStyle(document.documentElement).fontSize) *
+        3;
+      // ヘッダーが縮むスクロール位置の閾値を設定する。
+      siteHeader.toggleAttribute('data-shrunk', window.scrollY >= threshold);
+    };
+
+    updateHeaderWidth(); // 初期表示時にヘッダーの幅を更新する。
+    window.addEventListener('scroll', updateHeaderWidth, { passive: true }); // スクロール時にヘッダーの幅を更新する。
+    window.addEventListener('resize', updateHeaderWidth); // ウィンドウのリサイズ時にヘッダーの幅を更新する。
+    window.addEventListener('pageshow', updateHeaderWidth); // ページが表示されたときにヘッダーの幅を更新する。
+  }
+
   // ハンバーガーボタンと、開閉するナビゲーションを取得する。
   // querySelector の型引数で、取得した要素の種類を TypeScript に伝える。
   const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
