@@ -75,7 +75,7 @@ function buildCsp(string $nonce): string
         . "style-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://tagmanager.google.com https://fonts.googleapis.com; "
         . "img-src 'self' data: https://challenges.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com https://*.clarity.ms https://c.bing.com https://images.unsplash.com https://picsum.photos; "
         . "font-src 'self' data: https://fonts.gstatic.com; "
-        . "connect-src 'self' https://challenges.cloudflare.com https://formspree.io https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.clarity.ms https://c.bing.com https://api.unsplash.com; "
+        . "connect-src 'self' https://challenges.cloudflare.com https://formspree.io https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.clarity.ms https://c.bing.com https://api.unsplash.com https://github-contributions-api.jogruber.de; "
         . "frame-src https://challenges.cloudflare.com https://www.googletagmanager.com; "
         . "form-action 'self' https://formspree.io; "
         . "base-uri 'self'; "
