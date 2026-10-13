@@ -7,30 +7,32 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
   {
-    ignores: ['dist/', '.astro/', 'node_modules/'],
+    ignores: [
+      'dist/',
+      '.astro/',
+      'node_modules/',
+      '.vercel/',
+      '.netlify/',
+      'coverage/',
+      'public/**/*.js',
+      '**/*.min.js',
+    ],
   },
-
   eslint.configs.recommended,
-
   ...tseslint.configs.recommended,
-
   ...astro.configs.recommended,
-
   {
     files: ['**/*.{ts,tsx}'],
-
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node,
       },
     },
-
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
-
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
