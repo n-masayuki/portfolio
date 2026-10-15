@@ -18,11 +18,13 @@ const renderedWorks = works.map((work) => ({
 <section id="works" class="section" aria-labelledby="works-heading">
   <SectionHeading id="works-heading" title="開発履歴" english="Works" />
 
-  <p class="intro">これまでに携わったWebサイトの制作・開発実績を紹介します。</p>
+  <p class="intro" data-reveal>
+    これまでに携わったWebサイトの制作・開発実績を紹介します。
+  </p>
 
   <div class="works-list">
     {renderedWorks.map(({ work }) => (
-      <article class="work" id={`work-${work.id}`}>
+      <article class="work" id={`work-${work.id}`} data-reveal>
         <div class="work__thumbnail">
           {work.data.thumbnail ? (
             <Image
@@ -83,7 +85,12 @@ const renderedWorks = works.map((work) => ({
           <X size={32} stroke-width={0.5} />
         </button>
 
-        <div class="work-modal__inner">
+        <div
+          class="work-modal__inner"
+          tabindex="0"
+          role="region"
+          aria-labelledby={`work-modal-title-${work.id}`}
+        >
           <header class="work__header">
             <ul class="work__category">
               {work.data.category.map((item) => (

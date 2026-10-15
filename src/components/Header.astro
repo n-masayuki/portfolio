@@ -533,6 +533,11 @@
       if (id) linkBySectionId.set(id, link);
     });
 
+    // 見出しやフォームのIDは除外し、ナビゲーションの移動先だけを監視する。
+    const navigableSections = sections.filter((section) =>
+      linkBySectionId.has(section.id),
+    );
+
     // すべてのリンクから aria-current を一度外し、対象のリンクだけに付け直す。
     const setActiveLink = (id: string | null) => {
       navLinks.forEach((link) => link.removeAttribute('aria-current'));
@@ -582,12 +587,10 @@
     const updateActiveSection = () => {
       if (navigating) return;
       const markerPosition = headerHeight + sectionMarkerOffsetPx;
-      const activeSection = sections
-        .filter((section) => linkBySectionId.has(section.id))
-        .find((section) => {
-          const { top, bottom } = section.getBoundingClientRect();
-          return top <= markerPosition && bottom > markerPosition;
-        });
+      const activeSection = navigableSections.find((section) => {
+        const { top, bottom } = section.getBoundingClientRect();
+        return top <= markerPosition && bottom > markerPosition;
+      });
 
       setActiveLink(activeSection?.id ?? null);
     };
@@ -598,8 +601,8 @@
     // セクションが判定領域に入ったか、出たかを監視する。
     const sectionObserver = new IntersectionObserver(
       (entries) => {
-        if (!hasScrolled || navigating) return;
-
+        // 表示の更新を抑制している間も、交差状態は記録しておく。
+        // 初期表示から交差し続けるセクションの通知が欠落するのを防ぐ。
         entries.forEach((entry) => {
           // 画面内に入ったセクションを記録し、出たセクションを削除する。
           if (entry.isIntersecting) {
@@ -609,8 +612,10 @@
           }
         });
 
+        if (!hasScrolled || navigating) return;
+
         // 現在表示されているセクションのうち、ページ上で先にあるものを採用する。
-        const activeSection = sections.find((section) =>
+        const activeSection = navigableSections.find((section) =>
           visibleSectionIds.has(section.id),
         );
 
@@ -623,8 +628,8 @@
       },
     );
 
-    // すべてのセクションを監視対象に登録する。
-    sections.forEach((section) => sectionObserver.observe(section));
+    // ナビゲーションの移動先となるセクションを監視対象に登録する。
+    navigableSections.forEach((section) => sectionObserver.observe(section));
 
     // 最初のスクロールをきっかけに現在地表示を有効にする。
     window.addEventListener(

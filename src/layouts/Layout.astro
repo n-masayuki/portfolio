@@ -57,6 +57,7 @@ const noiseImage = await getImage({
     <meta property="og:image:alt" content="Niibori Masayukiのポートフォリオ" />
     <link rel="canonical" href={pageUrl.href} />
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(structuredData)}
     ></script>
@@ -205,32 +206,28 @@ const noiseImage = await getImage({
       });
     });
 
-  // 各section,要素を少し下からふわっと表示する
-  document
-    .querySelectorAll<HTMLElement>(
-      '.intro, .avatar, .score-share, .skills-grid, .skill-card,.works-list, .contact-form',
-    )
-    .forEach((section) => {
-      if (prefersReducedMotion) return;
+  // 要素を少し下からふわっと表示する
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((element) => {
+    if (prefersReducedMotion) return;
 
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 24, filter: 'blur(4px)' },
-        {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 92%',
-            once: true,
-            // markers: true,
-          },
+    gsap.fromTo(
+      element,
+      { opacity: 0, y: 24, filter: 'blur(4px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 92%',
+          once: true,
+          // markers: true,
         },
-      );
-    });
+      },
+    );
+  });
 
   document.querySelectorAll<HTMLElement>('.github-link').forEach((section) => {
     if (prefersReducedMotion) return;
