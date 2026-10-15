@@ -46,3 +46,9 @@ sftp.json
 
 # copilot instructions
 copilot-instructtions.md
+
+# test reports
+coverage/
+playwright-report/
+test-results/
+.vitest/

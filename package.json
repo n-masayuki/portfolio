@@ -15,7 +15,15 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check": "astro check --minimumFailingSeverity warning",
+    "check:static": "npm run check && npm run lint && npm run format:check",
+    "test": "vitest",
+    "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "npm run build && playwright test",
+    "test:e2e:ui": "npm run build && playwright test --ui",
+    "verify": "npm run check:static && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",
@@ -35,19 +43,25 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
     "@tsconfig/bases": "^1.0.28",
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.3",
+    "@vitest/coverage-v8": "^5.0.4",
     "eslint": "^10.10.0",
     "eslint-plugin-astro": "^3.1.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.6",
     "globals": "^17.12.0",
+    "jsdom": "^27.4.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^1.0.0",
     "sass": "^1.104.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.0"
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.4"
   },
   "browserslist": [
     "> 1%",

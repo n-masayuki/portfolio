@@ -4,7 +4,13 @@
   const storageKey = 'portfolio:splash-seen';
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!splash || typeof splash.showModal !== 'function' || motion.matches || window.location.hash || document.hidden)
+  if (
+    !splash ||
+    typeof splash.showModal !== 'function' ||
+    motion.matches ||
+    window.location.hash ||
+    document.hidden
+  )
     return;
 
   // 保存できない環境では、ページ移動のたびに再生することを避ける。
@@ -34,7 +40,8 @@
   splash.addEventListener(
     'animationend',
     (event) => {
-      if (event.target === splash && event.animationName === 'splash-exit') finish();
+      if (event.target === splash && event.animationName === 'splash-exit')
+        finish();
     },
     options,
   );

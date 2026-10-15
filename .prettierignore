@@ -1,0 +1,13 @@
+# ビルド成果物・テストレポートは整形対象に含めない。
+dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+.vitest/
+.playwright-cli/
+# 別プロジェクトでビルド済みのデモとローカル専用ファイル。
+public/random-animals-image-gallery/
+.vscode/
+docs/
+src/content/works/
