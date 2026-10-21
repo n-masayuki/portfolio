@@ -26,26 +26,38 @@ import { GitHubCalendar } from 'react-github-calendar';
 
   .github-calendar {
     position: relative;
+    --title-line-height: 1.2;
+    --title-height: calc(var(--font-size-md) * var(--title-line-height));
+    --title-margin-bottom: 0.75rem;
+    --footer-height: calc(var(--font-size-xs) * 1.7);
+    --calendar-gap: 8px;
+    --react-activity-calendar-height: 130px;
+
     margin-block-start: 3rem;
+    height: calc(
+      var(--title-height) + var(--title-margin-bottom) +
+        var(--react-activity-calendar-height) + var(--calendar-gap) +
+        var(--footer-height)
+    );
+  }
 
-    :global(svg) {
-      max-width: max-content;
-    }
+  h3 {
+    margin-bottom: var(--title-margin-bottom);
+    font-size: var(--font-size-md);
+    line-height: var(--title-line-height);
+  }
 
-    :global(.react-activity-calendar__scroll-container[data-overflow-right]) {
-      // 右に続きがある場合だけフェードする
-      mask-image: linear-gradient(
-        to right,
-        #000 0,
-        #000 calc(100% - 32px),
-        transparent 100%
-      );
-    }
+  :global(svg) {
+    max-width: max-content;
+  }
 
-    h3 {
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
-      line-height: 1.2;
-    }
+  :global(.react-activity-calendar__scroll-container[data-overflow-right]) {
+    // 右に続きがある場合だけフェードする
+    mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - 32px),
+      transparent 100%
+    );
   }
 </style>

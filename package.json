@@ -26,12 +26,12 @@
     "verify": "npm run check:static && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.3.1",
-    "@astrojs/react": "^6.0.5",
+    "@astrojs/markdown-remark": "^7.3.3",
+    "@astrojs/react": "^7.1.0",
     "@lucide/astro": "^1.46.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
-    "astro": "^7.3.1",
+    "astro": "^7.4.1",
     "gsap": "^3.15.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -42,7 +42,7 @@
     "esbuild": true
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.11",
     "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.64.0",
@@ -50,6 +50,7 @@
     "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.3",
     "@vitest/coverage-v8": "^5.0.4",
+    "esbuild": "^0.28.2",
     "eslint": "^10.10.0",
     "eslint-plugin-astro": "^3.1.0",
     "eslint-plugin-react-hooks": "^7.1.1",

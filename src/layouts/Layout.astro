@@ -106,6 +106,15 @@ const noiseImage = await getImage({
     width: 100%;
     background-color: var(--color-background);
 
+    @keyframes noise {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100px 0;
+      }
+    }
+
     &::before {
       content: '';
       position: absolute;
@@ -116,6 +125,7 @@ const noiseImage = await getImage({
       background-image: var(--noise-image);
       background-size: 256px 256px;
       opacity: 0.1;
+      // animation: noise 1s steps(10) infinite;
     }
 
     &::after {
