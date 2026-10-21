@@ -26,41 +26,43 @@ const experienceYears =
 
 <section id="about" class="section about" aria-labelledby="about-heading">
   <SectionHeading id="about-heading" title="私について" english="About" />
+  <div class="about__intro-wrap">
+    <figure class="avatar" data-reveal>
+      <picture>
+        <source
+          media="(max-width: 767px)"
+          type="image/webp"
+          srcset={mobilePortrait.srcSet.attribute}
+          sizes={portraitSizes}
+          width={246}
+          height={328}
+        />
+        <Image
+          src={portrait}
+          alt="プロフィール画像"
+          loading="eager"
+          width={160}
+          height={120}
+          widths={[160, 240, 320]}
+          sizes={portraitSizes}
+          fit="cover"
+          position="center"
+          format="webp"
+        />
+      </picture>
+      <figcaption>Niibori Masayuki</figcaption>
+    </figure>
 
-  <figure class="avatar" data-reveal>
-    <picture>
-      <source
-        media="(max-width: 767px)"
-        type="image/webp"
-        srcset={mobilePortrait.srcSet.attribute}
-        sizes={portraitSizes}
-        width={246}
-        height={328}
-      />
-      <Image
-        src={portrait}
-        alt="プロフィール画像"
-        loading="eager"
-        width={160}
-        height={120}
-        widths={[160, 240, 320]}
-        sizes={portraitSizes}
-        fit="cover"
-        position="center"
-        format="webp"
-      />
-    </picture>
-    <figcaption>Niibori Masayuki</figcaption>
-  </figure>
+    <p class="intro" data-reveal>
+      Web制作会社および広告代理店にて約{experienceYears}
+      年間、Webサイトの企画・制作・開発・運用に従事してきました。
+      <br />
+      HTML /
+      CSSを用いたWebサイト制作を強みとし、JavaScript、React、PHP、WordPressを用いたフロントエンド開発・CMS構築にも携わっています。
+    </p>
+  </div>
 
   <p class="intro" data-reveal>
-    Web制作会社および広告代理店にて約{experienceYears}
-    年間、Webサイトの企画・制作・開発・運用に従事してきました。
-    <br />
-    HTML /
-    CSSを用いたWebサイト制作を強みとし、JavaScript、React、PHP、WordPressを用いたフロントエンド開発・CMS構築にも携わっています。
-    <br />
-    <br />
     近年は既存サイトのリファクタリングやReactへの段階的な移行、表示パフォーマンス・アクセシビリティの改善、GA4
     /
     GTM等を利用した計測環境の整備など、継続的なサイト改善に取り組んできました。
@@ -79,7 +81,7 @@ const experienceYears =
   @use '../../styles/base' as *;
   @use '../../styles/breakpoints' as breakpoint;
 
-  #about {
+  .about {
     position: relative;
     // scroll-margin-top: 0; // 調整
     // padding-top: 20rem; // 調整
@@ -108,6 +110,20 @@ const experienceYears =
       pointer-events: none;
       user-select: none;
     }
+
+    &__intro-wrap {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+
+      @media (max-width: breakpoint.$mobile) {
+        gap: 1rem;
+      }
+
+      .intro {
+        margin-top: 0;
+      }
+    }
   }
 
   :global(.site-shell) {
@@ -121,13 +137,14 @@ const experienceYears =
 
     position: relative;
     float: left;
-    width: clamp(80px, 16vw, 160px);
-    margin: 0 2rem 1rem 0;
+    width: clamp(80px, 14vw, 160px);
+    // width: clamp(80px, 16vw, 160px);
+    // margin: 0 2rem 1rem 0;
     shape-outside: inset(0 round 1.25rem);
 
-    @media (max-width: breakpoint.$mobile) {
-      margin-right: 1rem;
-    }
+    // @media (max-width: breakpoint.$mobile) {
+    //   margin-right: 1rem;
+    // }
 
     &::before {
       position: absolute;
@@ -135,7 +152,8 @@ const experienceYears =
       left: 0;
       content: '';
       display: block;
-      width: clamp(80px, 16vw, 160px);
+      width: clamp(80px, 14vw, 160px);
+      // width: clamp(80px, 16vw, 160px);
       aspect-ratio: 4 / 3;
       outline: 1px dashed var(--color-white);
       outline-offset: 3px;
