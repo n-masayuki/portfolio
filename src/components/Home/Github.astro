@@ -5,6 +5,14 @@ import ExternalLink from '../ui/ExternalLink.astro';
 ---
 
 <section id="github" class="section github" aria-labelledby="github-heading">
+  <span class="decor-line decor-line--top" aria-hidden="true">
+    <span class="decor-line__cross decor-line__cross--left"></span>
+    <span class="decor-line__cross decor-line__cross--right"></span>
+  </span>
+  <span class="decor-line decor-line--bottom" aria-hidden="true">
+    <span class="decor-line__cross decor-line__cross--left"></span>
+    <span class="decor-line__cross decor-line__cross--right"></span>
+  </span>
   <h2 id="github-heading" class="visually-hidden">
     GitHub
   </h2>
@@ -35,7 +43,7 @@ import ExternalLink from '../ui/ExternalLink.astro';
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     font-size: var(--font-size-xxs);
-    line-height: 1cap;
+    // line-height: 1cap;
     text-decoration: none;
     border: 1px solid var(--color-gray-200);
     border-radius: var(--radius-infinite);

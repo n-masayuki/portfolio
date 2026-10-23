@@ -25,9 +25,19 @@ const experienceYears =
 ---
 
 <section id="about" class="section about" aria-labelledby="about-heading">
+  <span class="decor-line decor-line--top" aria-hidden="true">
+    <span class="decor-line__cross decor-line__cross--left"></span>
+    <span class="decor-line__cross decor-line__cross--right"></span>
+  </span>
   <SectionHeading id="about-heading" title="私について" english="About" />
   <div class="about__intro-wrap">
     <figure class="avatar" data-reveal>
+      <span class="decor-line decor-line--top" aria-hidden="true">
+        <span class="decor-line__cross decor-line__cross--left"></span>
+      </span>
+      <span class="decor-line decor-line--bottom" aria-hidden="true">
+        <span class="decor-line__cross decor-line__cross--right"></span>
+      </span>
       <picture>
         <source
           media="(max-width: 767px)"
@@ -94,21 +104,22 @@ const experienceYears =
       padding-top: 2rem;
     }
 
-    &::before {
-      @extend .grape-nuts-regular;
-      content: 'NM';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(32rem, 20vw, 200rem);
-      line-height: 1cap;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.6);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-    }
+    // &::before {
+    //   @extend .grape-nuts-regular;
+    //   content: 'NM';
+    //   position: absolute;
+    //   // top: 50%;
+    //   top: 30%;
+    //   left: 50%;
+    //   transform: translate(-50%, -50%);
+    //   font-size: clamp(32rem, 20vw, 200rem);
+    //   line-height: 1cap;
+    //   text-align: center;
+    //   color: rgba(255, 255, 255, 0.6);
+    //   white-space: nowrap;
+    //   pointer-events: none;
+    //   user-select: none;
+    // }
 
     &__intro-wrap {
       display: grid;
@@ -188,7 +199,7 @@ const experienceYears =
     }
   }
 
-  .intro {
-    text-wrap: pretty;
-  }
+  // .intro {
+  //   text-wrap: pretty;
+  // }
 </style>
