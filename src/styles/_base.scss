@@ -208,7 +208,9 @@ body {
   background: var(--color-background);
   font-family: var(--font-sans-jp);
   // font-family: var(--font-not-sans-jp);
+  // letter-spacing: 0.1em;
   line-height: 1.7;
+  // font-feature-settings: 'palt' 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   counter-reset: number 0;
@@ -301,6 +303,20 @@ mark {
   --mark-bg-color: oklch(0.95 0.12 102);
   --mark-bg: linear-gradient(transparent 70%, var(--mark-bg-color) 0%);
   background: var(--mark-bg);
+}
+
+body:has([popover]:popover-open) {
+  pointer-events: none;
+  user-select: none;
+}
+
+[popover]:popover-open {
+  pointer-events: auto;
+  user-select: text;
+}
+
+::selection {
+  background-color: oklch(68.726% 0.15915 262.722 / 0.2);
 }
 
 // @view-transition {

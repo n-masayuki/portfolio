@@ -1,0 +1,106 @@
+// 共通の区切り線と十字装飾
+@use 'breakpoints' as breakpoint;
+
+.section > .decor-line {
+  max-width: calc(100% - 3rem);
+}
+
+.decor-line {
+  --decor-color: rgba(27, 32, 35, 0.2);
+  --decor-line-color: rgba(27, 32, 35, 0.04);
+  --decor-transparent: rgba(27, 32, 35, 0);
+
+  position: absolute;
+  inset-inline: 0;
+  display: block;
+  height: 1px;
+  margin-inline: auto;
+  pointer-events: none;
+  // background: var(--decor-line-color);
+  background: linear-gradient(
+    90deg,
+    var(--decor-line-color) 0%,
+    var(--decor-transparent) 50%,
+    var(--decor-line-color) 100%
+  );
+
+  @media (max-width: breakpoint.$mobile) {
+    // max-width: 100%;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 0;
+    width: 300px;
+    height: 1px;
+    content: '';
+  }
+
+  &::before {
+    right: 100%;
+    background: linear-gradient(
+      -90deg,
+      var(--decor-line-color) 0%,
+      var(--decor-transparent) 100%
+    );
+  }
+
+  &::after {
+    left: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--decor-line-color) 0%,
+      var(--decor-transparent) 100%
+    );
+  }
+
+  &--top {
+    top: 0;
+  }
+
+  &--bottom {
+    bottom: 0;
+  }
+
+  &__cross {
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    height: 300px;
+    background: linear-gradient(
+      180deg,
+      var(--decor-transparent) 0%,
+      var(--decor-line-color) 50%,
+      var(--decor-transparent) 100%
+    );
+    transform: translateY(-50%);
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      background: var(--decor-color);
+      content: '';
+      mask-image: url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA5IDknPjxnIGZpbGw9JyMyMTIxMjEnPjxwYXRoIGQ9J000IDBoMXY5SDR6Jy8+PHBhdGggZD0nTTkgNHYxSDBWNHonLz48L2c+PC9zdmc+);
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      transform: translate(-50%, -50%);
+    }
+
+    &--left {
+      left: 0;
+    }
+
+    &--right {
+      right: 0;
+    }
+  }
+}
+
+.decor-grain {
+  --grain: url(../assets/grain.webp) 0 0 / 128px 128px;
+  mask: var(--grain);
+}

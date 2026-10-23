@@ -3,6 +3,7 @@
 @use '../styles/breakpoints' as breakpoint;
 
 .section {
+  position: relative;
   max-width: 800px;
   margin-inline: auto;
   padding: 4rem 1.5rem;
@@ -13,7 +14,7 @@
 }
 
 .section-heading {
-  max-width: 42rem;
+  // max-width: 42rem;
   margin-bottom: 2rem;
   @media (max-width: breakpoint.$mobile) {
     margin-bottom: 1.5rem;
