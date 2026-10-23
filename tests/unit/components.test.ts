@@ -50,9 +50,9 @@ describe('Astroの生成HTML', () => {
       '私について',
     );
     // 装飾用の英語は、読み上げ対象から除くaria-hidden付きの要素にあることを確認する。
-    expect(
-      root.querySelector('[aria-hidden="true"]')!.textContent?.trim(),
-    ).toBe('About');
+    const english = root.querySelector('.section-heading__en')!;
+    expect(english.textContent?.trim()).toBe('About');
+    expect(english.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('フォームのラベル・必須入力・入力上限・エラー通知を出力する', async () => {
