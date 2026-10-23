@@ -1,0 +1,358 @@
+[
+  {
+    "lang": "ja",
+    "text": "ありがとう",
+    "roman": "arigatou",
+    "regions": "日本"
+  },
+  {
+    "lang": "en",
+    "text": "Thank you",
+    "regions": "イギリス、アメリカ、カナダ、オーストラリアなど"
+  },
+  {
+    "lang": "zh-Hans",
+    "text": "谢谢",
+    "roman": "xièxie",
+    "regions": "中国本土、シンガポールなど（簡体字表記）"
+  },
+  {
+    "lang": "zh-Hant",
+    "text": "謝謝",
+    "roman": "xièxie",
+    "regions": "台湾、香港、マカオなど（繁体字表記）"
+  },
+  {
+    "lang": "ko",
+    "text": "감사합니다",
+    "roman": "gamsahamnida",
+    "regions": "韓国、北朝鮮など"
+  },
+  {
+    "lang": "es",
+    "text": "Gracias",
+    "regions": "スペイン、メキシコ、中南米の多くの国など"
+  },
+  {
+    "lang": "fr",
+    "text": "Merci",
+    "regions": "フランス、ベルギー、スイス、カナダ、アフリカの多くの国など"
+  },
+  {
+    "lang": "de",
+    "text": "Danke",
+    "regions": "ドイツ、オーストリア、スイスなど"
+  },
+  {
+    "lang": "it",
+    "text": "Grazie",
+    "regions": "イタリア、スイスなど"
+  },
+  {
+    "lang": "pt",
+    "text": "Obrigado / Obrigada",
+    "regions": "ポルトガル、ブラジル、アンゴラ、モザンビークなど"
+  },
+  {
+    "lang": "ru",
+    "text": "Спасибо",
+    "roman": "spasibo",
+    "regions": "ロシアと周辺地域など"
+  },
+  {
+    "lang": "uk",
+    "text": "Дякую",
+    "roman": "diakuiu",
+    "regions": "ウクライナなど"
+  },
+  {
+    "lang": "ar",
+    "text": "شكرًا",
+    "roman": "shukran",
+    "dir": "rtl",
+    "regions": "中東・北アフリカの多くの国や地域"
+  },
+  {
+    "lang": "he",
+    "text": "תודה",
+    "roman": "toda",
+    "dir": "rtl",
+    "regions": "イスラエルなど"
+  },
+  {
+    "lang": "fa",
+    "text": "ممنون",
+    "roman": "mamnun",
+    "dir": "rtl",
+    "regions": "イラン、アフガニスタンなど"
+  },
+  {
+    "lang": "ur",
+    "text": "شکریہ",
+    "roman": "shukriya",
+    "dir": "rtl",
+    "regions": "パキスタン、インドなど"
+  },
+  {
+    "lang": "hi",
+    "text": "धन्यवाद",
+    "roman": "dhanyavaad",
+    "regions": "インドなど"
+  },
+  {
+    "lang": "bn",
+    "text": "ধন্যবাদ",
+    "roman": "dhonnobad",
+    "regions": "バングラデシュ、インド東部など"
+  },
+  {
+    "lang": "ta",
+    "text": "நன்றி",
+    "roman": "nandri",
+    "regions": "インド南部、スリランカ、シンガポールなど"
+  },
+  {
+    "lang": "te",
+    "text": "ధన్యవాదాలు",
+    "roman": "dhanyavaadaalu",
+    "regions": "インド南部のアーンドラ・プラデーシュ州、テランガーナ州など"
+  },
+  {
+    "lang": "th",
+    "text": "ขอบคุณ",
+    "roman": "khop khun",
+    "regions": "タイなど"
+  },
+  {
+    "lang": "vi",
+    "text": "Cảm ơn",
+    "regions": "ベトナムなど"
+  },
+  {
+    "lang": "id",
+    "text": "Terima kasih",
+    "regions": "インドネシアなど"
+  },
+  {
+    "lang": "fil",
+    "text": "Salamat",
+    "regions": "フィリピンなど"
+  },
+  {
+    "lang": "km",
+    "text": "អរគុណ",
+    "roman": "arkun",
+    "regions": "カンボジアなど"
+  },
+  {
+    "lang": "lo",
+    "text": "ຂອບໃຈ",
+    "roman": "khop chai",
+    "regions": "ラオスなど"
+  },
+  {
+    "lang": "my",
+    "text": "ကျေးဇူးတင်ပါတယ်",
+    "roman": "kyay zu tin ba deh",
+    "regions": "ミャンマーなど"
+  },
+  {
+    "lang": "mn",
+    "text": "Баярлалаа",
+    "roman": "bayarlalaa",
+    "regions": "モンゴル、中国の内モンゴル自治区など"
+  },
+  {
+    "lang": "kk",
+    "text": "Рахмет",
+    "roman": "rakhmet",
+    "regions": "カザフスタンなど"
+  },
+  {
+    "lang": "uz",
+    "text": "Rahmat",
+    "regions": "ウズベキスタンなど"
+  },
+  {
+    "lang": "ka",
+    "text": "გმადლობთ",
+    "roman": "gmadlobt",
+    "regions": "ジョージアなど"
+  },
+  {
+    "lang": "hy",
+    "text": "Շնորհակալություն",
+    "roman": "shnorhakalut'yun",
+    "regions": "アルメニアなど"
+  },
+  {
+    "lang": "tr",
+    "text": "Teşekkürler",
+    "regions": "トルコ、キプロスなど"
+  },
+  {
+    "lang": "el",
+    "text": "Ευχαριστώ",
+    "roman": "efcharistó",
+    "regions": "ギリシャ、キプロスなど"
+  },
+  {
+    "lang": "pl",
+    "text": "Dziękuję",
+    "regions": "ポーランドなど"
+  },
+  {
+    "lang": "cs",
+    "text": "Děkuji",
+    "regions": "チェコなど"
+  },
+  {
+    "lang": "sk",
+    "text": "Ďakujem",
+    "regions": "スロバキアなど"
+  },
+  {
+    "lang": "hu",
+    "text": "Köszönöm",
+    "regions": "ハンガリーと周辺地域など"
+  },
+  {
+    "lang": "ro",
+    "text": "Mulțumesc",
+    "regions": "ルーマニア、モルドバなど"
+  },
+  {
+    "lang": "bg",
+    "text": "Благодаря",
+    "roman": "blagodarya",
+    "regions": "ブルガリアなど"
+  },
+  {
+    "lang": "sr",
+    "text": "Хвала",
+    "roman": "hvala",
+    "regions": "セルビア、ボスニア・ヘルツェゴビナなど"
+  },
+  {
+    "lang": "hr",
+    "text": "Hvala",
+    "regions": "クロアチア、ボスニア・ヘルツェゴビナなど"
+  },
+  {
+    "lang": "nl",
+    "text": "Dank je",
+    "regions": "オランダ、ベルギー、スリナムなど"
+  },
+  {
+    "lang": "sv",
+    "text": "Tack",
+    "regions": "スウェーデン、フィンランドなど"
+  },
+  {
+    "lang": "da",
+    "text": "Tak",
+    "regions": "デンマークなど"
+  },
+  {
+    "lang": "nb",
+    "text": "Takk",
+    "regions": "ノルウェー（ブークモールの書き言葉）"
+  },
+  {
+    "lang": "is",
+    "text": "Takk fyrir",
+    "regions": "アイスランドなど"
+  },
+  {
+    "lang": "fi",
+    "text": "Kiitos",
+    "regions": "フィンランドなど"
+  },
+  {
+    "lang": "et",
+    "text": "Aitäh",
+    "regions": "エストニアなど"
+  },
+  {
+    "lang": "lv",
+    "text": "Paldies",
+    "regions": "ラトビアなど"
+  },
+  {
+    "lang": "lt",
+    "text": "Ačiū",
+    "regions": "リトアニアなど"
+  },
+  {
+    "lang": "ga",
+    "text": "Go raibh maith agat",
+    "regions": "アイルランドなど"
+  },
+  {
+    "lang": "cy",
+    "text": "Diolch",
+    "regions": "イギリスのウェールズなど"
+  },
+  {
+    "lang": "ca",
+    "text": "Gràcies",
+    "regions": "スペインのカタルーニャ地方、アンドラなど"
+  },
+  {
+    "lang": "eu",
+    "text": "Eskerrik asko",
+    "regions": "スペインとフランスにまたがるバスク地方など"
+  },
+  {
+    "lang": "la",
+    "text": "Gratias",
+    "regions": "古代ローマに由来し、現在も学術や宗教などで使われる言語"
+  },
+  {
+    "lang": "eo",
+    "text": "Dankon",
+    "regions": "特定の国に属さず、世界各地の人々に使われる国際補助語"
+  },
+  {
+    "lang": "sw",
+    "text": "Asante",
+    "regions": "タンザニア、ケニアなど東アフリカの国々"
+  },
+  {
+    "lang": "zu",
+    "text": "Ngiyabonga",
+    "regions": "南アフリカなど"
+  },
+  {
+    "lang": "af",
+    "text": "Dankie",
+    "regions": "南アフリカ、ナミビアなど"
+  },
+  {
+    "lang": "ha",
+    "text": "Na gode",
+    "regions": "ナイジェリア北部、ニジェールなど"
+  },
+  {
+    "lang": "yo",
+    "text": "Ẹ ṣé",
+    "regions": "ナイジェリア南西部、ベナンなど"
+  },
+  {
+    "lang": "am",
+    "text": "አመሰግናለሁ",
+    "roman": "ameseginalehu",
+    "regions": "エチオピアなど"
+  },
+  {
+    "lang": "haw",
+    "text": "Mahalo",
+    "regions": "アメリカのハワイ諸島"
+  },
+  {
+    "lang": "ain",
+    "text": "イヤイライケレ",
+    "roman": "iyairaikere",
+    "regions": "日本の北海道を中心とする地域（歴史的には樺太・千島列島などにも分布）"
+  }
+]
