@@ -10,6 +10,13 @@ const { id, title, english } = Astro.props;
 
 <div class="section-heading">
   <div class="section-heading__ja-en-wrapper">
+    <span class="decor-line decor-line--top" aria-hidden="true">
+      <span
+        class="decor-line__cross decor-line__cross--left"
+        style="--decor-color: transparent"
+      ></span>
+      <!-- <span class="decor-line__cross decor-line__cross--right"></span> -->
+    </span>
     <h2 id={id} class="section-heading__ja">
       {title}
     </h2>
