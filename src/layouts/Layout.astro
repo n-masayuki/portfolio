@@ -111,7 +111,7 @@ const noiseImage = await getImage({
         background-position: 0 0;
       }
       100% {
-        background-position: 100px 0;
+        background-position: 64px 64px;
       }
     }
 
@@ -125,7 +125,7 @@ const noiseImage = await getImage({
       background-image: var(--noise-image);
       background-size: 256px 256px;
       opacity: 0.1;
-      // animation: noise 1s steps(10) infinite;
+      animation: noise 1s steps(4) infinite;
     }
 
     &::after {
@@ -154,6 +154,7 @@ const noiseImage = await getImage({
 
   .site-main {
     flex: 1;
+    overflow-y: clip;
   }
 </style>
 
@@ -244,10 +245,11 @@ const noiseImage = await getImage({
 
     gsap.fromTo(
       section,
-      { opacity: 0, y: 24 },
+      { opacity: 0, y: 24, filter: 'blur(4px)' },
       {
         opacity: 1,
         y: 0,
+        filter: 'blur(0px)',
         duration: 0.8,
         ease: 'power2.out',
         scrollTrigger: {
