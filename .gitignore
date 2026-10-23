@@ -16,6 +16,7 @@ pnpm-debug.log*
 
 # Playwright CLI artifacts
 .playwright-cli/
+output/
 
 # environment variables
 .env
