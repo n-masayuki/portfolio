@@ -39,7 +39,7 @@
   --font-sans-jp:
     'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
     Meiryo, sans-serif;
-  --font-not-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
+  --font-noto-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
 
   // font sizes
   --font-size-xxxs: 0.5rem;
@@ -207,7 +207,7 @@ body {
   color: var(--color-text);
   background: var(--color-background);
   font-family: var(--font-sans-jp);
-  // font-family: var(--font-not-sans-jp);
+  // font-family: var(--font-noto-sans-jp);
   // letter-spacing: 0.1em;
   line-height: 1.7;
   // font-feature-settings: 'palt' 1;
