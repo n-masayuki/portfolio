@@ -26,7 +26,7 @@
 
   // Touch browsers can retain :hover after a tap.
   @media (hover: hover) {
-    &:hover .wt__track {
+    &:has(.wt__item:hover) .wt__track {
       animation-play-state: paused;
     }
   }
@@ -79,6 +79,47 @@
     font-size: 0.55em;
     opacity: 0.7;
     margin-inline-start: 0.6em;
+  }
+
+  &[data-wt-curved] {
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+
+    .wt__track {
+      display: none;
+    }
+  }
+
+  &__curve {
+    display: block;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    fill: var(--wt-color, currentColor);
+    font-family: inherit;
+    font-size: var(--font-size-xl);
+    outline: none;
+
+    a {
+      cursor: pointer;
+      transition: fill var(--transition-duration-normal) ease-in-out;
+
+      &:hover,
+      &:focus-visible {
+        fill: var(--color-muted);
+        outline: none;
+      }
+    }
+  }
+
+  &__curve-measure {
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
@@ -276,6 +317,18 @@
 
   .wt__track {
     animation: none;
+  }
+
+  .wt[data-wt-curved] .wt__track {
+    display: flex;
+  }
+
+  .wt[data-wt-curved] {
+    mask-image: none;
+  }
+
+  .wt__curve {
+    display: none;
   }
 
   .wt__group[aria-hidden],

@@ -45,7 +45,7 @@ export function getPopoverPosition(
 /** Position a visible native popover and follow scroll, resize and content changes. */
 export function anchorPopover(
   popover: HTMLElement,
-  trigger: HTMLElement,
+  trigger: Element,
 ): () => void {
   let frame = 0;
   let stopped = false;

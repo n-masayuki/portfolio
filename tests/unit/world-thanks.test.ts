@@ -126,4 +126,106 @@ describe('world-thanks', () => {
     expect(new Set(thanks.map((item) => item.lang)).size).toBe(thanks.length);
     for (const item of thanks) expect(item.regions.trim()).not.toBe('');
   });
+
+  it('keeps curved-loop words selectable and stops their motion when paused', () => {
+    vi.stubGlobal('SVGAElement', SVGElement);
+    const hover = { matches: true };
+    vi.stubGlobal('matchMedia', (query: string) =>
+      query === '(hover: hover)'
+        ? hover
+        : {
+            matches: false,
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+          },
+    );
+    let tick: FrameRequestCallback;
+    const cancel = vi.fn();
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+      tick = callback;
+      return 1;
+    });
+    vi.stubGlobal('cancelAnimationFrame', cancel);
+    Object.defineProperties(SVGElement.prototype, {
+      getComputedTextLength: { configurable: true, value: () => 400 },
+      getTotalLength: { configurable: true, value: () => 800 },
+    });
+    try {
+      const item = { lang: 'ja', text: 'ありがとう' };
+      const onSelect = vi.fn();
+      controls = mount(host, {
+        items: [item],
+        shuffle: false,
+        curved: true,
+        onSelect,
+      });
+      const curve = host.querySelector('defs path')!;
+      // A single arc replaces the repeated wave, and softens at mobile widths.
+      expect(curve.getAttribute('d')).toBe('M -100 40 Q 175 130 600 40');
+      Object.defineProperty(host, 'clientWidth', { value: 1200 });
+      resize();
+      expect(curve.getAttribute('d')).toBe('M -100 40 Q 420 180 1300 40');
+      const words = host.querySelectorAll<SVGAElement>('svg a');
+      expect(words).toHaveLength(4);
+      expect(words[0].getAttribute('tabindex')).toBe('0');
+      expect(words[1].getAttribute('tabindex')).toBe('-1');
+      words[0].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+      );
+      expect(onSelect).toHaveBeenLastCalledWith(item, words[0]);
+      const path = host.querySelector('textPath')!;
+      // Model the pointer explicitly; jsdom has no real pointer hit testing.
+      let overWord = false;
+      vi.spyOn(host, 'matches').mockImplementation(
+        (selector) =>
+          selector === ':hover' ||
+          (selector === ':has(.wt__curve a:hover)' && overWord),
+      );
+      tick!(100);
+      expect(Number(path.getAttribute('startOffset'))).toBeLessThan(0);
+      controls.pause();
+      const offset = path.getAttribute('startOffset');
+      tick!(150);
+      expect(path.getAttribute('startOffset')).toBe(offset);
+      controls.resume();
+      tick!(200);
+      expect(Number(path.getAttribute('startOffset'))).toBeLessThan(
+        Number(offset),
+      );
+
+      // Hovering the surrounding band must not stop the curved loop.
+      let lastOffset = path.getAttribute('startOffset');
+      tick!(250);
+      expect(path.getAttribute('startOffset')).not.toBe(lastOffset);
+
+      overWord = true;
+      lastOffset = path.getAttribute('startOffset');
+      tick!(300);
+      expect(path.getAttribute('startOffset')).toBe(lastOffset);
+
+      overWord = false;
+      tick!(350);
+      expect(path.getAttribute('startOffset')).not.toBe(lastOffset);
+
+      // Touch hover must not stick after a tap; the open explanation pauses it.
+      hover.matches = false;
+      overWord = true;
+      lastOffset = path.getAttribute('startOffset');
+      tick!(400);
+      expect(path.getAttribute('startOffset')).not.toBe(lastOffset);
+      host.setAttribute('data-wt-details-open', '');
+      lastOffset = path.getAttribute('startOffset');
+      tick!(450);
+      expect(path.getAttribute('startOffset')).toBe(lastOffset);
+      host.removeAttribute('data-wt-details-open');
+      tick!(500);
+      expect(path.getAttribute('startOffset')).not.toBe(lastOffset);
+      controls.destroy();
+      expect(cancel).toHaveBeenCalled();
+      expect(host.innerHTML).toBe('<p>元のテキスト</p>');
+    } finally {
+      Reflect.deleteProperty(SVGElement.prototype, 'getComputedTextLength');
+      Reflect.deleteProperty(SVGElement.prototype, 'getTotalLength');
+    }
+  });
 });

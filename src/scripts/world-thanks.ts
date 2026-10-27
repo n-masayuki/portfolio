@@ -1,4 +1,7 @@
 import thanks from '../data/world-thanks.json';
+import { mountCurvedLoop } from './world-thanks-curved-loop';
+
+export type ThanksTrigger = HTMLButtonElement | SVGAElement;
 
 export interface ThanksItem {
   lang: string;
@@ -15,7 +18,10 @@ export interface WorldThanksOptions {
   showLang?: boolean;
   showRoman?: boolean;
   label?: string;
-  onSelect?: (item: ThanksItem, trigger: HTMLButtonElement) => void;
+  curved?: boolean;
+  /** Arc control-point offset in pixels, softened automatically on mobile. */
+  curveAmount?: number;
+  onSelect?: (item: ThanksItem, trigger: ThanksTrigger) => void;
 }
 
 export interface WorldThanksControls {
@@ -92,6 +98,7 @@ export function mount(
     'aria-label',
     'tabindex',
     'data-wt-paused',
+    'data-wt-curved',
   ];
   const originalAttributes = attributes.map(
     (name) => [name, host.getAttribute(name)] as const,
@@ -102,6 +109,7 @@ export function mount(
   host.setAttribute('aria-label', options.label);
   host.setAttribute('tabindex', '0');
   host.removeAttribute('data-wt-paused');
+  if (options.curved) host.setAttribute('data-wt-curved', '');
 
   const track = document.createElement('div');
   track.className = 'wt__track';
@@ -144,7 +152,7 @@ export function mount(
   const select = (event: MouseEvent) => {
     const trigger =
       event.target instanceof Element
-        ? event.target.closest<HTMLButtonElement>('button[data-wt-index]')
+        ? event.target.closest<ThanksTrigger>('[data-wt-index]')
         : null;
     if (!trigger || !host.contains(trigger)) return;
     const item = items[Number(trigger.dataset.wtIndex)];
@@ -190,6 +198,9 @@ export function mount(
   document.fonts?.ready.then(measure);
   document.fonts?.addEventListener('loadingdone', measure);
   measure();
+  const destroyCurvedLoop = options.curved
+    ? mountCurvedLoop(host, items, options.speed, options.curveAmount)
+    : undefined;
 
   const controls = {
     pause() {
@@ -202,6 +213,7 @@ export function mount(
       if (destroyed) return;
       destroyed = true;
       observer.disconnect();
+      destroyCurvedLoop?.();
       host.removeEventListener('click', select);
       document.fonts?.removeEventListener('loadingdone', measure);
       host.replaceChildren(...originalChildren);

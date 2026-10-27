@@ -1,0 +1,235 @@
+---
+// import { ArrowUpRight, X } from '@lucide/astro';
+// import ExternalLink from '../ui/ExternalLink.astro';
+import SplitText from '../ui/SplitText.tsx';
+import '../../styles/world-thanks.scss';
+
+// const detailsId = `world-thanks-${crypto.randomUUID()}`;
+
+const handleAnimationComplete = () => {
+  console.log('All letters have animated!');
+};
+---
+
+<div class="world-thanks" data-world-thanks>
+  <SplitText
+    client:load
+    className="world-thanks__message"
+    text="ご覧いただき<wbr />ありがとうございます。"
+    effect="blur"
+    splitType="chars"
+    delay={80}
+    duration={1.4}
+    staggerFrom="start"
+    trigger="view"
+    hoverEffect="lift"
+    loop
+    loopDelay={1.5}
+    mask={false}
+    threshold={0.1}
+    rootMargin="-40px"
+    textAlign="center"
+    onLetterAnimationComplete={handleAnimationComplete}
+  />
+  {/*
+  <div data-thanks-track>
+    <p>ありがとう · Thank you · Gracias · Merci</p>
+  </div>
+   */}
+  {/*
+      <p class="world-thanks__message">
+        <span>
+          言葉をクリックすると、言語や使われている地域がわかります。
+          <br class="world-thanks__message-br" />
+          <span class="world-thanks__message-sub">
+            マウスを乗せると一時停止します。
+          </span>
+        </span>
+      </p>
+   */}
+  {/*
+  <div
+    id={detailsId}
+    class="wt-details"
+    data-thanks-details
+    popover="auto"
+    role="dialog"
+    aria-labelledby={`${detailsId}-title`}
+  >
+    <div class="wt-details__content">
+      <button
+        type="button"
+        class="wt-details__close"
+        data-details-close
+        aria-label="言語の説明を閉じる"
+      >
+        <X size={20} aria-hidden="true" />
+      </button>
+      <p class="wt-details__eyebrow">世界の「ありがとう」</p>
+      <h3 id={`${detailsId}-title`} data-details-language></h3>
+      <p class="wt-details__word">
+        <bdi data-details-word></bdi>
+      </p>
+      <p
+        class="wt-details__roman"
+        data-details-roman
+        lang="und-Latn"
+        dir="ltr"
+      ></p>
+      <dl data-details-regions>
+        <dt data-details-region-label>主な国・地域</dt>
+        <dd data-details-region-text></dd>
+      </dl>
+      <ExternalLink
+        class="wt-details__search"
+        href="https://www.google.com/"
+        data-details-search
+        aria-label="Googleで詳しく調べる（新しいタブで開きます）"
+      >
+        Googleで詳しく調べる
+        <ArrowUpRight size={16} aria-hidden="true" />
+      </ExternalLink>
+    </div>
+  </div>
+   */}
+</div>
+
+<script>
+  // import { mount, type ThanksTrigger } from '../../scripts/world-thanks';
+  // import { anchorPopover } from '../../scripts/anchored-popover';
+
+  // document
+  //   .querySelectorAll<HTMLElement>('[data-world-thanks]')
+  //   .forEach((element) => {
+  //     const host = element.querySelector<HTMLElement>('[data-thanks-track]');
+  //     const details = element.querySelector<HTMLElement>(
+  //       '[data-thanks-details]',
+  //     );
+  //     const close = element.querySelector<HTMLButtonElement>(
+  //       '[data-details-close]',
+  //     );
+  //     const language = element.querySelector<HTMLElement>(
+  //       '[data-details-language]',
+  //     );
+  //     const word = element.querySelector<HTMLElement>('[data-details-word]');
+  //     const roman = element.querySelector<HTMLElement>('[data-details-roman]');
+  //     const regions = element.querySelector<HTMLElement>(
+  //       '[data-details-regions]',
+  //     );
+  //     const regionLabel = element.querySelector<HTMLElement>(
+  //       '[data-details-region-label]',
+  //     );
+  //     const regionText = element.querySelector<HTMLElement>(
+  //       '[data-details-region-text]',
+  //     );
+  //     const search = element.querySelector<HTMLAnchorElement>(
+  //       '[data-details-search]',
+  //     );
+  //     if (
+  //       !host ||
+  //       !details ||
+  //       !close ||
+  //       !language ||
+  //       !word ||
+  //       !roman ||
+  //       !regions ||
+  //       !regionLabel ||
+  //       !regionText ||
+  //       !search
+  //     )
+  //       return;
+
+  //     const names = new Intl.DisplayNames(['ja'], { type: 'language' });
+  //     let activeTrigger: ThanksTrigger | undefined;
+  //     let stopPositioning: (() => void) | undefined;
+  //     mount(host, {
+  //       speed: 48,
+  //       curved: true,
+  //       curveAmount: 140,
+  //       onSelect(item, trigger) {
+  //         let name = item.lang;
+  //         try {
+  //           name = names.of(item.lang) ?? item.lang;
+  //         } catch {
+  //           /* Custom language codes use the code as a label. */
+  //         }
+  //         search.href = `https://www.google.com/search?q=${encodeURIComponent(`${name} ${item.text} ありがとう 言語`)}`;
+  //         if (typeof details.showPopover !== 'function') {
+  //           window.open(search.href, '_blank', 'noopener,noreferrer');
+  //           return;
+  //         }
+  //         activeTrigger?.setAttribute('aria-expanded', 'false');
+  //         activeTrigger = trigger;
+  //         trigger.setAttribute('aria-controls', details.id);
+  //         trigger.setAttribute('aria-expanded', 'true');
+  //         language.textContent = name;
+  //         word.textContent = item.text;
+  //         word.lang = item.lang;
+  //         word.dir = item.dir === 'rtl' ? 'rtl' : 'auto';
+  //         roman.textContent = item.roman ?? '';
+  //         roman.hidden = !item.roman;
+  //         regions.hidden = !item.regions;
+  //         regionLabel.textContent = ['la', 'eo'].includes(item.lang)
+  //           ? '使われ方'
+  //           : '主な国・地域';
+  //         regionText.textContent = item.regions ?? '';
+  //         host.setAttribute('data-wt-details-open', '');
+  //         // Reveal only after positioning, so the spring starts at the selected word.
+  //         delete details.dataset.placement;
+  //         details.showPopover({
+  //           source: trigger instanceof HTMLElement ? trigger : host,
+  //         });
+  //         stopPositioning?.();
+  //         stopPositioning = anchorPopover(details, trigger);
+  //         close.focus({ preventScroll: true });
+  //       },
+  //     });
+  //     details.addEventListener('beforetoggle', (event) => {
+  //       if ((event as ToggleEvent).newState !== 'closed') return;
+  //       stopPositioning?.();
+  //       stopPositioning = undefined;
+  //       host.removeAttribute('data-wt-details-open');
+  //       activeTrigger?.setAttribute('aria-expanded', 'false');
+  //     });
+  //     close.addEventListener('click', () => {
+  //       details.hidePopover();
+  //       if (activeTrigger?.isConnected)
+  //         activeTrigger.focus({ preventScroll: true });
+  //     });
+  //   });
+</script>
+
+<style lang="scss">
+  @use '../../styles/base' as *;
+  @use '../../styles/breakpoints' as breakpoint;
+
+  .world-thanks {
+    --wt-color: var(--color-text);
+
+    display: grid;
+    gap: 2rem;
+    // padding-block: 4rem;
+    padding-block: 4rem 6rem;
+    text-align: center;
+
+    :global(.world-thanks__message) {
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      font-size: var(--font-size-xl);
+      word-break: keep-all;
+    }
+
+    &__message {
+      &-br {
+        display: none;
+      }
+
+      &-sub {
+        font-size: var(--font-size-xs);
+        @media (max-width: breakpoint.$mobile) {
+          display: none;
+        }
+      }
+    }
+  }
+</style>
