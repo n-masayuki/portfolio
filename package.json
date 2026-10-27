@@ -28,6 +28,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.3",
     "@astrojs/react": "^7.1.0",
+    "@gsap/react": "^2.1.2",
     "@lucide/astro": "^1.46.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
@@ -36,7 +37,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-github-calendar": "^5.0.9",
-    "simple-icons": "^16.31.0"
+    "simple-icons": "^16.31.0",
+    "three": "^0.186.1"
   },
   "allowScripts": {
     "esbuild": true
@@ -49,6 +51,7 @@
     "@tsconfig/bases": "^1.0.28",
     "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.3",
+    "@types/three": "^0.186.0",
     "@vitest/coverage-v8": "^5.0.4",
     "esbuild": "^0.28.2",
     "eslint": "^10.10.0",

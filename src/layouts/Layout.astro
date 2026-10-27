@@ -4,6 +4,7 @@ import { getImage } from 'astro:assets';
 import noiseSource from '../assets/noise.png';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import ColorBends from '../components/ui/ColorBends.tsx';
 import GoogleTagManager from '../components/GoogleTagManager.astro';
 
 interface Props {
@@ -85,6 +86,25 @@ const noiseImage = await getImage({
     <GoogleTagManager noscript />
     <slot name="splash" />
     <div class="site-shell" style={`--noise-image: url("${noiseImage.src}")`}>
+      <div class="color-bends-bg" aria-hidden="true">
+        <ColorBends
+          client:only="react"
+          className="color-bends-canvas"
+          colors={['#ffffff', '#d4d6ff']}
+          rotation={90}
+          speed={0.2}
+          scale={1}
+          frequency={1}
+          warpStrength={1}
+          mouseInfluence={1}
+          noise={0.15}
+          parallax={0.5}
+          iterations={1}
+          intensity={1.5}
+          bandWidth={2}
+          transparent
+        />
+      </div>
       <Header />
       <main class="site-main">
         <slot />
@@ -149,6 +169,30 @@ const noiseImage = await getImage({
     > * {
       position: relative;
       z-index: 1;
+    }
+
+    > .color-bends-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      container-type: size;
+    }
+
+    .color-bends-bg :global(.color-bends-container) {
+      // 16:9の構図を保って画面を覆い、はみ出す部分は背景枠で切り抜く。
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100cqw, calc(100cqh * 16 / 9));
+      height: auto;
+      aspect-ratio: 16 / 9;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      opacity: 0.6;
     }
   }
 
@@ -240,7 +284,7 @@ const noiseImage = await getImage({
     );
   });
 
-  document.querySelectorAll<HTMLElement>('.github-link').forEach((section) => {
+  document.querySelectorAll<HTMLElement>('.world-thanks').forEach((section) => {
     if (prefersReducedMotion) return;
 
     gsap.fromTo(
