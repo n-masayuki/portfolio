@@ -96,6 +96,11 @@
         padding-inline: 1rem;
         min-height: 1rem;
       }
+
+      &:hover {
+        animation: header-hover-bounce var(--transition-duration-extra-slow)
+          var(--spring);
+      }
     }
 
     &__brand {
@@ -117,6 +122,16 @@
         font-size: 1.5rem;
         min-height: 1.5rem;
       }
+    }
+  }
+
+  @keyframes header-hover-bounce {
+    0% {
+      transform: scaleX(1);
+    }
+
+    100% {
+      transform: scaleX(1.015);
     }
   }
 
