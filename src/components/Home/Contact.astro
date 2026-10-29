@@ -59,7 +59,9 @@ import SectionHeading from '../ui/SectionHeading.astro';
 
     <p class="contact-form__note">
       <span aria-hidden="true">※</span>
-      お問い合わせの内容によっては、お答えできない場合がございます。
+      お問い合わせの内容によっては、
+      <wbr />
+      お答えできない場合がございます。
     </p>
 
     <div
@@ -106,6 +108,10 @@ import SectionHeading from '../ui/SectionHeading.astro';
 
     &__note {
       font-size: var(--font-size-xs);
+      // ２行になる場合はセンタリングにする
+      text-align: center;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
 
     &__error {
