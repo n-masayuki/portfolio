@@ -119,8 +119,31 @@ const aiSkills: Skill[] = [
       </h3>
       <TechnologyList class="skill-list" items={frontSkills} />
       <p>
-        セマンティックなマークアップ、レスポンシブ設計、CSS
-        Grid・Flexbox、既存コードの改修や共通化に対応します。
+        セマンティックなマークアップ、レスポンシブ設計、CSS、既存コードの改修や共通化に対応します。
+        <br />
+        AstroやReactにおけるコンポーネント開発、型安全な設計、ビルド時の型検証に対応します。
+      </p>
+    </article>
+
+    <article class="skill-card" data-reveal>
+      <h3>
+        <span>デザイン・分析</span>
+        <span aria-hidden="true">Design &amp; Analysis</span>
+      </h3>
+      <TechnologyList class="skill-list" items={designSkills} />
+      <p>
+        Figma等を用いたUI・ワイヤーフレーム設計から、GA4やClarity等によるアクセス解析、Lighthouseを活用した表示パフォーマンスの継続的な改善まで幅広く対応します。
+      </p>
+    </article>
+
+    <article class="skill-card" data-reveal>
+      <h3>
+        <span>インタラクション</span>
+        <span aria-hidden="true">Interaction</span>
+      </h3>
+      <TechnologyList class="skill-list" items={interactionSkills} />
+      <p>
+        CSSアニメーションやGSAP、Lottieなどを活用し、デザインの意図に沿った心地よいUIの操作感や動的演出を実装。ユーザーの視線誘導や直感的な操作性を意識したインタラクション構築に対応します。
       </p>
     </article>
 
@@ -137,37 +160,14 @@ const aiSkills: Skill[] = [
 
     <article class="skill-card" data-reveal>
       <h3>
-        <span>インタラクション</span>
-        <span aria-hidden="true">Interaction</span>
-      </h3>
-      <TechnologyList class="skill-list" items={interactionSkills} />
-      <p>
-        目的に応じてCSSとJavaScriptを使い分け、UIの操作感やページの演出を実装します。
-      </p>
-    </article>
-
-    <article class="skill-card" data-reveal>
-      <h3>
         <span>品質・開発環境</span>
         <span aria-hidden="true">Quality &amp; Workflow</span>
       </h3>
       <TechnologyList class="skill-list" items={qualitySkills} />
       <p>
-        Core Web
-        Vitalsを意識し、Lighthouse等で課題を特定して改善まで対応します。アクセシビリティやアクセス解析にも配慮し、レビューと保守性を含めて開発します。
+        GitHubによるバージョン管理やVite等によるビルド環境の構築に対応します。
         <br />
-        また、ビルド環境の整備、Lint・フォーマットによるコード品質の維持に対応します。
-      </p>
-    </article>
-
-    <article class="skill-card" data-reveal>
-      <h3>
-        <span>デザイン・分析</span>
-        <span aria-hidden="true">Design &amp; Analysis</span>
-      </h3>
-      <TechnologyList class="skill-list" items={designSkills} />
-      <p>
-        ワイヤーフレームやUI設計、顧客との仕様調整から、公開後の分析と改善まで対応します。
+        PlaywrightやVitestを用いたテスト自動化、Lighthouse等によるパフォーマンス改善を意識した開発を行います。
       </p>
     </article>
 
@@ -178,7 +178,8 @@ const aiSkills: Skill[] = [
       </h3>
       <TechnologyList class="skill-list" items={aiSkills} />
       <p>
-        設計検討、デバッグ、リファクタリング、テスト、ドキュメント作成の補助に活用し、内容を確認してから採用します。
+        ChatGPTやGitHub
+        Copilotなどを開発支援に積極的に活用。設計の壁打ち、コード生成、リファクタリング、テストコード作成等の補助として取り入れ、保守性やセキュリティを考慮した上で安全に実装へ適用します。
       </p>
     </article>
   </div>
