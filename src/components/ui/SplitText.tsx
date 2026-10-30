@@ -456,7 +456,10 @@ const SplitText = ({
             busy.kill();
             busy = null;
           }
-          if (revealed) return undefined;
+          if (revealed) {
+            el.removeAttribute('data-split-pending');
+            return undefined;
+          }
           intro = reveal(true, {
             scrollTrigger:
               trigger === 'load'
@@ -477,6 +480,7 @@ const SplitText = ({
             },
           });
           busy = intro;
+          el.removeAttribute('data-split-pending');
           return intro;
         },
       });
@@ -540,6 +544,7 @@ const SplitText = ({
     <Tag
       key={text}
       ref={ref}
+      data-split-pending=""
       className={`split-parent ${className}`}
       style={{
         textAlign,
