@@ -217,6 +217,13 @@ const handleAnimationComplete = () => {
       padding-inline: 1.5rem;
       font-size: var(--font-size-xl);
       word-break: keep-all;
+
+      // ハイドレーション前の分割前テキストが、分割・初期非表示化の直前に一瞬見えるのを防ぐ。
+      @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+        &[data-split-pending] {
+          visibility: hidden;
+        }
+      }
     }
 
     &__message {
