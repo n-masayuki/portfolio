@@ -152,7 +152,6 @@ const SplitText = ({
   const onCompleteRef = useRef(onLetterAnimationComplete);
   const liveRef = useRef({ trigger, hoverEffect, accentColor });
   const [fontsLoaded, setFontsLoaded] = useState(fontsAreLoaded);
-  const [ready, setReady] = useState(false);
 
   useIsoLayoutEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
@@ -187,7 +186,6 @@ const SplitText = ({
       };
 
       if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-        setReady(true);
         finish();
         return;
       }
@@ -482,7 +480,6 @@ const SplitText = ({
           return intro;
         },
       });
-      setReady(true);
       if (revealed) queue();
 
       el.addEventListener('pointerenter', onEnter);
@@ -552,7 +549,6 @@ const SplitText = ({
         wordWrap: 'break-word',
         color,
         cursor: trigger === 'click' ? 'pointer' : undefined,
-        visibility: ready ? undefined : 'hidden',
       }}
     >
       {text.split(/<wbr\s*\/?\s*>/gi).map((part, index) => (
