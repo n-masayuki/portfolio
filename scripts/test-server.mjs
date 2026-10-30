@@ -2,8 +2,10 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { URL } from 'node:url';
+import process from 'node:process';
 
 const root = resolve('dist');
+const port = Number(process.env.PLAYWRIGHT_TEST_PORT ?? 14322);
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -37,4 +39,4 @@ createServer(async (request, response) => {
     response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
     response.end(await readFile(resolve(root, '404.html')));
   }
-}).listen(4322, '127.0.0.1');
+}).listen(port, '127.0.0.1');

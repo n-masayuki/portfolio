@@ -14,6 +14,14 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+### Server lifecycle and port conflicts
+
+- サーバーの起動・ブラウザー確認・E2E実行前に、[サーバーとポートの運用](docs/server-operations.md)を読む。
+- 起動前に `npx astro dev status` で既存サーバーを確認する。同じ作業ディレクトリのサーバーが利用できる場合は再利用し、起動ログの実際のURL・ポートを使う。
+- PlaywrightのE2E専用ポートは既定 `14322`（`PLAYWRIGHT_TEST_PORT` で変更可）。開発・プレビューのサーバーに流用しない。`reuseExistingServer: false` を維持する。
+- AIが検証用に起動したサーバーは作業後に終了する。開発サーバーは `npx astro dev stop` を使う。継続利用のため残す場合は、起動したサーバーのURL・PID・終了方法をユーザーへ伝える。
+- ポート競合では、設定変更や追加起動の前に既存プロセスの用途・作業ディレクトリを調べる。ユーザーや別タスクのプロセスを一括終了しない。原因と解決が既知なら、文書の手順を優先する。
+
 ## Image quality
 
 - ラスター画像は、各ブレークポイントでの実際のCSS表示幅・高さに対して、Retinaの2倍密度（@2x）まで十分な画素数を確保する。`object-fit: cover` や切り抜き後の有効な解像度も考慮する。

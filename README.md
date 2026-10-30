@@ -29,6 +29,8 @@ npm install
 npm run dev
 ```
 
+AIによる起動・終了、E2E専用ポート（既定 `14322`）、ポート競合の解消手順は [サーバーとポートの運用](docs/server-operations.md) を参照してください。
+
 ### ローカル HTTPS（任意）
 
 HTTPSでの動作確認には、mkcertをインストールしてローカル認証局を信頼させた後、リポジトリのルートで証明書を生成します。mkcertのインストール方法は[公式README](https://github.com/FiloSottile/mkcert#installation)を参照してください。

@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Astroの開発・プレビュー用ポートと分ける。
+const testPort = process.env.PLAYWRIGHT_TEST_PORT ?? '14322';
+const baseURL = `http://127.0.0.1:${testPort}`;
+
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
@@ -8,7 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 3,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:4322',
+    baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     serviceWorkers: 'block',
@@ -30,7 +34,8 @@ export default defineConfig({
   // 開発サーバーではなく、ビルド済みの配布物をテストする。
   webServer: {
     command: 'node scripts/test-server.mjs',
-    url: 'http://127.0.0.1:4322',
+    env: { PLAYWRIGHT_TEST_PORT: testPort },
+    url: baseURL,
     reuseExistingServer: false,
   },
 });

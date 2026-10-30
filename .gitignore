@@ -31,8 +31,9 @@ private/users.php
 # macOS-specific files
 .DS_Store
 
-# local documentation
-docs/
+# local documentation (share only the server operations guide)
+docs/*
+!docs/server-operations.md
 
 # jetbrains setting folder
 .idea/
@@ -53,3 +54,6 @@ coverage/
 playwright-report/
 test-results/
 .vitest/
+
+# Lighthouse CI reports
+.lighthouseci/
