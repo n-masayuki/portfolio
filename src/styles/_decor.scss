@@ -97,6 +97,12 @@
     &--right {
       right: 0;
     }
+
+    &--after-none {
+      &::after {
+        display: none;
+      }
+    }
   }
 }
 
