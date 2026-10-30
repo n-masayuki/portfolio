@@ -86,9 +86,12 @@
         border-radius var(--transition-duration-extra-slow) ease,
         box-shadow var(--transition-duration-extra-slow) ease,
         background-color var(--transition-duration-extra-slow) ease,
-        backdrop-filter var(--transition-duration-extra-slow) ease;
+        backdrop-filter var(--transition-duration-extra-slow) ease,
+        transform var(--transition-duration-extra-slow) var(--spring);
       border-radius: 0;
       pointer-events: auto;
+      backface-visibility: hidden;
+      // will-change: transform;
 
       @media (max-width: breakpoint.$mobile) {
         max-width: 100%;
@@ -97,9 +100,10 @@
         min-height: 1rem;
       }
 
-      &:hover {
-        animation: header-hover-bounce var(--transition-duration-extra-slow)
-          var(--spring);
+      @media (min-width: (breakpoint.$mobile + 1px)) {
+        &:hover {
+          transform: scale(1.04);
+        }
       }
     }
 
@@ -122,16 +126,6 @@
         font-size: 1.5rem;
         min-height: 1.5rem;
       }
-    }
-  }
-
-  @keyframes header-hover-bounce {
-    0% {
-      transform: scaleX(1);
-    }
-
-    100% {
-      transform: scaleX(1.015);
     }
   }
 
@@ -567,6 +561,7 @@
 
     // クリックによるスクロール中は、途中のセクションへ現在地を戻さない。
     let navigating = false;
+    let anchorScrolling = false;
     let navigationTimer: number | undefined;
     const finishNavigation = () => {
       navigating = false;
@@ -592,7 +587,18 @@
       });
     });
     window.addEventListener('scrollend', () => {
-      if (navigating) finishNavigation();
+      // JSによるinstantスクロールは各フレームでscrollendを発火する。
+      if (navigating && !anchorScrolling) finishNavigation();
+    });
+    document.addEventListener('anchor-scroll:start', (event) => {
+      anchorScrolling = true;
+      navigating = true;
+      window.clearTimeout(navigationTimer);
+      setActiveLink((event as CustomEvent<{ id: string }>).detail.id);
+    });
+    document.addEventListener('anchor-scroll:end', () => {
+      anchorScrolling = false;
+      finishNavigation();
     });
 
     // 初期表示では現在地を持たせず、スクロール後のObserver判定から反映する。

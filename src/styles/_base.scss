@@ -29,6 +29,7 @@
   --color-surface: #f8fafc;
   --color-clear-blue: #f0f9ff;
   --color-border: #e2e8f0;
+  --color-accent: roklch(47.201% 0.24841 279.429);
   --color-accent-soft: #eff6ff;
   --color-accent-border: #bfdbfe;
   --color-background: var(--color-white);
@@ -186,7 +187,8 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  // アンカーの加減速はanchor-scroll.tsで制御し、二重のスクロールを避ける。
+  scroll-behavior: auto;
 }
 
 [id] {
