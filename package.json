@@ -5,10 +5,13 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:stop": "astro dev stop",
+    "dev:status": "astro dev status",
+    "dev:logs": "astro dev logs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,7 +20,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "astro check --minimumFailingSeverity warning",
-    "check:static": "npm run check && npm run lint && npm run format:check",
+    "check:docs": "node scripts/check-docs.mjs",
+    "check:static": "npm run check:docs && npm run check && npm run lint && npm run format:check",
     "test": "vitest",
     "test:unit": "vitest run",
     "test:coverage": "vitest run --coverage",

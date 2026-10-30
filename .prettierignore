@@ -9,5 +9,4 @@ test-results/
 # 別プロジェクトでビルド済みのデモとローカル専用ファイル。
 public/random-animals-image-gallery/
 .vscode/
-docs/
 src/content/works/

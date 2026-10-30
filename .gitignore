@@ -31,9 +31,17 @@ private/users.php
 # macOS-specific files
 .DS_Store
 
-# local documentation (share only the server operations guide)
+# Share reviewed project documentation; keep personal notes local.
 docs/*
+!docs/requirements.md
+!docs/architecture.md
+!docs/design.md
+!docs/development.md
 !docs/server-operations.md
+!docs/features/
+docs/features/*
+!docs/features/splash-screen.md
+!docs/features/world-thanks.md
 
 # jetbrains setting folder
 .idea/
