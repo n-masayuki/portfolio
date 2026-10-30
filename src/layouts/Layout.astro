@@ -114,6 +114,16 @@ const noiseImage = await getImage({
   </body>
 </html>
 
+<script>
+  import { initAnchorScroll } from '../scripts/anchor-scroll';
+
+  const cleanupAnchorScroll = initAnchorScroll();
+  if (import.meta.hot) import.meta.hot.dispose(cleanupAnchorScroll);
+  document.addEventListener('astro:before-swap', cleanupAnchorScroll, {
+    once: true,
+  });
+</script>
+
 <style lang="scss">
   @use '../styles/base' as *;
 
