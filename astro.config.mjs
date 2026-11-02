@@ -13,7 +13,18 @@ const https =
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  integrations: [
+    react(),
+    {
+      name: 'separate-vite-cache',
+      hooks: {
+        'astro:config:setup': ({ command, updateConfig }) => {
+          // buildの依存最適化で、稼働中のdevが参照するキャッシュを上書きしない。
+          updateConfig({ vite: { cacheDir: `node_modules/.vite/${command}` } });
+        },
+      },
+    },
+  ],
   vite: {
     server: { https },
     build: {

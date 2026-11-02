@@ -12,6 +12,12 @@ AIの検証で起動した開発サーバーが残り、E2E用サーバーの起
 
 E2Eの設定は `playwright.config.ts`、静的サーバーの実装は `scripts/test-server.mjs` にある。どちらも `PLAYWRIGHT_TEST_PORT` を参照する。開発・プレビューにはE2E専用ポートを使わない。
 
+## 開発中のビルドと依存キャッシュ
+
+[astro.config.mjs](../astro.config.mjs) でViteのキャッシュを `node_modules/.vite/<command>` に分けている。開発サーバーとビルドが同じ依存キャッシュを使うと、ビルド時の依存最適化が開発サーバーの参照するファイルを置き換え、Reactコンポーネントで `Failed to fetch dynamically imported module` が発生する場合がある。`npm run test:e2e` や `npm run lighthouse` もビルドを実行するため、この分離の対象になる。
+
+分離前のサーバーが残っている場合は、そのサーバーを停止して `npx astro dev --background` で起動し直し、起動ログのURLをブラウザーで再読み込みする。ポートが変わる場合があるので古いURLを使い続けない。停止対象と終了確認は下記の手順に従う。
+
 ## 起動前と終了時
 
 これらは終了を確認するための運用手順であり、自動終了の設定ではない。バックグラウンドサーバーは起動コマンドが終了しても動き続ける。状態確認・終了・ログ確認には、それぞれ `npx astro dev status` / `npx astro dev stop` / `npx astro dev logs` を使う。
