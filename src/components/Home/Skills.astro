@@ -28,6 +28,9 @@ import {
   siNpm,
   siVite,
   siClaude,
+  siThreedotjs,
+  siLighthouse,
+  siVitest,
 } from 'simple-icons';
 
 type Skill = ComponentProps<typeof TechnologyList>['items'][number];
@@ -52,11 +55,23 @@ const cmsSkills: Skill[] = [
   { label: 'etc.' },
 ];
 
+// デザイン・分析
+const designSkills: Skill[] = [
+  { icon: siFigma, label: 'Figma' },
+  { label: 'Photoshop' },
+  { label: 'Illustrator' },
+  { label: 'Adobe XD' },
+  { icon: siGoogleanalytics, label: 'GA4' },
+  { icon: siGoogletagmanager, label: 'Google Tag Manager' },
+  { label: 'Microsoft Clarity' },
+];
+
 // インタラクション
 const interactionSkills: Skill[] = [
   { label: 'CSS Animation' },
   { icon: siGsap, label: 'GSAP' },
   { icon: siLottiefiles, label: 'LottieFiles' },
+  { icon: siThreedotjs, label: 'Three.js' },
   { icon: siSwiper, label: 'Swiper' },
   { label: 'Splide', color: '#ff4154' },
   { label: 'MicroModal' },
@@ -72,25 +87,18 @@ const qualitySkills: Skill[] = [
   { icon: siWebpack, label: 'webpack' },
   { icon: siEslint, label: 'ESLint' },
   { icon: siPrettier, label: 'Prettier' },
+  { icon: siVitest, label: 'Vitest' },
+  { label: 'Playwright' },
+  { icon: siLighthouse, label: 'Lighthouse' },
   { label: 'etc.' },
-];
-
-// デザイン・分析
-const designSkills: Skill[] = [
-  { icon: siFigma, label: 'Figma' },
-  { label: 'Photoshop' },
-  { label: 'Illustrator' },
-  { label: 'Adobe XD' },
-  { icon: siGoogleanalytics, label: 'GA4' },
-  { icon: siGoogletagmanager, label: 'Google Tag Manager' },
 ];
 
 // AI活用
 const aiSkills: Skill[] = [
   { label: 'ChatGPT' },
+  { icon: siGithubcopilot, label: 'GitHub Copilot' },
   { label: 'Codex' },
   { icon: siClaude, label: 'Claude' },
-  { icon: siGithubcopilot, label: 'GitHub Copilot' },
   { icon: siGooglegemini, label: 'Google Gemini' },
   { label: 'etc.' },
 ];
@@ -112,7 +120,7 @@ const aiSkills: Skill[] = [
   </p>
 
   <div class="skills-grid">
-    <article class="skill-card" data-reveal>
+    <div class="skill-card" data-reveal>
       <h3>
         <span>フロントエンド</span>
         <span aria-hidden="true">Frontend</span>
@@ -123,31 +131,9 @@ const aiSkills: Skill[] = [
         <br />
         AstroやReactにおけるコンポーネント開発、型安全な設計、ビルド時の型検証に対応します。
       </p>
-    </article>
+    </div>
 
-    <article class="skill-card" data-reveal>
-      <h3>
-        <span>デザイン・分析</span>
-        <span aria-hidden="true">Design &amp; Analysis</span>
-      </h3>
-      <TechnologyList class="skill-list" items={designSkills} />
-      <p>
-        Figma等を用いたUI・ワイヤーフレーム設計から、GA4やClarity等によるアクセス解析、Lighthouseを活用した表示パフォーマンスの継続的な改善まで幅広く対応します。
-      </p>
-    </article>
-
-    <article class="skill-card" data-reveal>
-      <h3>
-        <span>インタラクション</span>
-        <span aria-hidden="true">Interaction</span>
-      </h3>
-      <TechnologyList class="skill-list" items={interactionSkills} />
-      <p>
-        CSSアニメーションやGSAP、Lottieなどを活用し、デザインの意図に沿った心地よいUIの操作感や動的演出を実装。ユーザーの視線誘導や直感的な操作性を意識したインタラクション構築に対応します。
-      </p>
-    </article>
-
-    <article class="skill-card" data-reveal>
+    <div class="skill-card" data-reveal>
       <h3>
         <span>CMS・EC</span>
         <span aria-hidden="true">CMS &amp; EC</span>
@@ -156,9 +142,31 @@ const aiSkills: Skill[] = [
       <p>
         WordPressのテーマ制作やPHPの改修、ECサイトのフロントエンド実装・運用、管理画面の設定を担当してきました。
       </p>
-    </article>
+    </div>
 
-    <article class="skill-card" data-reveal>
+    <div class="skill-card" data-reveal>
+      <h3>
+        <span>デザイン・分析</span>
+        <span aria-hidden="true">Design &amp; Analysis</span>
+      </h3>
+      <TechnologyList class="skill-list" items={designSkills} />
+      <p>
+        Figma等を用いたUI・ワイヤーフレーム設計から、GA4やClarity等によるアクセス解析まで幅広く対応します。
+      </p>
+    </div>
+
+    <div class="skill-card" data-reveal>
+      <h3>
+        <span>インタラクション</span>
+        <span aria-hidden="true">Interaction</span>
+      </h3>
+      <TechnologyList class="skill-list" items={interactionSkills} />
+      <p>
+        CSSアニメーションやGSAP、Lottieなどを活用し、デザインの意図に沿った心地よいUIの操作感や動的演出を実装。ユーザーの視線誘導や直感的な操作性を意識したインタラクション構築に対応します。
+      </p>
+    </div>
+
+    <div class="skill-card" data-reveal>
       <h3>
         <span>品質・開発環境</span>
         <span aria-hidden="true">Quality &amp; Workflow</span>
@@ -169,9 +177,9 @@ const aiSkills: Skill[] = [
         <br />
         PlaywrightやVitestを用いたテスト自動化、Lighthouse等によるパフォーマンス改善を意識した開発を行います。
       </p>
-    </article>
+    </div>
 
-    <article class="skill-card" data-reveal>
+    <div class="skill-card" data-reveal>
       <h3>
         <span>AI活用</span>
         <span aria-hidden="true">AI-assisted Development</span>
@@ -179,9 +187,9 @@ const aiSkills: Skill[] = [
       <TechnologyList class="skill-list" items={aiSkills} />
       <p>
         ChatGPTやGitHub
-        Copilotなどを開発支援に積極的に活用。設計の壁打ち、コード生成、リファクタリング、テストコード作成等の補助として取り入れ、保守性やセキュリティを考慮した上で安全に実装へ適用します。
+        Copilotを設計・実装・リファクタリングの補助に活用します。AGENTS.mdに開発方針や品質基準をまとめ、生成したコードはテスト・リント・型検査で検証。保守性とセキュリティを確認したうえで実装に取り入れます。
       </p>
-    </article>
+    </div>
   </div>
 </section>
 
