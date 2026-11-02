@@ -1,9 +1,9 @@
 ---
 import SectionHeading from '../ui/SectionHeading.astro';
 import { Image, getImage } from 'astro:assets';
+import portrait from '../../assets/home/portrait.webp';
 import ScoreShare from '../Home/ScoreShare.astro';
 import GitHubCalendar from '../Home/GithubCalender.astro';
-import portrait from '../../assets/home/portrait.webp';
 
 const portraitSizes =
   '(max-width: 500px) 80px, (max-width: 1000px) 16vw, 160px';
@@ -16,12 +16,18 @@ const mobilePortrait = await getImage({
   fit: 'cover',
   position: 'center',
   format: 'webp',
+  quality: 80,
 });
 
-const careerStartYear = 2008;
-const careerOffset = 1;
+const careerStartYear = 2008; // キャリア開始年
+const careerStartMonth = 4; // キャリア開始月（年度の途中での開始などを考慮）
+const careerOffset = 1; // キャリア開始年の補正値（年度の途中での開始などを考慮）
+const now = new Date();
 const experienceYears =
-  new Date().getFullYear() - careerStartYear - careerOffset;
+  now.getFullYear() -
+  careerStartYear -
+  careerOffset -
+  (now.getMonth() + 1 < careerStartMonth ? 1 : 0);
 ---
 
 <section id="about" class="section about" aria-labelledby="about-heading">
@@ -58,6 +64,7 @@ const experienceYears =
           fit="cover"
           position="center"
           format="webp"
+          quality={80}
         />
       </picture>
       <figcaption>Niibori Masayuki</figcaption>
