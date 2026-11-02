@@ -44,13 +44,12 @@ LinuxのCI環境を用意する場合は `npx playwright install --with-deps --n
 | ----------------------- | ------------------------------------------------------------ |
 | `npm run check:docs`    | 文書のローカルリンクとnpmスクリプトの参照                    |
 | `npm run check:static`  | 文書参照、Astro／TypeScriptの型、ESLint、Prettier            |
-| `npm run test:unit`     | VitestによるロジックとAstroの生成HTML                        |
+| `npm test`              | VitestによるロジックとAstroの生成HTMLを単発実行              |
 | `npm run test:coverage` | ユニットテストとカバレッジの最低基準                         |
 | `npm run test:e2e`      | ビルド後、PC Chromium・iPhone相当（WebKit）の2構成で画面操作 |
-| `npm run test:e2e:ui`   | ブラウザーテストのUIモード                                   |
 | `npm run verify`        | 静的チェックからブラウザーテストまで一括実行                 |
 
-開発中の継続実行は `npm test` を使用します。
+開発中の継続実行は `npm run test:watch`、ブラウザーテストのUIモードは `npm run test:e2e -- --ui` を使用します。
 インストール済みChromeを使用する場合は `PLAYWRIGHT_CHROMIUM_CHANNEL=chrome npm run test:e2e -- --project=chromium` を使用できます。
 
 E2Eは `chromium`（PC）と `mobile`（iPhone 13相当のWebKit）の2構成です。
@@ -71,6 +70,7 @@ E2Eは `chromium`（PC）と `mobile`（iPhone 13相当のWebKit）の2構成で
 ### 検証の範囲
 
 - カバレッジの対象は `src/scripts/**/*.ts` です。100%でもサイト全体や全ブラウザーの動作保証を意味しません。最低基準は行・文・関数90%、分岐85%です。
+- 現在のページでは無効な多言語表示モジュールもカバレッジに含めます。Popoverの配置・追従・監視解除と、波形／曲線表示のキーボード操作・停止条件・再計測・破棄をユニットテストで確認します。SVGの寸法とフレーム時刻はテスト用の値を使うため、実ブラウザーでの見た目は再利用時に別途確認します。
 - Astroの生成HTMLテストはサーバー側の出力を確認します。クライアント側スクリプトはユニットテストとブラウザーテストで確認します。
 - 外部通信はブラウザーテスト内で置き換えます。Formspreeへの実送信、Cloudflareの実認証、GTMの実計測、GitHub APIの稼働状況は検証しません。
 - ブラウザーテストはローカルの `dist` を配信します。MAMP／PHP認証／本番CSPは別の確認対象です。

@@ -14,7 +14,7 @@ E2Eの設定は `playwright.config.ts`、静的サーバーの実装は `scripts
 
 ## 起動前と終了時
 
-これらは終了を確認するための運用手順であり、自動終了の設定ではない。バックグラウンドサーバーは起動コマンドが終了しても動き続ける。ターミナルでは `npm run dev:status` / `npm run dev:stop` / `npm run dev:logs` も利用できる。`astro status` / `astro stop` は使わず、`npx astro dev status` / `npx astro dev stop` のように `dev` を含める。
+これらは終了を確認するための運用手順であり、自動終了の設定ではない。バックグラウンドサーバーは起動コマンドが終了しても動き続ける。状態確認・終了・ログ確認には、それぞれ `npx astro dev status` / `npx astro dev stop` / `npx astro dev logs` を使う。
 
 1. `npx astro dev status` で既存の開発サーバーを確認する。同じ作業ディレクトリの利用可能なサーバーがあれば再利用する。
 2. 必要な場合だけ `npx astro dev --background` で起動する。起動ログのURL・PIDを記録し、既定ポートで動いていると決めつけない。

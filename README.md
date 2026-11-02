@@ -24,12 +24,12 @@ npm ci
 起動前に [サーバーとポートの運用](docs/server-operations.md) を確認します。
 
 ```sh
-npm run dev:status
+npx astro dev status
 npm run dev -- --background
 ```
 
 同じ作業ディレクトリのサーバーが利用できれば再利用します。URLは起動ログで確認してください。
-状態確認は `npm run dev:status`、ログ確認は `npm run dev:logs`、終了は `npm run dev:stop` を使います。
+状態確認は `npx astro dev status`、ログ確認は `npx astro dev logs`、終了は `npx astro dev stop` を使います。
 
 ```sh
 npm run check:static
