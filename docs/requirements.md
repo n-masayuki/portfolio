@@ -22,12 +22,11 @@ Web制作・設計・改善・AI活用を含めた実務能力を示す。
 
 ```tree
 Home
-├─ Hero
 ├─ About
 ├─ Skills
 ├─ Selected Works
-├─ GitHub
-└─ Contact
+├─ Contact
+└─ GitHub
 
 Detail Pages
 └─ /works/[slug]
