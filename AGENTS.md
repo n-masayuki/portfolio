@@ -4,6 +4,71 @@
 - 既存のルールや実装に改善点を見つけた場合は、依頼の範囲内であれば改善してよい。範囲外の場合は変更せず、提案として報告する。
 - ルールは状況や知見の変化に合わせて更新する。更新の必要がないときは、無理に変更しない。
 
+## Git commit messages
+
+Commits must follow [Conventional Commits](https://www.conventionalcommits.org/) specification, enforced by commitlint.
+
+### Format
+
+```
+type(scope): description
+```
+
+### Type
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation
+- `style`: Formatting, missing semicolons, etc. (no code change)
+- `refactor`: Code refactoring
+- `perf`: Performance improvement
+- `test`: Add or modify tests
+- `ci`: CI/CD configuration
+- `chore`: Dependencies, build tools (no source code change)
+- `revert`: Revert a previous commit
+
+### Scope (optional)
+
+Scope describes the affected module or feature. Use kebab-case:
+- `contact`: Contact form
+- `navigation`: Header/navigation
+- `calendar`: GitHub calendar
+- `world-thanks`: World thanks animation
+- `deps`: Dependencies
+
+### Description
+
+- Use imperative mood: "add" not "adds" or "added"
+- Do not capitalize the first letter
+- Do not end with a period
+- Limit to 50 characters when possible
+- Use English or Japanese consistently
+
+### Examples
+
+```
+feat(contact): add email validation
+fix(navigation): resolve popover positioning on mobile
+docs: update commitment message guidelines
+perf(world-thanks): optimize SVG rendering
+test(calendar): add edge case tests
+chore(deps): upgrade astro to 7.4.1
+```
+
+### Validation
+
+commitlint automatically validates your commits. If a commit message does not comply, the commit will be rejected:
+
+```
+$ git commit -m "update readme"
+⧗   input: update readme
+✖   subject may not be empty [subject-empty]
+✖   type must be one of [feat, fix, docs, style, refactor, perf, test, ci, chore, revert] [type-enum]
+
+✖   found 2 problems, 0 warnings
+ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+```
+
 ## Development
 
 - 静的な内容はAstro、状態管理やクライアント描画が必要な部分はReactを使う。HTMLとCSSで十分な場合はクライアントJavaScriptを追加しない。
