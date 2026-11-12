@@ -9,6 +9,30 @@
 依存関係は `npm ci` で [package-lock.json](../package-lock.json) に合わせます。
 制作実績と一部の画像はGit管理対象外なので、別環境でのビルドには別途素材が必要です。
 
+### Git commit messages
+
+コミットメッセージは [Conventional Commits](https://www.conventionalcommits.org/) 仕様に従い、[commitlint](https://commitlint.js.org/) で自動検証されます。詳細は [AGENTS.md](../AGENTS.md#git-commit-messages) を参照してください。
+
+`npm install` 後、Husky の git hook が自動セットアップされ、コミット時にメッセージ形式が検証されます。無効な形式でコミットすると以下のように拒否されます：
+
+```
+$ git commit -m "update readme"
+⧗   input: update readme
+✖   type must be one of [feat, fix, docs, style, refactor, perf, test, ci, chore, revert] [type-enum]
+✖   subject may not be empty [subject-empty]
+
+✖   found 2 problems, 0 warnings
+```
+
+有効な形式でリトライしてください：
+
+```
+$ git commit -m "docs: update readme"
+[main abc1234] docs: update readme
+```
+
+設定ファイルは [commitlint.config.js](../commitlint.config.js)、git hook は [.husky/commit-msg](../.husky/commit-msg) で管理されます。
+
 ### サーバー
 
 起動・ブラウザー確認・E2E実行前に [サーバーとポートの運用](server-operations.md) を確認してください。
