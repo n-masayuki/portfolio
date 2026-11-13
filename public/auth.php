@@ -201,6 +201,9 @@ function renderLogin(string $redirectPath, ?string $error, string $cspNonce): ne
   <meta name="viewport" content="width=device-width">
   <meta name="robots" content="noindex, nofollow">
   <title>ログイン - Portfolio</title>
+  <meta name="description" content="ログインページ - Portfolio">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <style>
     :root {
     --color-white: #fff;
@@ -270,7 +273,8 @@ function renderLogin(string $redirectPath, ?string $error, string $cspNonce): ne
     position: relative;
     }
     .password-field input {
-    padding: 0.7rem 2.75rem 0.7rem 1rem;
+    min-height: 56px;
+    padding: 0.7rem calc(48px + 0.75rem) 0.7rem 1rem;
     }
     .password-field label {
     position: absolute;
@@ -299,9 +303,11 @@ function renderLogin(string $redirectPath, ?string $error, string $cspNonce): ne
     .password-toggle {
     position: absolute;
     top: 50%;
-    right: 0.35rem;
+    right: 4px;
     display: grid;
-    min-width: 0;
+    box-sizing: border-box;
+    min-width: 48px;
+    min-height: 48px;
     margin: 0;
     padding: 0.4rem;
     transform: translateY(-50%);
@@ -330,6 +336,7 @@ function renderLogin(string $redirectPath, ?string $error, string $cspNonce): ne
     padding: 0.5rem 1.5rem;
     justify-self: start;
     min-width: 8rem;
+    min-height: 48px;
     color: var(--color-white);
     font-size: var(--font-size-sm);
     outline: 1px solid var(--color-gray-200);

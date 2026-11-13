@@ -93,6 +93,6 @@ CSPなどのHTTPヘッダーは `.htaccess` で管理します。外部サービ
 
 ## SEO
 
-共通レイアウトがtitle、description、canonical、OGP、JSON-LDを出力し、ページ側から値を渡します。
+共通レイアウトがtitle、description、canonical、OGP、Twitter Card、JSON-LDを出力し、ページ側から値を渡します。Twitter Cardは `summary_large_image` を指定し、タイトル・説明・画像URLはOGPと同じ値を使います。
 制作実績の詳細は `noindex` を指定しています。robotsとsitemapは `public/` のファイルで管理します。
 本番のPHP認証下では検索クローラーが保護ページを閲覧できないため、メタ情報の出力と検索への掲載は区別します。
