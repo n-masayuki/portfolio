@@ -41,6 +41,7 @@
     'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'YuGothic',
     Meiryo, sans-serif;
   --font-noto-sans-jp: 'Noto Sans JP', 'Noto Sans JP Variable', sans-serif;
+  --font-line-seed-jp: 'LINESeedJP', var(--font-sans-jp);
 
   // font sizes
   --font-size-xxxs: 0.5rem;
@@ -208,10 +209,12 @@ body {
   min-width: 320px;
   color: var(--color-text);
   background: var(--color-background);
-  font-family: var(--font-sans-jp);
+  font-family: var(--font-line-seed-jp);
+  // font-family: var(--font-sans-jp);
   // font-family: var(--font-noto-sans-jp);
   // letter-spacing: 0.1em;
-  line-height: 1.7;
+  line-height: 1.8;
+  // line-height: 1.7;
   // font-feature-settings: 'palt' 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -224,6 +227,22 @@ body {
 // }
 
 // Self-hosted - Google Fonts
+@font-face {
+  font-family: 'LINESeedJP';
+  src: url('/fonts/LINESeedJP-Regular.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LINESeedJP';
+  src: url('/fonts/LINESeedJP-Bold.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
 @font-face {
   font-family: 'Grape Nuts';
   src: url('/fonts/grape-nuts-regular.woff2') format('woff2');

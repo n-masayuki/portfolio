@@ -52,7 +52,8 @@
 .intro {
   position: relative;
   margin: 1rem 0 0;
-  line-height: 1.8;
+  line-height: 2;
+  // line-height: 1.8;
   @media (max-width: breakpoint.$mobile) {
     font-size: 0.875rem;
   }
