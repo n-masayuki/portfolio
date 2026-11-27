@@ -75,6 +75,7 @@ $ git commit -m "update readme"
 - JavaScript・Reactの実装はTypeScriptを基本とし、セマンティックHTMLとアクセシビリティを必須要件とする。
 - 単純な動きはCSS、CSSだけでは対応しにくい動きはGSAPを使う。依存関係を追加する場合は必要性を説明する。
 - 構造や設計を変更する前に、[要件](docs/requirements.md)、[アーキテクチャ](docs/architecture.md)、[デザイン](docs/design.md) と関連する機能文書を確認する。
+- 複数の仕様・設計判断を含む変更や複数の機能に影響する変更では、実装前に[大きな変更の進め方](docs/development.md#大きな変更の進め方)を参照する。
 
 When starting the dev server, use background mode:
 
