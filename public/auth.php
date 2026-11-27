@@ -49,7 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $authenticatedUsername;
 
         $redirectPath = normalizePath((string) ($_POST['redirect'] ?? '/'));
-        header('Location: ' . ($redirectPath === '/' ? './' : '.' . $redirectPath));
+        // Canonical URL正規化のため、/もしくは/index.htmlの場合は/にリダイレクト
+        if ($redirectPath === '/' || $redirectPath === '/index.html') {
+            header('Location: ./');
+        } else {
+            header('Location: .' . $redirectPath);
+        }
         exit;
     }
 
