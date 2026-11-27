@@ -17,6 +17,10 @@ RewriteRule ^(sitemap\.xml|robots\.txt)$ - [END]
 # ホーム画面およびブラウザーのアイコンは未認証でも直接配信する。
 RewriteRule ^(apple-touch-icon\.png|favicon\.ico)$ - [END]
 
+# index.html へのアクセスを / にリダイレクト（Canonical URL統一）
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html
+RewriteRule ^(.*)index\.html$ / [R=301,L]
+
 # 静的ファイルを含め、すべて認証処理を通す。
 RewriteRule ^auth\.php$ - [END]
 RewriteRule ^(.*)$ auth.php?path=/$1 [B,END,QSA]
